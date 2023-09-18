@@ -29,16 +29,12 @@ struct SignUp: View {
                 Section{
                     Button {
                         ViewModel.createUser()
-                        if ViewModel.success {
-                            DispatchQueue.main.async {
-                                loggedIn.toggle()
-                            }
-                        }
+                        loggedIn.toggle()
                     } label: {
                         Text("Sign up")
                     }
                 }.frame(maxWidth: .infinity, alignment: .center)
-                .fullScreenCover(isPresented: $loggedIn) {
+                    .fullScreenCover(isPresented: $ViewModel.success) {
                         NavigationStack{
                             TabBar(vm: model)
                         }

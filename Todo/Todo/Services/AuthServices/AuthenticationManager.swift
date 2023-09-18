@@ -14,8 +14,8 @@ import Combine
 final class AuthenticationManager{
     let auth = Auth.auth()
     func createUser(email:String,pass:String) -> Future <UserAuthModel,Error> {
-        return Future{ [unowned self] promise in
-            self.auth.createUser(withEmail: email, password: pass){ authResult, error in
+        return Future{ [weak self] promise in
+            self!.auth.createUser(withEmail: email, password: pass){ authResult, error in
                 if let error = error{
                     promise(.failure(error))
                 }else if let authResult = authResult {
@@ -25,9 +25,9 @@ final class AuthenticationManager{
         }
     }
     func signIn(email:String,pass:String) -> Future<UserAuthModel,Error> {
-        return Future<UserAuthModel,Error>{ [unowned self]
+        return Future<UserAuthModel,Error>{ [weak self]
             promise in
-            self.auth.signIn(withEmail: email, password: pass){
+            self!.auth.signIn(withEmail: email, password: pass){
                 AuthDataResult , error in
                 if let error = error{
                     promise(.failure(error))

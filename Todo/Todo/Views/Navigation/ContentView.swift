@@ -23,7 +23,6 @@ struct ContentView: View {
                  }
         }.onAppear {
             showAuthView = Auth.auth().currentUser?.uid == nil
-            print("\(showAuthView)")
         }
     }
 

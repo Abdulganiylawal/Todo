@@ -20,7 +20,6 @@ class AuthViewModel: ObservableObject{
    
     func createUser(){
         authModel.createUser(email: email, pass: password)
-            .receive(on: DispatchQueue.main)
             .sink { result in
                 switch result{
                 case .failure(let error):
@@ -39,7 +38,6 @@ class AuthViewModel: ObservableObject{
     
     func signIn(){
         authModel.signIn(email: email, pass: password)
-            .receive(on: DispatchQueue.main)
             .sink {  result in
                 switch result{
                 case .failure(let error):

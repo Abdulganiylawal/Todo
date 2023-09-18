@@ -29,12 +29,7 @@ struct SignIn: View {
                 Section{
                     Button {
                         ViewModel.signIn()
-                        if ViewModel.success{
-                            DispatchQueue.main.async {
-                                loggedIn.toggle()
-                            }
-                       
-                        }
+                        loggedIn.toggle()
                     } label: {
                         Text("Log in")
                     }
