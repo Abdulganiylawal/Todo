@@ -6,6 +6,17 @@
 //
 
 import Foundation
-struct UserAuthModel{
+import FirebaseAuth
+import FirebaseCore
+
+struct UserAuthModel:Codable{
+    let uid: String
+    let email: String?
+    let photoname: String?
     
+    init(user: User) {
+        self.uid = user.uid
+        self.email = user.email
+        self.photoname = user.photoURL?.absoluteString
+    }
 }

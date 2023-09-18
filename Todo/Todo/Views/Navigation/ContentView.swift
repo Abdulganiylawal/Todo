@@ -7,11 +7,24 @@
 
 import SwiftUI
 import CoreData
+import FirebaseAuth
+import FirebaseCore
 
 struct ContentView: View {
+    private let model = AuthenticationManager()
+    @AppStorage("showAuthView") private var showAuthView = false
     
     var body: some View {
-        Text("Todo App")
+        NavigationStack {
+                 if showAuthView {
+                     Authiew()
+                 } else {
+                     TabBar(vm: model)
+                 }
+        }.onAppear {
+            showAuthView = Auth.auth().currentUser?.uid == nil
+            print("\(showAuthView)")
+        }
     }
 
 }
