@@ -43,6 +43,13 @@
 		1050F2412AB8CB01001EA255 /* CombineFirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 1050F2402AB8CB01001EA255 /* CombineFirebaseRemoteConfig */; };
 		1050F2432AB8CB01001EA255 /* CombineFirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1050F2422AB8CB01001EA255 /* CombineFirebaseStorage */; };
 		1050F2452AB8E83D001EA255 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1050F2442AB8E83D001EA255 /* TabBar.swift */; };
+		10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E86D2AB9E74500E2359D /* TabModel.swift */; };
+		10E0E8712AB9EA1200E2359D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8702AB9EA1200E2359D /* Home.swift */; };
+		10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8722AB9EA1F00E2359D /* Settings.swift */; };
+		10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8742AB9EA2C00E2359D /* Search.swift */; };
+		10E0E8772AB9EF5300E2359D /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8762AB9EF5300E2359D /* Tab.swift */; };
+		10E0E8792AB9F7F900E2359D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8782AB9F7F900E2359D /* MainView.swift */; };
+		10E0E87C2ABA0F0300E2359D /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E87B2ABA0F0300E2359D /* Styles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +92,13 @@
 		1050F2312AB8B2F5001EA255 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		1050F2332AB8B862001EA255 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		1050F2442AB8E83D001EA255 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		10E0E86D2AB9E74500E2359D /* TabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
+		10E0E8702AB9EA1200E2359D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		10E0E8722AB9EA1F00E2359D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		10E0E8742AB9EA2C00E2359D /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		10E0E8762AB9EF5300E2359D /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		10E0E8782AB9F7F900E2359D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		10E0E87B2ABA0F0300E2359D /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				104ECFEC2AB6288A0083B3D6 /* AuthModel.swift */,
+				10E0E86D2AB9E74500E2359D /* TabModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -213,8 +228,9 @@
 		104ECFE72AB627D00083B3D6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				10E0E86F2AB9E9FD00E2359D /* Mainiew */,
+				1050F2272AB8A130001EA255 /* AuthView */,
 				104ECFE82AB628110083B3D6 /* Navigation */,
-				1050F2442AB8E83D001EA255 /* TabBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -222,8 +238,9 @@
 		104ECFE82AB628110083B3D6 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				1050F2442AB8E83D001EA255 /* TabBar.swift */,
 				104ECFB72AB6273A0083B3D6 /* ContentView.swift */,
-				1050F2272AB8A130001EA255 /* AuthView */,
+				10E0E8782AB9F7F900E2359D /* MainView.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -265,9 +282,29 @@
 		1050F2302AB8B2CF001EA255 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				10E0E87A2ABA0EE900E2359D /* New Group */,
 				1050F2312AB8B2F5001EA255 /* PasswordField.swift */,
+				10E0E8762AB9EF5300E2359D /* Tab.swift */,
+				10E0E87B2ABA0F0300E2359D /* Styles.swift */,
 			);
 			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		10E0E86F2AB9E9FD00E2359D /* Mainiew */ = {
+			isa = PBXGroup;
+			children = (
+				10E0E8702AB9EA1200E2359D /* Home.swift */,
+				10E0E8722AB9EA1F00E2359D /* Settings.swift */,
+				10E0E8742AB9EA2C00E2359D /* Search.swift */,
+			);
+			path = Mainiew;
+			sourceTree = "<group>";
+		};
+		10E0E87A2ABA0EE900E2359D /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -426,16 +463,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				104ECFBF2AB6273C0083B3D6 /* Persistence.swift in Sources */,
+				10E0E8792AB9F7F900E2359D /* MainView.swift in Sources */,
+				10E0E8772AB9EF5300E2359D /* Tab.swift in Sources */,
 				104ECFF02AB628E50083B3D6 /* AuthViewModel.swift in Sources */,
 				1050F2342AB8B862001EA255 /* AuthenticationManager.swift in Sources */,
 				1050F2452AB8E83D001EA255 /* TabBar.swift in Sources */,
 				104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */,
 				1050F2322AB8B2F5001EA255 /* PasswordField.swift in Sources */,
+				10E0E8712AB9EA1200E2359D /* Home.swift in Sources */,
 				104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */,
 				104ECFC22AB6273C0083B3D6 /* Todo.xcdatamodeld in Sources */,
+				10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */,
 				104ECFED2AB6288A0083B3D6 /* AuthModel.swift in Sources */,
+				10E0E87C2ABA0F0300E2359D /* Styles.swift in Sources */,
 				1050F22B2AB8A164001EA255 /* SignUp.swift in Sources */,
 				1050F2292AB8A14D001EA255 /* SignIn.swift in Sources */,
+				10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */,
+				10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */,
 				1050F22D2AB8A173001EA255 /* AuthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

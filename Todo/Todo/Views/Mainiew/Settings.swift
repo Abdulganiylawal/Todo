@@ -1,13 +1,13 @@
 //
-//  TabBar.swift
+//  Settings.swift
 //  Todo
 //
-//  Created by Lawal Abdulganiy on 18/09/2023.
+//  Created by Lawal Abdulganiy on 19/09/2023.
 //
 
 import SwiftUI
 
-struct TabBar: View {
+struct Settings: View {
     @StateObject private var ViewModel:AuthViewModel
     @State var showAuthView = false
     
@@ -28,9 +28,9 @@ struct TabBar: View {
     }
 }
 
-struct TabBar_Previews: PreviewProvider {
+struct Settings_Previews: PreviewProvider {
     static let data = AuthenticationManager()
     static var previews: some View {
-        TabBar(vm: data)
+        Settings(vm: data)
     }
 }

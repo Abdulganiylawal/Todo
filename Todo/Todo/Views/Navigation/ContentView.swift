@@ -19,11 +19,12 @@ struct ContentView: View {
                  if showAuthView {
                      Authiew()
                  } else {
-                     TabBar(vm: model)
+                     MainView()
                  }
         }.onAppear {
             showAuthView = Auth.auth().currentUser?.uid == nil
         }
+
     }
 
 }

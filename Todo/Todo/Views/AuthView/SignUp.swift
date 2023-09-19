@@ -17,41 +17,26 @@ struct SignUp: View {
     
     var body: some View {
         NavigationStack{
-            Form{
-                Section {
+            Form {
+                Section(header: Text("Email"), footer: Text(ViewModel.errorEmailMessage).foregroundColor(.red)) {
                     TextField("Enter your email", text: $ViewModel.email)
-                        .textInputAutocapitalization(.none)
-                } header: {
-                    Text("Email")
-                } footer: {
-                    Text(ViewModel.errorEmailMessage)
-                        .foregroundColor(.red)
+                        .textInputAutocapitalization(.never)
+                }
+                Section(header: Text("Password"), footer: Text(ViewModel.errorPassMessage).foregroundColor(.red)) {
+                    PasswordField(placeholder: "Password", text: $ViewModel.password, isSecure: $isSecure)
+                        .textInputAutocapitalization(.never)
+                        .padding(6)
                 }
                 
                 Section {
-                    PasswordField(placeholder: "Password", text: $ViewModel.password, isSecure: $isSecure)
-                        .padding(6)
-                } header: {
-                    Text("Password")
-                } footer: {
-                    Text(ViewModel.errorPassMessage)
-                        .foregroundColor(.red)
-                }
-                
-                Section{
-                    Button {
+                    Button(action: {
                         ViewModel.createUser()
-                    } label: {
-                        Text("Sign up")
+                    }) {
+                        Text("Sign Up")
                     }.disabled(!ViewModel.isEnabled)
                 }.frame(maxWidth: .infinity, alignment: .center)
-                    .fullScreenCover(isPresented: $ViewModel.success) {
-                        NavigationStack{
-                            TabBar(vm: model)
-                        }
-                    }
-            }  .alert("Authentication Error", isPresented: $ViewModel.isError, actions: {
-                // You can add actions here if needed
+            }.alert("Authentication Error", isPresented: $ViewModel.isError, actions: {
+                //
             }) {
                 Text("\(ViewModel.errorMessage)")
             }
