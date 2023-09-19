@@ -19,13 +19,24 @@ struct SignIn: View {
     var body: some View {
         NavigationStack{
             Form{
-                Section("Email") {
+                Section {
                     TextField("Enter your email", text: $ViewModel.email)
+                } header: {
+                    Text("Email")
+                } footer: {
+                    Text(ViewModel.errorEmailMessage)
+                        .foregroundColor(.red)
                 }
-                Section("password") {
+                Section {
                     PasswordField(placeholder: "Password", text: $ViewModel.password, isSecure: $isSecure)
                         .padding(6)
+                } header: {
+                    Text("Password")
+                } footer: {
+                    Text(ViewModel.errorPassMessage)
+                        .foregroundColor(.red)
                 }
+                
                 Section{
                     Button {
                         ViewModel.signIn()
