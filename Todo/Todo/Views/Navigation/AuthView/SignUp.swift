@@ -10,7 +10,6 @@ import SwiftUI
 struct SignUp: View {
     @StateObject private var ViewModel:AuthViewModel
     @State private var isSecure: Bool = true
-    @State var loggedIn = false
     var model = AuthenticationManager()
     init(vm:AuthenticationManager){
       _ViewModel = StateObject(wrappedValue: AuthViewModel(AuthModel: vm))
@@ -21,6 +20,7 @@ struct SignUp: View {
             Form{
                 Section {
                     TextField("Enter your email", text: $ViewModel.email)
+                        .textInputAutocapitalization(.none)
                 } header: {
                     Text("Email")
                 } footer: {
@@ -41,16 +41,19 @@ struct SignUp: View {
                 Section{
                     Button {
                         ViewModel.createUser()
-                        loggedIn.toggle()
                     } label: {
                         Text("Sign up")
-                    }
+                    }.disabled(!ViewModel.isEnabled)
                 }.frame(maxWidth: .infinity, alignment: .center)
                     .fullScreenCover(isPresented: $ViewModel.success) {
                         NavigationStack{
                             TabBar(vm: model)
                         }
                     }
+            }  .alert("Authentication Error", isPresented: $ViewModel.isError, actions: {
+                // You can add actions here if needed
+            }) {
+                Text("\(ViewModel.errorMessage)")
             }
         }.navigationTitle("Sign up")
     }

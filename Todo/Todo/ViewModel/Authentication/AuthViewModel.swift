@@ -14,6 +14,10 @@ class AuthViewModel: ObservableObject{
     @Published var success:Bool = false
     @Published var errorEmailMessage = ""
     @Published var errorPassMessage = ""
+    @Published var isEnabled = false
+    @Published var errorMessage = ""
+    @Published var isError = false
+    
     private var cancellables = Set<AnyCancellable>()
     var authModel:AuthenticationManager
     
@@ -27,6 +31,8 @@ class AuthViewModel: ObservableObject{
         isPasswordaValid.map{
             $0 ? "": "The password is less than 6 characters"
         }.assign(to: &$errorPassMessage)
+        
+        buttonClickable.assign(to: &$isEnabled)
     }
     
     private lazy var isEmailValid: AnyPublisher<Bool,Never> = {
@@ -49,39 +55,45 @@ class AuthViewModel: ObservableObject{
         .eraseToAnyPublisher()
     }()
     
-    
+
+    private lazy var buttonClickable: AnyPublisher<Bool, Never> = {
+        Publishers.CombineLatest(isEmailValid, isPasswordaValid)
+            .map { (isValidEmail, isValidPassword) in
+                return isValidEmail && isValidPassword
+            }
+            .eraseToAnyPublisher()
+    }()
+
     
     func createUser(){
         authModel.createUser(email: email, pass: password)
-            .sink { result in
+            .sink { [unowned self] result in
                 switch result{
                 case .failure(let error):
-                    print("\(error.localizedDescription)")
+                    self.isError = true
+                    self.setErrorMessage(for: error)
+                    print("\(error)")
                 case .finished:
-                    
                     print("Finished")
-                    
                 }
-            } receiveValue: { [weak self] value in
+            } receiveValue: { [weak self] _ in
                 self!.success = true
-                print(self!.success)
-                print(value)
             }.store(in: &cancellables)
     }
     
     func signIn(){
         authModel.signIn(email: email, pass: password)
-            .sink {  result in
+            .sink { [unowned self] result in
                 switch result{
                 case .failure(let error):
-                    print("\(error.localizedDescription)")
+                    self.isError = true
+                    self.setErrorMessage(for: error)
+                    print("\(error)")
                 case .finished:
                     print("Finished")
                 }
-            } receiveValue: { [weak self] value in
+            } receiveValue: { [weak self] _ in
                 self!.success = true
-                print(self!.success)
-                print(value)
             }.store(in: &cancellables)
     }
     
@@ -89,7 +101,27 @@ class AuthViewModel: ObservableObject{
         do{
             try authModel.signOut()
         }catch(let error){
-            print(error)
+            print(error.localizedDescription)
         }
+    }
+    
+    private func setErrorMessage(for error: Error) {
+          if let authError = error as? AuthError {
+              switch authError {
+              case .invalidEmail:
+                  errorMessage = "Invalid email address."
+              case .weakPassword:
+                  errorMessage = "The password is too weak."
+              default:
+                  errorMessage = "An error occurred during authentication."
+              }
+          } else {
+              errorMessage = "Invalid email or password"
+          }
+      }
+    
+    enum AuthError: Error {
+        case invalidEmail
+        case weakPassword
     }
 }

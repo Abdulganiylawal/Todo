@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignIn: View {
     @StateObject private var ViewModel:AuthViewModel
-    @State var loggedIn = false
+
     var model = AuthenticationManager()
     
     init(vm:AuthenticationManager){
@@ -21,6 +21,7 @@ struct SignIn: View {
             Form{
                 Section {
                     TextField("Enter your email", text: $ViewModel.email)
+                        .textInputAutocapitalization(.never)
                 } header: {
                     Text("Email")
                 } footer: {
@@ -38,20 +39,23 @@ struct SignIn: View {
                 }
                 
                 Section{
-                    Button {
+                    Button(action: {
                         ViewModel.signIn()
-                        loggedIn.toggle()
-                    } label: {
+                       
+                    }) {
                         Text("Log in")
-                    }
+                    }.disabled(!ViewModel.isEnabled)
                 }.frame(maxWidth: .infinity, alignment: .center)
-                    .fullScreenCover(isPresented: $loggedIn) {
+                    .fullScreenCover(isPresented: $ViewModel.success) {
                         NavigationStack{
                             TabBar(vm: model)
                         }
                     }
+            }.alert("Authentication Error", isPresented: $ViewModel.isError, actions: {
+                // You can add actions here if needed
+            }) {
+                Text("\(ViewModel.errorMessage)")
             }
-            
         }
         .navigationTitle("Log in")
     }

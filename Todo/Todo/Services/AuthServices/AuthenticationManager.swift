@@ -14,7 +14,7 @@ import Combine
 final class AuthenticationManager{
     let auth = Auth.auth()
     func createUser(email:String,pass:String) -> Future <UserAuthModel,Error> {
-        return Future{ [weak self] promise in
+        return Future<UserAuthModel,Error>{ [weak self] promise in
             self!.auth.createUser(withEmail: email, password: pass){ authResult, error in
                 if let error = error{
                     promise(.failure(error))
@@ -48,8 +48,3 @@ final class AuthenticationManager{
        }
     }
 
-enum AuthError: Error {
-    case createUserFailed(Error)
-    case userNotFound
-    case signOutFailed(Error)
-}
