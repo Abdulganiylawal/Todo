@@ -9,13 +9,30 @@ import SwiftUI
 
 struct Home: View {
     @Environment(\.colorScheme) var colorScheme
+    @State var isClicked: Bool = false
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack() {
             All
             HStack{
                 Today
                 Spacer()
                 Schedule
+            }.padding(.bottom,20)
+            HStack(){
+                Text("My Lists")
+                Spacer()
+                Button {
+                    isClicked.toggle()
+                } label: {
+                    Image(systemName: "plus.app.fill")
+                        .foregroundColor(Color(hex: "331D2C"))
+                }
+
+            }.padding()
+            .sheet(isPresented: $isClicked) {
+                    NavigationStack{
+                        AddList()
+                }
             }
         }
         .padding(12)

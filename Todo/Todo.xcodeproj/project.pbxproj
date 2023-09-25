@@ -43,6 +43,10 @@
 		1050F2412AB8CB01001EA255 /* CombineFirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 1050F2402AB8CB01001EA255 /* CombineFirebaseRemoteConfig */; };
 		1050F2432AB8CB01001EA255 /* CombineFirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1050F2422AB8CB01001EA255 /* CombineFirebaseStorage */; };
 		1050F2452AB8E83D001EA255 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1050F2442AB8E83D001EA255 /* TabBar.swift */; };
+		107075732AC1B8FF00793E13 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075722AC1B8FF00793E13 /* Global.swift */; };
+		107075762AC1C44600793E13 /* AddList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075752AC1C44600793E13 /* AddList.swift */; };
+		107075782AC1C47E00793E13 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075772AC1C47E00793E13 /* ListModel.swift */; };
+		1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070757A2AC1C50700793E13 /* ListViewModel.swift */; };
 		10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E86D2AB9E74500E2359D /* TabModel.swift */; };
 		10E0E8712AB9EA1200E2359D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8702AB9EA1200E2359D /* Home.swift */; };
 		10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8722AB9EA1F00E2359D /* Settings.swift */; };
@@ -92,6 +96,10 @@
 		1050F2312AB8B2F5001EA255 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		1050F2332AB8B862001EA255 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		1050F2442AB8E83D001EA255 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		107075722AC1B8FF00793E13 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		107075752AC1C44600793E13 /* AddList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddList.swift; sourceTree = "<group>"; };
+		107075772AC1C47E00793E13 /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
+		1070757A2AC1C50700793E13 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		10E0E86D2AB9E74500E2359D /* TabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
 		10E0E8702AB9EA1200E2359D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		10E0E8722AB9EA1F00E2359D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -177,7 +185,7 @@
 				104ECFC02AB6273C0083B3D6 /* Todo.xcdatamodeld */,
 				104ECFB92AB6273C0083B3D6 /* Assets.xcassets */,
 				104ECFBE2AB6273C0083B3D6 /* Persistence.swift */,
-				1050F2302AB8B2CF001EA255 /* Modifiers */,
+				1050F2302AB8B2CF001EA255 /* Misc */,
 				104ECFBB2AB6273C0083B3D6 /* Preview Content */,
 			);
 			path = Todo;
@@ -213,6 +221,7 @@
 			children = (
 				104ECFEC2AB6288A0083B3D6 /* AuthModel.swift */,
 				10E0E86D2AB9E74500E2359D /* TabModel.swift */,
+				107075772AC1C47E00793E13 /* ListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -220,6 +229,7 @@
 		104ECFE62AB627C40083B3D6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				107075792AC1C4EF00793E13 /* LIst */,
 				104ECFEE2AB628C80083B3D6 /* Authentication */,
 			);
 			path = ViewModel;
@@ -228,6 +238,7 @@
 		104ECFE72AB627D00083B3D6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				107075742AC1C43200793E13 /* ListView */,
 				10E0E86F2AB9E9FD00E2359D /* Mainiew */,
 				1050F2272AB8A130001EA255 /* AuthView */,
 				104ECFE82AB628110083B3D6 /* Navigation */,
@@ -279,15 +290,31 @@
 			path = AuthView;
 			sourceTree = "<group>";
 		};
-		1050F2302AB8B2CF001EA255 /* Modifiers */ = {
+		1050F2302AB8B2CF001EA255 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
-				10E0E87A2ABA0EE900E2359D /* New Group */,
+				107075722AC1B8FF00793E13 /* Global.swift */,
 				1050F2312AB8B2F5001EA255 /* PasswordField.swift */,
 				10E0E8762AB9EF5300E2359D /* Tab.swift */,
 				10E0E87B2ABA0F0300E2359D /* Styles.swift */,
 			);
-			path = Modifiers;
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		107075742AC1C43200793E13 /* ListView */ = {
+			isa = PBXGroup;
+			children = (
+				107075752AC1C44600793E13 /* AddList.swift */,
+			);
+			path = ListView;
+			sourceTree = "<group>";
+		};
+		107075792AC1C4EF00793E13 /* LIst */ = {
+			isa = PBXGroup;
+			children = (
+				1070757A2AC1C50700793E13 /* ListViewModel.swift */,
+			);
+			path = LIst;
 			sourceTree = "<group>";
 		};
 		10E0E86F2AB9E9FD00E2359D /* Mainiew */ = {
@@ -298,13 +325,6 @@
 				10E0E8742AB9EA2C00E2359D /* Search.swift */,
 			);
 			path = Mainiew;
-			sourceTree = "<group>";
-		};
-		10E0E87A2ABA0EE900E2359D /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -470,6 +490,8 @@
 				1050F2452AB8E83D001EA255 /* TabBar.swift in Sources */,
 				104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */,
 				1050F2322AB8B2F5001EA255 /* PasswordField.swift in Sources */,
+				107075732AC1B8FF00793E13 /* Global.swift in Sources */,
+				107075782AC1C47E00793E13 /* ListModel.swift in Sources */,
 				10E0E8712AB9EA1200E2359D /* Home.swift in Sources */,
 				104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */,
 				104ECFC22AB6273C0083B3D6 /* Todo.xcdatamodeld in Sources */,
@@ -479,6 +501,8 @@
 				1050F22B2AB8A164001EA255 /* SignUp.swift in Sources */,
 				1050F2292AB8A14D001EA255 /* SignIn.swift in Sources */,
 				10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */,
+				107075762AC1C44600793E13 /* AddList.swift in Sources */,
+				1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */,
 				10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */,
 				1050F22D2AB8A173001EA255 /* AuthView.swift in Sources */,
 			);
