@@ -8,13 +8,30 @@
 import Foundation
 import UIKit
 import SwiftUI
+import Combine
 
 class ListViewManger:ObservableObject{
-    @Published var myList: [ListModel] = []
+    @Published var myList = [ListModel]()
+    @Published var title = ""
+    @Published var isEnabled: Bool = true
+    var imageName:String = ""
+    var colorName:String = ""
     
-    func addList(name:String,image:UIImage){
-        myList.append(ListModel(name: name, image: image))
+    func addList(name:String,image:String,color:String){
+        myList.append(ListModel(name: name, image: image, color: color))
     }
+    
+    init(){
+        isClickable
+            .assign(to: &$isEnabled)
+    }
+
+    lazy var isClickable: AnyPublisher<Bool,Never> = {
+        $title
+            .map { value in
+                return value.count >= 1
+            }.eraseToAnyPublisher()
+    }()
     
 }
 
@@ -40,8 +57,6 @@ let popularColors: [String] = [
     "625757",
 ]
 
-
-
 let todoIcons: [String] = [
     "list.bullet",           // A simple bullet list
     "checkmark.circle",      // A checkmark inside a circle
@@ -62,3 +77,5 @@ let todoIcons: [String] = [
     "pencil",                // A pencil for editing or adding tasks
     "checkmark.rectangle",   // A checkmark inside a rectangle
 ]
+
+let listModels: [ListModel] = Array(repeating: ListModel(name: "Your List Name", image: "list.bullet", color: "D83F31"), count: 20)

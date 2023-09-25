@@ -8,9 +8,11 @@
 import Foundation
 import UIKit
 
-struct ListModel{
+struct ListModel:Identifiable{
+    var id = UUID()
     let name:String
-    let image:UIImage
+    let image:String
+    let color:String
     let Counter: Int = 0
 }
 

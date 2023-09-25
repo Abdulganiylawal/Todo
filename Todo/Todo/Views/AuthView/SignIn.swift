@@ -9,8 +9,6 @@ import SwiftUI
 
 struct SignIn: View {
     @StateObject private var ViewModel:AuthViewModel
-
-    var model = AuthenticationManager()
     
     init(vm:AuthenticationManager){
         _ViewModel = StateObject(wrappedValue: AuthViewModel(AuthModel: vm))

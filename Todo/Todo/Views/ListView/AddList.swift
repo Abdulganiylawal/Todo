@@ -2,10 +2,15 @@ import SwiftUI
 
 struct AddList: View {
     let itemsPerRow = 6
-    @StateObject var model = ListViewManger()
-    @State var name: String = ""
-    @State var color: String? = nil
-    @State var icon: String? = nil
+    @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var model:ListViewManger
+    
+    init(manager: ListViewManger){
+        self._model = ObservedObject(wrappedValue: manager)
+    }
+    @State var color: String? = "D83F31"
+    @State var icon: String? = "list.bullet"
+    @State var name:String = ""
     
     var colorGrid: some View {
         VStack(spacing: 16) {
@@ -39,12 +44,12 @@ struct AddList: View {
         VStack {
             Form {
                 Section {
-                    TextField("", text: $name)
+                    TextField("", text: $model.title)
                         .font(.system(size: 30, weight: .regular))
                         .multilineTextAlignment(.center)
                         .background(
                             ZStack(alignment: .leading) {
-                                if name.isEmpty {
+                                if model.title.isEmpty {
                                     Text("Title")
                                         .font(.system(size: 25, weight: .regular))
                                         .foregroundColor(.gray)
@@ -59,19 +64,20 @@ struct AddList: View {
                 Section {
                     IconGrid
                 }
-                Section{
-                    Text(self.color ?? " ")
-                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    // Add your save logic here
+                    self.name = model.title
+                    model.addList(name: self.name, image: self.icon!, color: self.color!)
+                    model.title = ""
+                    presentationMode.wrappedValue.dismiss()
+                    
                 } label: {
                     Text("Save")
-                }
+                }.disabled(!model.isEnabled)
             }
             ToolbarItem(placement: .principal) {
                 Image(systemName: self.icon ?? "list.bullet")
@@ -118,14 +124,14 @@ struct IconView: View {
     
     var body: some View {
         Image(systemName: icon)
-            .resizable()
+            .frame(width: 40,height: 40)
             .foregroundColor(.gray)
             .onTapGesture {
                 self.selectedIcon = icon
             }
             .overlay(
                 Image(systemName: icon)
-                    .resizable()
+                    .frame(width: 40,height: 40)
                     .foregroundColor(self.selectedIcon == icon ? Color(hex: self.color ?? "D83F31") : .gray)
                     .opacity(self.icon == selectedIcon ? 1 : 0)
             )
@@ -155,6 +161,7 @@ struct ColorCapsule: View {
 
 struct AddList_Previews: PreviewProvider {
     static var previews: some View {
-        AddList()
+        let model = ListViewManger()
+        AddList(manager: model)
     }
 }
