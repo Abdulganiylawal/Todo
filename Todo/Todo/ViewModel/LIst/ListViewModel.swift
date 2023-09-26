@@ -13,14 +13,15 @@ import Combine
 class ListViewManger:ObservableObject{
     @Published var myList = [ListModel]()
     @Published var title = ""
-    @Published var isEnabled: Bool = true
+    @Published var isEnabled: Bool = false
     var imageName:String = ""
     var colorName:String = ""
-    
+
     func addList(name:String,image:String,color:String){
         myList.append(ListModel(name: name, image: image, color: color))
     }
     
+   
     init(){
         isClickable
             .assign(to: &$isEnabled)
@@ -32,6 +33,7 @@ class ListViewManger:ObservableObject{
                 return value.count >= 1
             }.eraseToAnyPublisher()
     }()
+    
     
 }
 
@@ -78,4 +80,4 @@ let todoIcons: [String] = [
     "checkmark.rectangle",   // A checkmark inside a rectangle
 ]
 
-let listModels: [ListModel] = Array(repeating: ListModel(name: "Your List Name", image: "list.bullet", color: "D83F31"), count: 20)
+let listModels: [ListModel] = Array(repeating: ListModel(name: "Your List Name", image: "list.bullet", color: "D83F31"), count: 2)

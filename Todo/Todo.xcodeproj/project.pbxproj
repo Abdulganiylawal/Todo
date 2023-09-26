@@ -47,6 +47,12 @@
 		107075762AC1C44600793E13 /* AddList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075752AC1C44600793E13 /* AddList.swift */; };
 		107075782AC1C47E00793E13 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075772AC1C47E00793E13 /* ListModel.swift */; };
 		1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070757A2AC1C50700793E13 /* ListViewModel.swift */; };
+		10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */; };
+		10D72A722AC322C800193E93 /* RemainderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A712AC322C800193E93 /* RemainderModel.swift */; };
+		10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A742AC32A2C00193E93 /* RemainderView.swift */; };
+		10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A762AC32BFC00193E93 /* DropDownMenu.swift */; };
+		10D72A792AC34F8900193E93 /* RemainderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A782AC34F8900193E93 /* RemainderRow.swift */; };
+		10D72A7B2AC350D200193E93 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A7A2AC350D200193E93 /* SwiftUIView.swift */; };
 		10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E86D2AB9E74500E2359D /* TabModel.swift */; };
 		10E0E8712AB9EA1200E2359D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8702AB9EA1200E2359D /* Home.swift */; };
 		10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8722AB9EA1F00E2359D /* Settings.swift */; };
@@ -100,6 +106,12 @@
 		107075752AC1C44600793E13 /* AddList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddList.swift; sourceTree = "<group>"; };
 		107075772AC1C47E00793E13 /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		1070757A2AC1C50700793E13 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderViewModel.swift; sourceTree = "<group>"; };
+		10D72A712AC322C800193E93 /* RemainderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderModel.swift; sourceTree = "<group>"; };
+		10D72A742AC32A2C00193E93 /* RemainderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderView.swift; sourceTree = "<group>"; };
+		10D72A762AC32BFC00193E93 /* DropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
+		10D72A782AC34F8900193E93 /* RemainderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderRow.swift; sourceTree = "<group>"; };
+		10D72A7A2AC350D200193E93 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		10E0E86D2AB9E74500E2359D /* TabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
 		10E0E8702AB9EA1200E2359D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		10E0E8722AB9EA1F00E2359D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -222,6 +234,7 @@
 				104ECFEC2AB6288A0083B3D6 /* AuthModel.swift */,
 				10E0E86D2AB9E74500E2359D /* TabModel.swift */,
 				107075772AC1C47E00793E13 /* ListModel.swift */,
+				10D72A712AC322C800193E93 /* RemainderModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -229,6 +242,7 @@
 		104ECFE62AB627C40083B3D6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				10D72A6E2AC3227A00193E93 /* Remainder */,
 				107075792AC1C4EF00793E13 /* LIst */,
 				104ECFEE2AB628C80083B3D6 /* Authentication */,
 			);
@@ -238,6 +252,7 @@
 		104ECFE72AB627D00083B3D6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				10D72A732AC32A1800193E93 /* RemainderView */,
 				107075742AC1C43200793E13 /* ListView */,
 				10E0E86F2AB9E9FD00E2359D /* Mainiew */,
 				1050F2272AB8A130001EA255 /* AuthView */,
@@ -297,6 +312,7 @@
 				1050F2312AB8B2F5001EA255 /* PasswordField.swift */,
 				10E0E8762AB9EF5300E2359D /* Tab.swift */,
 				10E0E87B2ABA0F0300E2359D /* Styles.swift */,
+				10D72A762AC32BFC00193E93 /* DropDownMenu.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -315,6 +331,24 @@
 				1070757A2AC1C50700793E13 /* ListViewModel.swift */,
 			);
 			path = LIst;
+			sourceTree = "<group>";
+		};
+		10D72A6E2AC3227A00193E93 /* Remainder */ = {
+			isa = PBXGroup;
+			children = (
+				10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */,
+			);
+			path = Remainder;
+			sourceTree = "<group>";
+		};
+		10D72A732AC32A1800193E93 /* RemainderView */ = {
+			isa = PBXGroup;
+			children = (
+				10D72A742AC32A2C00193E93 /* RemainderView.swift */,
+				10D72A7A2AC350D200193E93 /* SwiftUIView.swift */,
+				10D72A782AC34F8900193E93 /* RemainderRow.swift */,
+			);
+			path = RemainderView;
 			sourceTree = "<group>";
 		};
 		10E0E86F2AB9E9FD00E2359D /* Mainiew */ = {
@@ -493,17 +527,23 @@
 				107075732AC1B8FF00793E13 /* Global.swift in Sources */,
 				107075782AC1C47E00793E13 /* ListModel.swift in Sources */,
 				10E0E8712AB9EA1200E2359D /* Home.swift in Sources */,
+				10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */,
 				104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */,
+				10D72A722AC322C800193E93 /* RemainderModel.swift in Sources */,
 				104ECFC22AB6273C0083B3D6 /* Todo.xcdatamodeld in Sources */,
 				10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */,
 				104ECFED2AB6288A0083B3D6 /* AuthModel.swift in Sources */,
+				10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */,
 				10E0E87C2ABA0F0300E2359D /* Styles.swift in Sources */,
 				1050F22B2AB8A164001EA255 /* SignUp.swift in Sources */,
 				1050F2292AB8A14D001EA255 /* SignIn.swift in Sources */,
 				10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */,
 				107075762AC1C44600793E13 /* AddList.swift in Sources */,
 				1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */,
+				10D72A792AC34F8900193E93 /* RemainderRow.swift in Sources */,
 				10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */,
+				10D72A7B2AC350D200193E93 /* SwiftUIView.swift in Sources */,
+				10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */,
 				1050F22D2AB8A173001EA255 /* AuthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

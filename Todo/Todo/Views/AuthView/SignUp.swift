@@ -12,7 +12,7 @@ struct SignUp: View {
     @State private var isSecure: Bool = true
     var model = AuthenticationManager()
     init(vm:AuthenticationManager){
-      _ViewModel = StateObject(wrappedValue: AuthViewModel(AuthModel: vm))
+        _ViewModel = StateObject(wrappedValue: AuthViewModel(AuthModel: vm))
     }
     
     var body: some View {
@@ -35,18 +35,23 @@ struct SignUp: View {
                         Text("Sign Up")
                     }.disabled(!ViewModel.isEnabled)
                 }.frame(maxWidth: .infinity, alignment: .center)
-            }.alert("Authentication Error", isPresented: $ViewModel.isError, actions: {
-                //
-            }) {
-                Text("\(ViewModel.errorMessage)")
-            }
-        }.navigationTitle("Sign up")
+                    .fullScreenCover(isPresented: $ViewModel.success) {
+                        NavigationStack{
+                            MainView()
+                        }
+                    }.alert("Authentication Error", isPresented: $ViewModel.isError, actions: {
+                        //
+                    }) {
+                        Text("\(ViewModel.errorMessage)")
+                    }
+            }.navigationTitle("Sign up")
+        }
     }
-}
-
-struct SignUp_Previews: PreviewProvider {
-    static let data = AuthenticationManager()
-    static var previews: some View {
-        SignUp(vm: data)
+    
+    struct SignUp_Previews: PreviewProvider {
+        static let data = AuthenticationManager()
+        static var previews: some View {
+            SignUp(vm: data)
+        }
     }
 }

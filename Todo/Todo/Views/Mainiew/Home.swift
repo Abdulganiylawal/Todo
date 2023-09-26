@@ -12,58 +12,62 @@ struct Home: View {
     @StateObject var model = ListViewManger()
     @State var isClicked: Bool = false
     var body: some View {
-        VStack() {
-            Section{
-                All
-                HStack{
-                    Today
-                    Spacer()
-                    Schedule
-                }
-            }
-            Section{
-                HStack{
-                    Text("MY LISTS")
-                    Spacer()
-                    Button {
-                        isClicked.toggle()
-                    } label: {
-                        Image(systemName: "plus.app.fill")
-                        
-                    }
-                    
-                }
-                .sheet(isPresented: $isClicked) {
-                    NavigationStack{
-                        AddList(manager: model)
-                    }
-                }
-            }.padding()
-
-            
-            Section{
+        NavigationStack{
+            VStack() {
                 List{
-                    ForEach(listModels) { list in
-                        NavigationLink(destination: EmptyView()) {
-                            HStack {
-                                Image(systemName: list.image)
-                                    .foregroundColor(Color(hex: list.color))
-                                Text(list.name)
+                    Section{
+                        All
+                        HStack{
+                            Today
+                            Spacer()
+                            Schedule
+                        }.listRowSeparator(.hidden)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10,  trailing: 0))
+                    Section{
+                        ForEach($model.myList) { $list in
+                            NavigationLink {
+                                RemainderView(model: $list)
+                            } label: {
+                                HStack{
+                                    Image(systemName: list.image)
+                                        .foregroundColor(Color(hex: list.color))
+                                    Text(list.name)
+                                    Spacer()
+                                    Text("\(list.remainders.count)")
+                                }
+                            }
+                            .listRowInsets(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 15))
+                            
+                        }
+                        
+                    }header: {
+                        HStack{
+                            Text("MY LISTS")
+                                .fontWeight(.bold)
+                            Spacer()
+                            Button {
+                                isClicked.toggle()
+                            } label: {
+                                Image(systemName: "plus.app.fill")
+                                
                             }
                         }
+                    }   .sheet(isPresented: $isClicked) {
+                        NavigationStack{
+                            AddList(manager: model)
+                        }
                     }
-                    .listRowSeparator(.hidden)
                 }
-                .padding(.all, 0)
-                .listStyle(.automatic)
                 .scrollContentBackground(.hidden)
-            }
-            .padding(0)
-        }
-        .padding(10)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(hex: colorScheme == .dark ? "000000" : "C4C1A4"))
         
+                .navigationTitle("Tasks")
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(hex: colorScheme == .dark ? "000000" : "C4C1A4"))
+        }
+
     }
     
     var All:some View{
@@ -90,7 +94,7 @@ struct Home: View {
         .background(Color(hex: colorScheme == .dark ? "272829":"FAF2D3"))
         .cornerRadius(15)
         .shadow(color: Color.gray.opacity(colorScheme == .light ? 0.5 : 0), radius: 5, x: 0, y: 2)
-        .padding([.top, .leading, .trailing], 10)
+        
     }
     
     var Today:some View{
@@ -114,7 +118,7 @@ struct Home: View {
         .background(Color(hex: colorScheme == .dark ? "272829": "EFB495"))
         .cornerRadius(15)
         .shadow(color: Color.gray.opacity(colorScheme == .light ? 0.5 : 0), radius: 5, x: 0, y: 2)
-        .padding([.top, .leading, .trailing], 10)
+        
     }
     
     var Schedule:some View{
@@ -134,12 +138,12 @@ struct Home: View {
                 .font(.title2)
                 .fontWeight(.heavy)
         }
-//
+
         .padding(10)
         .background(Color(hex: colorScheme == .dark ? "272829" : "8ECDDD"))
         .cornerRadius(15)
         .shadow(color: Color.gray.opacity(colorScheme == .light ? 0.5 : 0), radius: 5, x: 0, y: 2)
-        .padding([.top, .leading, .trailing], 10)
+  
     }
     
 }

@@ -13,6 +13,7 @@ struct ListModel:Identifiable{
     let name:String
     let image:String
     let color:String
-    let Counter: Int = 0
+    var remainders: [RemainderModel] = []
+    var completedRemainders:[RemainderModel] = []
 }
 

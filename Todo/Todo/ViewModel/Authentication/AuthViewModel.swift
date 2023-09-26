@@ -112,11 +112,11 @@ class AuthViewModel: ObservableObject{
                   errorMessage = "Invalid email address."
               case .weakPassword:
                   errorMessage = "The password is too weak."
-              default:
-                  errorMessage = "An error occurred during authentication."
-              }
+         
+                                }
           } else {
-              errorMessage = "Invalid email or password"
+              errorMessage = "An error occurred during authentication."
+
           }
       }
     
