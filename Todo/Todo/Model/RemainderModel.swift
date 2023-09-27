@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RemainderModel:Identifiable {
+struct RemainderModel:Identifiable{
     var id = UUID()
     var title:String
     var description:String

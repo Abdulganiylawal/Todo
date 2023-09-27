@@ -9,17 +9,23 @@ import SwiftUI
 struct RemainderView: View {
     @Binding var model: ListModel
     @State private var isPopoverVisible = false
-    
     @State private var isDropdownMenuVisible = false
 
     var body: some View {
         NavigationStack {
             VStack {
                 List{
-                    ForEach($model.remainders) { $remainder in
-                        RemainderRow(model: $remainder, viewModel: model)
+                    ForEach(Array(zip($model.remainders.indices, $model.remainders)),id: \.0) { index , $remainder in
+                        RemainderRow(model: $remainder, viewModel: $model)
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
+                                Button(role: .destructive) {
+                                   delete(item: index)
+                                } label: {
+                                    Label("Delete", systemImage: "xmark.bin")
+                                }
+
+                            })
                     }
-                    
                     .padding([.bottom],10)
                 }
                 .listStyle(.inset)
@@ -61,6 +67,9 @@ struct RemainderView: View {
                 DropdownMenu(vm: model)
             }
         }
+    }
+    func delete(item:Int){
+      _ =  model.remainders.remove(at: item)
     }
 }
 

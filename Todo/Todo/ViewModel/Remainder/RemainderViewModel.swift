@@ -7,6 +7,12 @@
 
 import Foundation
 
-class RemainderManager{
-
+class RemainderManager:ObservableObject{
+//    @Published var model:ListModel
+    @Published var Remainder:[RemainderModel] = []
+    
+    init(model: ListModel) {
+        
+    }
+    
 }

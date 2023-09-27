@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RemainderRow: View {
     @Binding var model: RemainderModel
-    var viewModel:ListModel
+    @Binding var viewModel:ListModel
     @State var isClicked:Bool = false
     @FocusState private var isItemFocused: Bool
 
@@ -17,7 +17,9 @@ struct RemainderRow: View {
         HStack(alignment: .top) {
             Button {
                 model.isComplete.toggle()
-                self.isItemFocused = false
+                self.isItemFocused.toggle()
+                viewModel.completedRemainders.append(RemainderModel(title: model.title, description: model.description, schedule: model.schedule,isComplete: true))
+        
                 
             } label: {
                 if model.isComplete {
@@ -139,6 +141,6 @@ struct RemainderRow: View {
 struct RemainderRow_Previews: PreviewProvider {
     static let vm = ListModel(name: "", image: "", color: "")
     static var previews: some View {
-        RemainderRow(model: .constant(RemainderModel(title: "", description: "", schedule: "")), viewModel: vm)
+        RemainderRow(model: .constant(RemainderModel(title: "", description: "", schedule: "")), viewModel: .constant(vm))
     }
 }
