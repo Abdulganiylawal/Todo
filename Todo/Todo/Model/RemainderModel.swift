@@ -11,6 +11,6 @@ struct RemainderModel:Identifiable {
     var id = UUID()
     var title:String
     var description:String
-//    let Schedule:Date
+    var schedule:String
     var isComplete = false
 }

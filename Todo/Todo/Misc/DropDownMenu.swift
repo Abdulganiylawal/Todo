@@ -32,9 +32,5 @@ struct DropdownMenu: View {
     }
 }
 
-struct DropDownMenu_Previews: PreviewProvider {
-    static let vm = ListModel(name: "", image: "", color: "")
-    static var previews: some View {
-        DropdownMenu(vm:vm)
-    }
-}
+
+

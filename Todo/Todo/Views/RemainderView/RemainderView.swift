@@ -8,34 +8,43 @@ import SwiftUI
 
 struct RemainderView: View {
     @Binding var model: ListModel
+    @State private var isPopoverVisible = false
+    
     @State private var isDropdownMenuVisible = false
 
     var body: some View {
         NavigationStack {
             VStack {
-                ForEach($model.remainders) { $remainder in
-                    RemainderRow(model: $remainder,  color: model.color)
-            }
-                .listStyle(.inset)
-                .padding([.trailing,.leading],20)
-                .padding([.bottom],10)
-                Spacer()
-                Button {
-                    model.remainders.append(RemainderModel(title: "", description: ""))
-                   
-                } label: {
-                    HStack {
-                        Image(systemName: "plus.circle.fill")
-                            .resizable()
-                            .foregroundColor(Color(hex: model.color))
-                            .frame(width: 20, height: 20)
-
-                        Text("New Todo")
-                            .fontWeight(.bold)
-                            .foregroundColor(Color(hex: model.color))
+                List{
+                    ForEach($model.remainders) { $remainder in
+                        RemainderRow(model: $remainder, viewModel: model)
                     }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.horizontal, 20)
+                    
+                    .padding([.bottom],10)
+                }
+                .listStyle(.inset)
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar{
+                ToolbarItemGroup(placement:.bottomBar) {
+                    Button {
+                        model.remainders.append(RemainderModel(title: "", description: "", schedule: ""))
+                    } label: {
+                        HStack {
+                            Image(systemName: "plus.circle.fill")
+                                .resizable()
+                                .foregroundColor(Color(hex: model.color))
+                                .frame(width: 20, height: 20)
+
+                            Text("New Todo")
+                                .fontWeight(.bold)
+                                .foregroundColor(Color(hex: model.color))
+                        }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding(.horizontal, 20)
+                    }
+                    Spacer()
+                    Spacer()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -56,6 +65,7 @@ struct RemainderView: View {
 }
 
 struct RemainderView_Previews: PreviewProvider {
+    
     static var previews: some View {
         RemainderView(model: .constant(ListModel(name: "law", image: "", color: "")))
     }
