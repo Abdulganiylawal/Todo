@@ -8,21 +8,19 @@
 import SwiftUI
 
 struct RemainderRow: View {
-    @Binding var model: RemainderModel
-    @Binding var viewModel:ListModel
+//    @Binding var model: RemainderModel
     @State var isClicked:Bool = false
+    @ObservedObject var ViewModel:RemainderManager
     @FocusState private var isItemFocused: Bool
 
     var body: some View {
         HStack(alignment: .top) {
             Button {
-                model.isComplete.toggle()
-                self.isItemFocused.toggle()
-                viewModel.completedRemainders.append(RemainderModel(title: model.title, description: model.description, schedule: model.schedule,isComplete: true))
-        
-                
+                ViewModel.remainder.isComplete.toggle()
+                isItemFocused.toggle()
+//                self.ViewModel.model.completedRemainders.append(RemainderModel(title: model.title, description: model.description, schedule: model.schedule,isComplete: true))
             } label: {
-                if model.isComplete {
+                if ViewModel.remainder.isComplete {
                     filledReminderLabel
                 } else {
                     emptyReminderLabel
@@ -33,19 +31,19 @@ struct RemainderRow: View {
             .buttonStyle(.plain)
             
             VStack(alignment:.leading){
-                TextField("New Reminder", text: $model.title)
-                    .foregroundColor(model.isComplete ? .secondary : .primary)
+                TextField("New Reminder", text: $ViewModel.remainder.title)
+                    .foregroundColor(ViewModel.remainder.isComplete ? .secondary : .primary)
                 if !isItemFocused{
-                    Text(model.schedule)
+                    Text(ViewModel.remainder.schedule)
                         .frame(alignment: .leading)
                 }
                 if isItemFocused {
-                    TextField("Add Note", text: $model.description)
-                        .foregroundColor(model.isComplete ? .secondary : .primary)
+                    TextField("Add Note", text: $ViewModel.remainder.description)
+                        .foregroundColor(ViewModel.remainder.isComplete ? .secondary : .primary)
                 }
                 if isItemFocused {
-                    TextField("", text: $model.schedule)
-                        .foregroundColor(model.isComplete ? .secondary : .primary)
+                    TextField("", text: $ViewModel.remainder.schedule)
+                        .foregroundColor(ViewModel.remainder.isComplete ? .secondary : .primary)
                 }
             }
             if isItemFocused {
@@ -53,7 +51,7 @@ struct RemainderRow: View {
             }
         }.sheet(isPresented: $isClicked, content: {
             NavigationStack{
-                calender(date: $model.schedule)
+                calender(date: $ViewModel.remainder.schedule)
             }
         })
         .onTapGesture {
@@ -70,7 +68,7 @@ struct RemainderRow: View {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy MM dd"
                     let todayDateString = dateFormatter.string(from: today)
-                    model.schedule = todayDateString
+                    ViewModel.remainder.schedule = todayDateString
                 } label: {
                     Label("Today", systemImage: "sun.max")
                 }
@@ -80,7 +78,7 @@ struct RemainderRow: View {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy MM dd"
                     let tomorrowDateString = dateFormatter.string(from: tomorrow)
-                    model.schedule = tomorrowDateString
+                    ViewModel.remainder.schedule = tomorrowDateString
                 } label: {
                     Label("Tomorrow", systemImage: "sunrise")
                 }
@@ -92,7 +90,7 @@ struct RemainderRow: View {
                 Divider()
                 
                 Button(role: .destructive) {
-                    model.schedule = ""
+                    ViewModel.remainder.schedule = ""
                 } label: {
                     Label("Remove Due Date", systemImage: "minus.circle")
                 }
@@ -105,20 +103,20 @@ struct RemainderRow: View {
             Image(systemName: "info.circle")
                 .resizable()
                 .frame(width: 20, height: 20)
-                .foregroundColor(Color(hex: viewModel.color))
+                .foregroundColor(Color(hex:ViewModel.model.color))
         }
         .frame(alignment: .leading)
     }
     
     var filledReminderLabel: some View {
         Circle()
-            .stroke(Color(hex: viewModel.color), lineWidth: 2)
+            .stroke(Color(hex: ViewModel.model.color), lineWidth: 2)
 
             .overlay(alignment: .center) {
                 GeometryReader { geo in
                     VStack {
                         Circle()
-                            .fill(Color(hex: viewModel.color))
+                            .fill(Color(hex: ViewModel.model.color))
                             .frame(width: geo.size.width*0.7, height: geo.size.height*0.7, alignment: .center)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -132,15 +130,9 @@ struct RemainderRow: View {
     
     var emptyReminderLabel: some View {
         Circle()
-            .stroke(Color(hex: viewModel.color))
+            .stroke(Color(hex: ViewModel.model.color))
 
     }
 
 }
 
-struct RemainderRow_Previews: PreviewProvider {
-    static let vm = ListModel(name: "", image: "", color: "")
-    static var previews: some View {
-        RemainderRow(model: .constant(RemainderModel(title: "", description: "", schedule: "")), viewModel: .constant(vm))
-    }
-}
