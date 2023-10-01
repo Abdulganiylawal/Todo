@@ -12,7 +12,7 @@ struct RemainderRow: View {
     var color:String
     @Binding var model:ListModel
     @State var isClicked:Bool = false
-    @FocusState private var isItemFocused: Bool
+    @FocusState var isItemFocused: Bool
 
     var body: some View {
         HStack(alignment: .top) {
@@ -20,8 +20,8 @@ struct RemainderRow: View {
                 withAnimation { 
                     remainder.isComplete.toggle()
                     isItemFocused.toggle()
-                    model.addCompletedRemainders(remainder)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    model.addCompletedRemainders([remainder])
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         withAnimation {
                             model.removeRemainder(remainder)
                         }
@@ -30,7 +30,6 @@ struct RemainderRow: View {
             } label: {
                 if remainder.isComplete {
                     filledReminderLabel
-                    
                 } else {
                     emptyReminderLabel
                 }
@@ -42,13 +41,17 @@ struct RemainderRow: View {
             VStack(alignment:.leading){
                 TextField("New Reminder", text: $remainder.title)
                     .foregroundColor(remainder.isComplete ? .secondary : .primary)
+       
                 if !isItemFocused{
                     Text(remainder.schedule)
                         .frame(alignment: .leading)
                 }
-               
+                
+                if isItemFocused{
                     TextField("Add Note", text: $remainder.description)
-                        .foregroundColor(remainder.isComplete ? .secondary : .primary)
+                            .foregroundColor(remainder.isComplete ? .secondary : .primary)
+                    
+                }
             
                 if isItemFocused {
                     TextField("", text: $remainder.schedule)
@@ -129,11 +132,7 @@ struct RemainderRow: View {
                             .frame(width: geo.size.width*0.7, height: geo.size.height*0.7, alignment: .center)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
-                    
                 }
-                
-                
             }
     }
     
@@ -145,3 +144,13 @@ struct RemainderRow: View {
 
 }
 
+
+//struct RemainderRow_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let reminder = RemainderModel(title: "Sample Reminder", description: "Description", schedule: "2023 10 01")
+//        let viewModel = ListModel(name: "Example List", image: "listIcon", color: "FF5733", remainders: [reminder])
+//        return RemainderRow(remainder: .constant(reminder), color: viewModel.color, model: .constant(viewModel))
+//            .previewLayout(.fixed(width: 300, height: 80)) 
+//            .padding()
+//    }
+//}

@@ -7,12 +7,10 @@
 
 import Foundation
 
-struct RemainderModel:Identifiable,Hashable{
+struct RemainderModel:Hashable{
     var id = UUID()
     var title:String
     var description:String
     var schedule:String
     var isComplete = false
-    
-
 }

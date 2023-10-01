@@ -26,7 +26,7 @@ struct Home: View {
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10,  trailing: 0))
                     Section{
-                        ForEach($model.myList) { $list in
+                        ForEach($model.myList,id:\.self.id) { $list in
                             NavigationLink {
                                 RemainderView(viewModel: $list)
                             } label: {
@@ -148,8 +148,8 @@ struct Home: View {
     
 }
 
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        Home()
-    }
+#Preview
+{
+   return Home()
+    
 }

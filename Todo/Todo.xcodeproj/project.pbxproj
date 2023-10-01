@@ -53,7 +53,6 @@
 		10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A742AC32A2C00193E93 /* RemainderView.swift */; };
 		10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A762AC32BFC00193E93 /* DropDownMenu.swift */; };
 		10D72A792AC34F8900193E93 /* RemainderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A782AC34F8900193E93 /* RemainderRow.swift */; };
-		10D72A7B2AC350D200193E93 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A7A2AC350D200193E93 /* SwiftUIView.swift */; };
 		10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E86D2AB9E74500E2359D /* TabModel.swift */; };
 		10E0E8712AB9EA1200E2359D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8702AB9EA1200E2359D /* Home.swift */; };
 		10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8722AB9EA1F00E2359D /* Settings.swift */; };
@@ -61,6 +60,7 @@
 		10E0E8772AB9EF5300E2359D /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8762AB9EF5300E2359D /* Tab.swift */; };
 		10E0E8792AB9F7F900E2359D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8782AB9F7F900E2359D /* MainView.swift */; };
 		10E0E87C2ABA0F0300E2359D /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E87B2ABA0F0300E2359D /* Styles.swift */; };
+		10F9A4F22AC9C50E005B5231 /* CompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F9A4F12AC9C50E005B5231 /* CompletedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,7 +113,6 @@
 		10D72A742AC32A2C00193E93 /* RemainderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderView.swift; sourceTree = "<group>"; };
 		10D72A762AC32BFC00193E93 /* DropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
 		10D72A782AC34F8900193E93 /* RemainderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderRow.swift; sourceTree = "<group>"; };
-		10D72A7A2AC350D200193E93 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		10E0E86D2AB9E74500E2359D /* TabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
 		10E0E8702AB9EA1200E2359D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		10E0E8722AB9EA1F00E2359D /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -121,6 +120,7 @@
 		10E0E8762AB9EF5300E2359D /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		10E0E8782AB9F7F900E2359D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		10E0E87B2ABA0F0300E2359D /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		10F9A4F12AC9C50E005B5231 /* CompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,8 +348,8 @@
 			isa = PBXGroup;
 			children = (
 				10D72A742AC32A2C00193E93 /* RemainderView.swift */,
-				10D72A7A2AC350D200193E93 /* SwiftUIView.swift */,
 				10D72A782AC34F8900193E93 /* RemainderRow.swift */,
+				10F9A4F12AC9C50E005B5231 /* CompletedView.swift */,
 			);
 			path = RemainderView;
 			sourceTree = "<group>";
@@ -448,7 +448,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					104ECFB12AB627390083B3D6 = {
 						CreatedOnToolsVersion = 14.2;
@@ -542,10 +542,10 @@
 				1050F2292AB8A14D001EA255 /* SignIn.swift in Sources */,
 				10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */,
 				107075762AC1C44600793E13 /* AddList.swift in Sources */,
+				10F9A4F22AC9C50E005B5231 /* CompletedView.swift in Sources */,
 				1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */,
 				10D72A792AC34F8900193E93 /* RemainderRow.swift in Sources */,
 				10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */,
-				10D72A7B2AC350D200193E93 /* SwiftUIView.swift in Sources */,
 				10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */,
 				1050F22D2AB8A173001EA255 /* AuthView.swift in Sources */,
 				10CE85CC2AC44D6F0086C8DA /* Calender.swift in Sources */,
@@ -621,6 +621,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -681,6 +682,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

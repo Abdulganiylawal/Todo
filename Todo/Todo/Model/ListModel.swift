@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct ListModel:Identifiable{
+struct ListModel:Hashable{
     var id = UUID()
     let name:String
     let image:String
@@ -17,28 +17,42 @@ struct ListModel:Identifiable{
     var completedRemainders:[RemainderModel] = []
     
     mutating func addRemainder(){
-        remainders.append(RemainderModel(title: "", description: "", schedule: ""))
+        remainders.append(RemainderModel(id: UUID(), title: "", description: "", schedule: "", isComplete: false))
+        print(remainders)
     }
     
-    mutating func addCompletedRemainders(_ remainder: RemainderModel) {
-        completedRemainders.append(remainder)
+    mutating func addCompletedRemainders(_ remaindersToAdd: [RemainderModel]) {
+        completedRemainders.append(contentsOf: remaindersToAdd)
     }
+    
     
     mutating func removeRemainder(_ remainder: RemainderModel) {
-        if let index = remainders.firstIndex(where: { $0.id == remainder.id }),
-            remainders.indices.contains(index) {
-            print(index)
+        
+        
+        //        print(remainder)
+        var indicesToRemove: [Int] = []
+            
+        for (index, element) in remainders.enumerated() {
+            if element.id == remainder.id {
+                indicesToRemove.append(index)
+                print(index,element)
+            }
+            
+        }
+        
+        for index in indicesToRemove {
             if let element = remainders[safe: index] {
                 print("Removing: \(element)")
                 remainders.remove(at: index)
             } else {
-                print("Index out of range.")
+                print("Index \(index) out of range.")
             }
-        } else {
-            print("Remainder not found in the list.")
         }
+//        print(remainders)
     }
 
+    
+    
 }
 
 extension Collection where Indices.Iterator.Element == Index {
@@ -46,4 +60,3 @@ extension Collection where Indices.Iterator.Element == Index {
         return indices.contains(index) ? self[index] : nil
     }
 }
-
