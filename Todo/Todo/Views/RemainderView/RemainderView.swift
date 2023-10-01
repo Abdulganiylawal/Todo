@@ -7,28 +7,24 @@
 import SwiftUI
 
 struct RemainderView: View {
-//    var model: ListModel
+    @Binding var viewModel: ListModel
     @State private var isPopoverVisible = false
     @State private var isDropdownMenuVisible = false
-    @StateObject var viewModel:RemainderManager
     
-    init(model:ListModel){
-        _viewModel = StateObject(wrappedValue: RemainderManager(model: model))
-    }
     
     var body: some View {
         NavigationStack {
             VStack {
                 List{
-                    ForEach(Array(zip(self.viewModel.model.remainders.indices, self.viewModel.model.remainders)),id: \.0) { index , _ in
-                        RemainderRow(ViewModel: viewModel)
+                    ForEach(Array(zip($viewModel.remainders.indices, $viewModel.remainders)),id: \.0) { index , $remainder in
+                        RemainderRow(remainder: $remainder, color: viewModel.color, model: $viewModel)
                             .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
                                 Button(role: .destructive) {
-                                   delete(item: index)
+                                    delete(item: index)
                                 } label: {
                                     Label("Delete", systemImage: "xmark.bin")
                                 }
-
+                                
                             })
                     }
                     .padding([.bottom],10)
@@ -39,17 +35,18 @@ struct RemainderView: View {
             .toolbar{
                 ToolbarItemGroup(placement:.bottomBar) {
                     Button {
-                        viewModel.model.remainders.append(RemainderModel(title: "", description: "", schedule: ""))
+//                        viewModel.remainders.append(RemainderModel(title: "", description: "", schedule: ""))
+                          viewModel.addRemainder()
                     } label: {
                         HStack {
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
-                                .foregroundColor(Color(hex: viewModel.model.color))
+                                .foregroundColor(Color(hex: viewModel.color))
                                 .frame(width: 20, height: 20)
-
+                            
                             Text("New Todo")
                                 .fontWeight(.bold)
-                                .foregroundColor(Color(hex: viewModel.model.color))
+                                .foregroundColor(Color(hex: viewModel.color))
                         }
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.horizontal, 20)
@@ -60,29 +57,27 @@ struct RemainderView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(
-                Text(viewModel.model.remainders.isEmpty ? "Empty" : "")
+                Text(viewModel.remainders.isEmpty ? "Empty" : "")
             )
-        }
-        .toolbar{
+        }.toolbar(content: {
             ToolbarItem(placement: .principal) {
-                Text(viewModel.model.name)
-                    .foregroundColor(Color(hex: viewModel.model.color)
-            )}
-            ToolbarItem {
-                DropdownMenu(vm:viewModel.model )
+                Text(viewModel.name)
+                    .foregroundColor(Color(hex: viewModel.color))
             }
-            ToolbarItem{
-                Button {
-                    viewModel.saveRemainder()
-                } label: {
-                    "Done"
+            ToolbarItem(placement: .navigationBarTrailing) {
+                DropdownMenu(vm: viewModel)
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    // Handle the button action here
+                }) {
+                    Text("Done")
                 }
-                
             }
-        }
+        })
     }
     func delete(item:Int){
-//      _ =  v.remainders.remove(at: item)
+        _ =  viewModel.remainders.remove(at: item)
     }
 }
 

@@ -33,8 +33,6 @@ class ListViewManger:ObservableObject{
                 return value.count >= 1
             }.eraseToAnyPublisher()
     }()
-    
-    
 }
 
 let popularColors: [String] = [

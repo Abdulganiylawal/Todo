@@ -26,9 +26,9 @@ struct Home: View {
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10,  trailing: 0))
                     Section{
-                        ForEach(model.myList) { list in
+                        ForEach($model.myList) { $list in
                             NavigationLink {
-                                RemainderView(model: list)
+                                RemainderView(viewModel: $list)
                             } label: {
                                 HStack{
                                     Image(systemName: list.image)
