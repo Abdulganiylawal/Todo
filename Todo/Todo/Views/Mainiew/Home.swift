@@ -39,7 +39,6 @@ struct Home: View {
                                 }
                             }
                             .listRowInsets(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 15))
-                            
                         }
                         
                     }header: {

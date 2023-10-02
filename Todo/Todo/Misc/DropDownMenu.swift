@@ -21,10 +21,12 @@ struct DropdownMenu: View {
             })
         } label: {
             Image(systemName: "ellipsis.circle")
+                .foregroundColor(Color(hex: model.color))
 
         }.sheet(isPresented: $isClicked, content: {
-            CompletedView(model: model)
-                
+            NavigationStack{
+                CompletedView(model: model)
+            }
         })
     }
 }

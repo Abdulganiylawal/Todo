@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CompletedView: View {
     var model:ListModel
-
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationStack{
@@ -21,18 +21,22 @@ struct CompletedView: View {
                             .frame(width: 20, height: 20)
                         VStack(alignment:.leading){
                             Text("\(remainder.title)")
-                                .foregroundColor( .secondary )
+//                                .foregroundColor(Color(hex: model.color))
+                            
                             Text("\(remainder.description)")
-                                .foregroundColor( .secondary )
+//                                .foregroundColor(Color(hex: model.color))
+                            
                             Text("\(remainder.schedule)")
-                                .foregroundColor( .secondary )
+//                                .foregroundColor(Color(hex: model.color))
                         }
                     }
                     
                 }
             }
-    
+            
         }
+     
+        
     }
     
     var filledReminderLabel: some View {

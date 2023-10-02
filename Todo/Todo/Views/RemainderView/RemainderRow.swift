@@ -12,32 +12,42 @@ struct RemainderRow: View {
     var color:String
     @Binding var model:ListModel
     @State var isClicked:Bool = false
-    @FocusState var isItemFocused: Bool
-
+    @FocusState var isItemFocused: Int?
+    @FocusState  var isFocused: Bool
+    
     var body: some View {
+        
         HStack(alignment: .top) {
-
-            VStack(alignment:.leading){
+            VStack(alignment: .leading) {
                 TextField("New Reminder", text: $remainder.title)
                     .foregroundColor(remainder.isComplete ? .secondary : .primary)
-       
-                if !isItemFocused{
+                    .focused($isFocused, equals: true)
+//                    .focused($isItemFocused, equals: 0)
+//                    .onTapGesture {
+//                        isItemFocused = 0
+//                    }
+                
+                TextField("Add Note", text: $remainder.description)
+                    .foregroundColor(remainder.isComplete ? .secondary : .primary)
+                    .focused($isFocused, equals: true)
+//                    .focused($isItemFocused, equals: 1)
+//                    .onTapGesture {
+//                        isItemFocused = 1
+//                    }
+                
+                if  !remainder.schedule.isEmpty && !isFocused {
                     Text(remainder.schedule)
                         .frame(alignment: .leading)
                 }
                 
-                if isItemFocused{
-                    TextField("Add Note", text: $remainder.description)
-                            .foregroundColor(remainder.isComplete ? .secondary : .primary)
-                    
-                }
-            
-                if isItemFocused {
+                if !remainder.schedule.isEmpty  && isFocused {
                     TextField("", text: $remainder.schedule)
                         .foregroundColor(remainder.isComplete ? .secondary : .primary)
+                     
                 }
             }
-            if isItemFocused {
+            
+            if isFocused{
                 infoMenu
             }
         }.sheet(isPresented: $isClicked, content: {
@@ -45,12 +55,8 @@ struct RemainderRow: View {
                 calender(date: $remainder.schedule)
             }
         })
-        .onTapGesture {
-            isItemFocused = true
-        }
-        .focused($isItemFocused, equals: true)
     }
-
+    
     var infoMenu:some View{
         Menu {
             Menu {
@@ -74,7 +80,7 @@ struct RemainderRow: View {
                     Label("Tomorrow", systemImage: "sunrise")
                 }
                 Button {
-                    isClicked.toggle()
+                    isClicked = true
                 } label: {
                     Label("Pick a Date", systemImage: "calendar.badge.clock")
                 }
@@ -85,11 +91,11 @@ struct RemainderRow: View {
                 } label: {
                     Label("Remove Due Date", systemImage: "minus.circle")
                 }
-
+                
             } label: {
                 Label("Due Date", systemImage: "calendar")
             }
-
+            
         } label: {
             Image(systemName: "info.circle")
                 .resizable()
@@ -99,6 +105,8 @@ struct RemainderRow: View {
         .frame(alignment: .leading)
     }
 }
+
+
 
 // MARK: - Commented Codes Will Come Back Later
 
@@ -151,7 +159,7 @@ struct RemainderRow: View {
 //        let reminder = RemainderModel(title: "Sample Reminder", description: "Description", schedule: "2023 10 01")
 //        let viewModel = ListModel(name: "Example List", image: "listIcon", color: "FF5733", remainders: [reminder])
 //        return RemainderRow(remainder: .constant(reminder), color: viewModel.color, model: .constant(viewModel))
-//            .previewLayout(.fixed(width: 300, height: 80)) 
+//            .previewLayout(.fixed(width: 300, height: 80))
 //            .padding()
 //    }
 //}

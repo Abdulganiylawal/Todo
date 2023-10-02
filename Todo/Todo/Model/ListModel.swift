@@ -19,7 +19,6 @@ struct ListModel:Hashable,Identifiable{
     
     mutating func addRemainder(){
         remainders.append(RemainderModel(title: "", description: "", schedule: "", isComplete: false))
-//        print(remainders)
     }
     
     mutating func addCompletedRemainders(item: Int) {

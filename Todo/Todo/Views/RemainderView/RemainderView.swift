@@ -35,14 +35,18 @@ struct RemainderView: View {
                                         viewModel.addCompletedRemainders(item: index)
                                     }
                                 } label: {
-                                    Label("Complete", systemImage: "checkmark")
-//                                        .foregroundColor(Color(hex: viewModel.color))
+                                   
+                                    Image(systemName: "checkmark")
+                                       
+                                      
                                 }
                             }
-                            .focused($isItemFocused)
+                           
                     }
+                    .focused($isItemFocused,equals: true)
+                    .listStyle(.plain)
                     .padding([.bottom], 10)
-                    .listStyle(.inset)
+                    
                     
                 }
                 .navigationBarTitleDisplayMode(.inline)
@@ -51,6 +55,9 @@ struct RemainderView: View {
                         Button {
                             
                             viewModel.addRemainder()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                 isItemFocused = true
+                             }
                         } label: {
                             HStack {
                                 Image(systemName: "plus.circle.fill")
@@ -84,20 +91,25 @@ struct RemainderView: View {
                 }
                 ToolbarItem {
                     if isItemFocused {
-                        withAnimation {
-                            HStack {
-                                Button("Done") {
-                                    isItemFocused.toggle()
-                                }
+                        Button(action: {
+                            withAnimation {
+                                isItemFocused.toggle()
                             }
+                        }) {
+                            Text("Done")
+                                .foregroundColor(Color(hex: viewModel.color))
                         }
                     }
                 }
             })
+
             
         }
     }
 }
+
+
+
     
     
     //#Preview{
