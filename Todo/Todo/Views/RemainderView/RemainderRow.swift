@@ -16,28 +16,7 @@ struct RemainderRow: View {
 
     var body: some View {
         HStack(alignment: .top) {
-            Button {
-                withAnimation { 
-                    remainder.isComplete.toggle()
-                    isItemFocused.toggle()
-                    model.addCompletedRemainders([remainder])
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        withAnimation {
-                            model.removeRemainder(remainder)
-                        }
-                    }
-                }
-            } label: {
-                if remainder.isComplete {
-                    filledReminderLabel
-                } else {
-                    emptyReminderLabel
-                }
-            }
-            .frame(width: 20, height: 20)
-            .buttonStyle(.plain)
 
-            
             VStack(alignment:.leading){
                 TextField("New Reminder", text: $remainder.title)
                     .foregroundColor(remainder.isComplete ? .secondary : .primary)
@@ -119,31 +98,53 @@ struct RemainderRow: View {
         }
         .frame(alignment: .leading)
     }
-    
-    var filledReminderLabel: some View {
-        Circle()
-            .stroke(Color(hex: color), lineWidth: 2)
-
-            .overlay(alignment: .center) {
-                GeometryReader { geo in
-                    VStack {
-                        Circle()
-                            .fill(Color(hex: color))
-                            .frame(width: geo.size.width*0.7, height: geo.size.height*0.7, alignment: .center)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-            }
-    }
-    
-    var emptyReminderLabel: some View {
-        Circle()
-            .stroke(Color(hex: color))
-
-    }
-
 }
 
+// MARK: - Commented Codes Will Come Back Later
+
+//            Button {
+//                withAnimation {
+//                    remainder.isComplete.toggle()
+//                    isItemFocused.toggle()
+//                    model.addCompletedRemainders([remainder])
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                        withAnimation {
+//                            model.removeRemainder(withID: remainder.id)
+//                        }
+//                    }
+//                }
+//            } label: {
+//                if remainder.isComplete {
+//                    filledReminderLabel
+//                } else {
+//                    emptyReminderLabel
+//                }
+//            }
+//            .frame(width: 20, height: 20)
+//            .buttonStyle(.plain)
+
+//var filledReminderLabel: some View {
+//    Circle()
+//        .stroke(Color(hex: color), lineWidth: 2)
+//
+//        .overlay(alignment: .center) {
+//            GeometryReader { geo in
+//                VStack {
+//                    Circle()
+//                        .fill(Color(hex: color))
+//                        .frame(width: geo.size.width*0.7, height: geo.size.height*0.7, alignment: .center)
+//                }
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//            }
+//        }
+//}
+//
+//var emptyReminderLabel: some View {
+//    Circle()
+//        .stroke(Color(hex: color))
+//
+//}
+//
 
 //struct RemainderRow_Previews: PreviewProvider {
 //    static var previews: some View {
