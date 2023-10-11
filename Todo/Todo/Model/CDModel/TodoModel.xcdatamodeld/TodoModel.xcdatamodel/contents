@@ -1,2 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier=""/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDList" representedClassName="CDList" syncable="YES" codeGenerationType="class">
+        <attribute name="color_" optional="YES" attributeType="String"/>
+        <attribute name="id_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image_" optional="YES" attributeType="String"/>
+        <attribute name="name_" optional="YES" attributeType="String"/>
+        <relationship name="remainders_" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDRemainder" inverseName="list_" inverseEntity="CDRemainder"/>
+    </entity>
+    <entity name="CDRemainder" representedClassName="CDRemainder" syncable="YES" codeGenerationType="class">
+        <attribute name="id_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="iscomplete_" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="notes_" optional="YES" attributeType="String"/>
+        <attribute name="schedule_" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title_" optional="YES" attributeType="String"/>
+        <relationship name="list_" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDList" inverseName="remainders_" inverseEntity="CDList"/>
+    </entity>
+</model>

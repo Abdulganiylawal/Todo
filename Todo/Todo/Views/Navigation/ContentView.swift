@@ -12,6 +12,7 @@ import FirebaseCore
 
 struct ContentView: View {
     private let model = AuthenticationManager()
+    public var context:NSManagedObjectContext
     @AppStorage("showAuthView") private var showAuthView = false
     
     var body: some View {
@@ -19,7 +20,7 @@ struct ContentView: View {
                  if showAuthView {
                      Authiew()
                  } else {
-                     MainView()
+                     MainView(context:context)
                  }
         }.onAppear {
             showAuthView = Auth.auth().currentUser?.uid == nil
@@ -31,6 +32,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(context: PersistenceController.shared.container.viewContext)
     }
 }

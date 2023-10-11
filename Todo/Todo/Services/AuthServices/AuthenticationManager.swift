@@ -24,6 +24,7 @@ final class AuthenticationManager{
             }
         }
     }
+    
     func signIn(email:String,pass:String) -> Future<UserAuthModel,Error> {
         return Future<UserAuthModel,Error>{ [weak self]
             promise in

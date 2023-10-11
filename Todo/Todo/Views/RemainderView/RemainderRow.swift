@@ -10,9 +10,7 @@ import SwiftUI
 struct RemainderRow: View {
     @Binding var remainder: RemainderModel
     var color:String
-    @Binding var model:ListModel
     @State var isClicked:Bool = false
-    @FocusState var isItemFocused: Int?
     @FocusState  var isFocused: Bool
     
     var body: some View {
@@ -22,18 +20,12 @@ struct RemainderRow: View {
                 TextField("New Reminder", text: $remainder.title)
                     .foregroundColor(remainder.isComplete ? .secondary : .primary)
                     .focused($isFocused, equals: true)
-//                    .focused($isItemFocused, equals: 0)
-//                    .onTapGesture {
-//                        isItemFocused = 0
-//                    }
+
                 
                 TextField("Add Note", text: $remainder.description)
                     .foregroundColor(remainder.isComplete ? .secondary : .primary)
                     .focused($isFocused, equals: true)
-//                    .focused($isItemFocused, equals: 1)
-//                    .onTapGesture {
-//                        isItemFocused = 1
-//                    }
+
                 
                 if  !remainder.schedule.isEmpty && !isFocused {
                     Text(remainder.schedule)
@@ -80,7 +72,7 @@ struct RemainderRow: View {
                     Label("Tomorrow", systemImage: "sunrise")
                 }
                 Button {
-                    isClicked = true
+                    isClicked.toggle()
                 } label: {
                     Label("Pick a Date", systemImage: "calendar.badge.clock")
                 }

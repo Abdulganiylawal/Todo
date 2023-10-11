@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
-
+import CoreData
 struct Home: View {
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var model = ListViewManger()
+    @StateObject var model:ListViewManger
+    
+    init(context:NSManagedObjectContext){
+        _model = StateObject(wrappedValue: ListViewManger(context: context))
+    }
+    
     @State var isClicked: Bool = false
     var body: some View {
         NavigationStack{
@@ -26,9 +31,9 @@ struct Home: View {
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10,  trailing: 0))
                     Section{
-                        ForEach($model.myList,id:\.self.id) { $list in
+                        ForEach(model.myList,id:\.self.id) { list in
                             NavigationLink {
-                                RemainderView(viewModel: $list)
+//                                RemainderView(viewModel: $list)
                             } label: {
                                 HStack{
                                     Image(systemName: list.image)
@@ -39,6 +44,13 @@ struct Home: View {
                                 }
                             }
                             .listRowInsets(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 15))
+                            .swipeActions(allowsFullSwipe:true) {
+                                Button(role: .destructive) {
+                                    model.delete(list: list)
+                                } label: {
+                                    Label("Delete", systemImage: "bin.xmark")
+                                }
+                            }
                         }
                         
                     }header: {
@@ -65,6 +77,8 @@ struct Home: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(hex: colorScheme == .dark ? "000000" : "C4C1A4"))
+        }.onAppear {
+            model.fetchList()
         }
 
     }
@@ -149,6 +163,6 @@ struct Home: View {
 
 #Preview
 {
-   return Home()
+    return Home(context: PersistenceController.shared.container.viewContext)
     
 }

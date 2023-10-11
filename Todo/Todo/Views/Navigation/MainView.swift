@@ -6,16 +6,21 @@
 //
 
 import SwiftUI
-
+import CoreData
 struct MainView: View {
     @AppStorage("SelectedTab") var selectedTab:TabItems = .home
     private var data = AuthenticationManager()
+    public var context:NSManagedObjectContext
+    init(context:NSManagedObjectContext){
+        self.context  = context
+    }
+    
     var body: some View {
         ZStack{
             Group {
                 switch selectedTab {
                 case .home:
-                    Home()
+                    Home(context: context)
                 case .search:
                     Search()
                 case .settings:
@@ -31,6 +36,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(context: PersistenceController.shared.container.viewContext)
     }
 }

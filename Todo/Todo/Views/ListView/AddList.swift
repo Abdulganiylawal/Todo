@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreData
 
 struct AddList: View {
     let itemsPerRow = 6
@@ -8,11 +9,13 @@ struct AddList: View {
     init(manager: ListViewManger){
         self._model = ObservedObject(wrappedValue: manager)
     }
+    
     @State var color: String? = "D83F31"
     @State var icon: String? = "list.bullet"
     @State var name:String = ""
     
     var colorGrid: some View {
+        
         VStack(spacing: 16) {
             ForEach(0..<popularColors.count, id: \.self) { index in
                 if index % itemsPerRow == 0 {
@@ -160,8 +163,10 @@ struct ColorCapsule: View {
 }
 
 struct AddList_Previews: PreviewProvider {
+    
     static var previews: some View {
-        let model = ListViewManger()
+        let model = ListViewManger(context: PersistenceController.shared.container.viewContext)
+            
         AddList(manager: model)
     }
 }

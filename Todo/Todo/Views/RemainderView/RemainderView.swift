@@ -8,56 +8,25 @@ import SwiftUI
 
 struct RemainderView: View {
     @Binding var viewModel: ListModel
-    @State private var isPopoverVisible = false
-    @State private var isDropdownMenuVisible = false
     @FocusState  var isItemFocused: Bool
-    @State var index:Int = 0
-    
     
     var body: some View {
         NavigationStack {
             VStack {
                 List{
-                    ForEach($viewModel.remainders, id: \.self.id) { $remainder in
-                        RemainderRow(remainder: $remainder, color: viewModel.color, model: $viewModel)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    if let index = viewModel.remainders.firstIndex(where: { $0.id == remainder.id }) {
-                                        viewModel.delete(item: index)
-                                    }
-                                } label: {
-                                    Label("Delete", systemImage: "xmark.bin")
-                                }
-                            }
-                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                                Button {
-                                    if let index = viewModel.remainders.firstIndex(where: { $0.id == remainder.id }) {
-                                        viewModel.addCompletedRemainders(item: index)
-                                    }
-                                } label: {
-                                   
-                                    Image(systemName: "checkmark")
-                                       
-                                      
-                                }
-                            }
-                           
-                    }
-                    .focused($isItemFocused,equals: true)
-                    .listStyle(.plain)
-                    .padding([.bottom], 10)
-                    
-                    
+                    remainder
+                        .focused($isItemFocused,equals: true)
+                        .listStyle(.plain)
+                        .padding([.bottom], 10)
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar{
                     ToolbarItemGroup(placement:.bottomBar) {
                         Button {
-                            
                             viewModel.addRemainder()
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                 isItemFocused = true
-                             }
+                                isItemFocused = true
+                            }
                         } label: {
                             HStack {
                                 Image(systemName: "plus.circle.fill")
@@ -102,7 +71,36 @@ struct RemainderView: View {
                     }
                 }
             })
-
+            
+            
+        }
+    }
+    
+    // MARK: -  Remainder Loop
+    var remainder: some View{
+        ForEach($viewModel.remainders, id: \.self.id) { $remainder in
+            RemainderRow(remainder: $remainder, color: viewModel.color)
+                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                    Button(role: .destructive) {
+                        if let index = viewModel.remainders.firstIndex(where: { $0.id == remainder.id }) {
+                            viewModel.delete(item: index)
+                        }
+                    } label: {
+                        Label("Delete", systemImage: "xmark.bin")
+                    }
+                }
+                .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                    Button {
+                        if let index = viewModel.remainders.firstIndex(where: { $0.id == remainder.id }) {
+                            viewModel.addCompletedRemainders(item: index)
+                        }
+                    } label: {
+                        
+                        Image(systemName: "checkmark")
+                        
+                        
+                    }
+                }
             
         }
     }
@@ -110,10 +108,10 @@ struct RemainderView: View {
 
 
 
-    
-    
-    //#Preview{
-    //        let viewModel = ListModel(name: "Example List", image: "listIcon", color: "FF5733")
-    //    return RemainderView(viewModel: .constant(viewModel),isItemFocused:)
-    //}
+
+
+//#Preview{
+//        let viewModel = ListModel(name: "Example List", image: "listIcon", color: "FF5733")
+//    return RemainderView(viewModel: .constant(viewModel),isItemFocused:)
+//}
 

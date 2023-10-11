@@ -36,7 +36,7 @@ struct SignIn: View {
                 }.frame(maxWidth: .infinity, alignment: .center)
             } .fullScreenCover(isPresented: $ViewModel.success) {
                 NavigationStack{
-                    MainView()
+                    MainView(context: PersistenceController.shared.container.viewContext)
                 }
             }
             .alert("Authentication Error", isPresented: $ViewModel.isError, actions: {

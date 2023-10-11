@@ -43,13 +43,18 @@
 		1050F2412AB8CB01001EA255 /* CombineFirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 1050F2402AB8CB01001EA255 /* CombineFirebaseRemoteConfig */; };
 		1050F2432AB8CB01001EA255 /* CombineFirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1050F2422AB8CB01001EA255 /* CombineFirebaseStorage */; };
 		1050F2452AB8E83D001EA255 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1050F2442AB8E83D001EA255 /* TabBar.swift */; };
+		1051EEB12AD6D9EA00B3C30B /* TodoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1051EEAF2AD6D9EA00B3C30B /* TodoModel.xcdatamodeld */; };
+		1051EEB32AD6DC4A00B3C30B /* CDList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1051EEB22AD6DC4A00B3C30B /* CDList.swift */; };
+		1051EEB52AD6DC5200B3C30B /* CDRemainders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1051EEB42AD6DC5200B3C30B /* CDRemainders.swift */; };
+		1051EEB72AD6E77B00B3C30B /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1051EEB62AD6E77B00B3C30B /* PersistenceController.swift */; };
+		1051EEB92AD6F1E700B3C30B /* Predicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1051EEB82AD6F1E700B3C30B /* Predicate.swift */; };
+		1051EEBB2AD705D000B3C30B /* RemainderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1051EEBA2AD705D000B3C30B /* RemainderModel.swift */; };
 		107075732AC1B8FF00793E13 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075722AC1B8FF00793E13 /* Global.swift */; };
 		107075762AC1C44600793E13 /* AddList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075752AC1C44600793E13 /* AddList.swift */; };
 		107075782AC1C47E00793E13 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075772AC1C47E00793E13 /* ListModel.swift */; };
 		1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070757A2AC1C50700793E13 /* ListViewModel.swift */; };
 		10CE85CC2AC44D6F0086C8DA /* Calender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CE85CB2AC44D6F0086C8DA /* Calender.swift */; };
 		10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */; };
-		10D72A722AC322C800193E93 /* RemainderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A712AC322C800193E93 /* RemainderModel.swift */; };
 		10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A742AC32A2C00193E93 /* RemainderView.swift */; };
 		10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A762AC32BFC00193E93 /* DropDownMenu.swift */; };
 		10D72A792AC34F8900193E93 /* RemainderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A782AC34F8900193E93 /* RemainderRow.swift */; };
@@ -103,13 +108,18 @@
 		1050F2312AB8B2F5001EA255 /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		1050F2332AB8B862001EA255 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		1050F2442AB8E83D001EA255 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		1051EEB02AD6D9EA00B3C30B /* TodoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodoModel.xcdatamodel; sourceTree = "<group>"; };
+		1051EEB22AD6DC4A00B3C30B /* CDList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDList.swift; sourceTree = "<group>"; };
+		1051EEB42AD6DC5200B3C30B /* CDRemainders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDRemainders.swift; sourceTree = "<group>"; };
+		1051EEB62AD6E77B00B3C30B /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		1051EEB82AD6F1E700B3C30B /* Predicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predicate.swift; sourceTree = "<group>"; };
+		1051EEBA2AD705D000B3C30B /* RemainderModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemainderModel.swift; sourceTree = "<group>"; };
 		107075722AC1B8FF00793E13 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		107075752AC1C44600793E13 /* AddList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddList.swift; sourceTree = "<group>"; };
 		107075772AC1C47E00793E13 /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		1070757A2AC1C50700793E13 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		10CE85CB2AC44D6F0086C8DA /* Calender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calender.swift; sourceTree = "<group>"; };
 		10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderViewModel.swift; sourceTree = "<group>"; };
-		10D72A712AC322C800193E93 /* RemainderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderModel.swift; sourceTree = "<group>"; };
 		10D72A742AC32A2C00193E93 /* RemainderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderView.swift; sourceTree = "<group>"; };
 		10D72A762AC32BFC00193E93 /* DropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
 		10D72A782AC34F8900193E93 /* RemainderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderRow.swift; sourceTree = "<group>"; };
@@ -233,10 +243,10 @@
 		104ECFE52AB627B20083B3D6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1051EEAE2AD6D9CF00B3C30B /* CDModel */,
 				104ECFEC2AB6288A0083B3D6 /* AuthModel.swift */,
 				10E0E86D2AB9E74500E2359D /* TabModel.swift */,
 				107075772AC1C47E00793E13 /* ListModel.swift */,
-				10D72A712AC322C800193E93 /* RemainderModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -318,6 +328,19 @@
 				10CE85CB2AC44D6F0086C8DA /* Calender.swift */,
 			);
 			path = Misc;
+			sourceTree = "<group>";
+		};
+		1051EEAE2AD6D9CF00B3C30B /* CDModel */ = {
+			isa = PBXGroup;
+			children = (
+				1051EEAF2AD6D9EA00B3C30B /* TodoModel.xcdatamodeld */,
+				1051EEB22AD6DC4A00B3C30B /* CDList.swift */,
+				1051EEB42AD6DC5200B3C30B /* CDRemainders.swift */,
+				1051EEB62AD6E77B00B3C30B /* PersistenceController.swift */,
+				1051EEB82AD6F1E700B3C30B /* Predicate.swift */,
+				1051EEBA2AD705D000B3C30B /* RemainderModel.swift */,
+			);
+			path = CDModel;
 			sourceTree = "<group>";
 		};
 		107075742AC1C43200793E13 /* ListView */ = {
@@ -521,18 +544,20 @@
 			files = (
 				104ECFBF2AB6273C0083B3D6 /* Persistence.swift in Sources */,
 				10E0E8792AB9F7F900E2359D /* MainView.swift in Sources */,
+				1051EEB92AD6F1E700B3C30B /* Predicate.swift in Sources */,
 				10E0E8772AB9EF5300E2359D /* Tab.swift in Sources */,
 				104ECFF02AB628E50083B3D6 /* AuthViewModel.swift in Sources */,
 				1050F2342AB8B862001EA255 /* AuthenticationManager.swift in Sources */,
 				1050F2452AB8E83D001EA255 /* TabBar.swift in Sources */,
+				1051EEBB2AD705D000B3C30B /* RemainderModel.swift in Sources */,
 				104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */,
 				1050F2322AB8B2F5001EA255 /* PasswordField.swift in Sources */,
 				107075732AC1B8FF00793E13 /* Global.swift in Sources */,
 				107075782AC1C47E00793E13 /* ListModel.swift in Sources */,
+				1051EEB32AD6DC4A00B3C30B /* CDList.swift in Sources */,
 				10E0E8712AB9EA1200E2359D /* Home.swift in Sources */,
 				10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */,
 				104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */,
-				10D72A722AC322C800193E93 /* RemainderModel.swift in Sources */,
 				104ECFC22AB6273C0083B3D6 /* Todo.xcdatamodeld in Sources */,
 				10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */,
 				104ECFED2AB6288A0083B3D6 /* AuthModel.swift in Sources */,
@@ -544,6 +569,9 @@
 				107075762AC1C44600793E13 /* AddList.swift in Sources */,
 				10F9A4F22AC9C50E005B5231 /* CompletedView.swift in Sources */,
 				1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */,
+				1051EEB52AD6DC5200B3C30B /* CDRemainders.swift in Sources */,
+				1051EEB72AD6E77B00B3C30B /* PersistenceController.swift in Sources */,
+				1051EEB12AD6D9EA00B3C30B /* TodoModel.xcdatamodeld in Sources */,
 				10D72A792AC34F8900193E93 /* RemainderRow.swift in Sources */,
 				10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */,
 				10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */,
@@ -1000,6 +1028,16 @@
 			);
 			currentVersion = 104ECFC12AB6273C0083B3D6 /* Todo.xcdatamodel */;
 			path = Todo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		1051EEAF2AD6D9EA00B3C30B /* TodoModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1051EEB02AD6D9EA00B3C30B /* TodoModel.xcdatamodel */,
+			);
+			currentVersion = 1051EEB02AD6D9EA00B3C30B /* TodoModel.xcdatamodel */;
+			path = TodoModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

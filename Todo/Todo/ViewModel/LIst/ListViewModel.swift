@@ -9,20 +9,42 @@ import Foundation
 import UIKit
 import SwiftUI
 import Combine
+import CoreData
 
 class ListViewManger:ObservableObject{
-    @Published var myList = [ListModel]()
+    @Published var myList = [CDList]()
     @Published var title = ""
     @Published var isEnabled: Bool = false
+    var context:NSManagedObjectContext
     var imageName:String = ""
     var colorName:String = ""
 
     func addList(name:String,image:String,color:String){
-        myList.append(ListModel(name: name, image: image, color: color))
+        myList.append(CDList(name: name, color: color, image: image, context: context))
     }
     
+
+    func fetchList() {
+        let request = CDList.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDList.name_, ascending: true)]
+        request.predicate = NSPredicate.all
+        do{
+          let result =  try context.fetch(request)
+          myList = result
+        }catch{
+            print("\(error)")
+        }
+       
+    }
+    
+    func delete(list:CDList){
+        guard let context = list.managedObjectContext else{return}
+        
+        context.delete(list)
+    }
    
-    init(){
+    init(context: NSManagedObjectContext){
+        self.context = context
         isClickable
             .assign(to: &$isEnabled)
     }

@@ -16,7 +16,7 @@ struct TabBar: View {
         
         ZStack(alignment: .bottom){
             TabView(selection: $selectedTab) {
-                Home()
+                Home(context: PersistenceController.shared.container.viewContext)
                     .tag(0)
 
                 Search()

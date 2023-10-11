@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CompletedView: View {
     var model:ListModel
-    @Environment(\.presentationMode) var presentationMode
+//    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationStack{

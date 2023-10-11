@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import Combine
 
 struct ListModel:Hashable,Identifiable{
     let id = UUID()
