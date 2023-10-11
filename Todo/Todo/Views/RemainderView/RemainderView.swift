@@ -5,10 +5,26 @@
 //
 
 import SwiftUI
-
+import CoreData
 struct RemainderView: View {
-    @Binding var viewModel: ListModel
     @FocusState  var isItemFocused: Bool
+    var model:CDList
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
+
+
+    
+    init(model:CDList){
+        self.model = model
+       
+        let request = CDRemainder.fetch()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.schedule_, ascending: true)]
+        let predicate1 = NSPredicate(format: "list == %@", self.model as CVarArg)
+        let predicate2 = NSPredicate(format: "isCompleted_ == false")
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2])
+        self._remainders = FetchRequest(fetchRequest: request, animation: .bouncy)
+
+    }
     
     var body: some View {
         NavigationStack {
@@ -23,7 +39,9 @@ struct RemainderView: View {
                 .toolbar{
                     ToolbarItemGroup(placement:.bottomBar) {
                         Button {
-                            viewModel.addRemainder()
+                            let remainder = CDRemainder(context: self.context, title: "", notes: "", schedule: "")
+                            remainder.list = model
+                            
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 isItemFocused = true
                             }
@@ -31,13 +49,14 @@ struct RemainderView: View {
                             HStack {
                                 Image(systemName: "plus.circle.fill")
                                     .resizable()
-                                    .foregroundColor(Color(hex: viewModel.color))
+                                    .foregroundColor(Color(hex: model.color))
                                     .frame(width: 20, height: 20)
                                 
                                 Text("New Todo")
                                     .fontWeight(.bold)
-                                    .foregroundColor(Color(hex: viewModel.color))
+                                    .foregroundColor(Color(hex: model.color))
                             }
+                            
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .padding(.horizontal, 20)
                         }
@@ -47,16 +66,16 @@ struct RemainderView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(
-                    Text(viewModel.remainders.isEmpty ? "Empty" : "")
+                    Text(remainders.isEmpty ? "Empty" : "")
                 )
                 
             }.toolbar(content: {
                 ToolbarItemGroup(placement: .principal) {
-                    Text(viewModel.name)
-                        .foregroundColor(Color(hex: viewModel.color))
+                    Text(model.name)
+                        .foregroundColor(Color(hex: model.color))
                 }
                 ToolbarItem {
-                    DropdownMenu(model: viewModel)
+                    DropdownMenu(model: model)
                 }
                 ToolbarItem {
                     if isItemFocused {
@@ -64,9 +83,10 @@ struct RemainderView: View {
                             withAnimation {
                                 isItemFocused.toggle()
                             }
+                            PersistenceController.shared.save()
                         }) {
                             Text("Done")
-                                .foregroundColor(Color(hex: viewModel.color))
+                                .foregroundColor(Color(hex: model.color))
                         }
                     }
                 }
@@ -78,27 +98,23 @@ struct RemainderView: View {
     
     // MARK: -  Remainder Loop
     var remainder: some View{
-        ForEach($viewModel.remainders, id: \.self.id) { $remainder in
-            RemainderRow(remainder: $remainder, color: viewModel.color)
+        ForEach(remainders) { remainder in
+            RemainderRow(remainder: remainder, color: model.color)
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button(role: .destructive) {
-                        if let index = viewModel.remainders.firstIndex(where: { $0.id == remainder.id }) {
-                            viewModel.delete(item: index)
-                        }
+                        CDRemainder.delete(remainder: remainder)
+                        PersistenceController.shared.save()
                     } label: {
                         Label("Delete", systemImage: "xmark.bin")
                     }
                 }
                 .swipeActions(edge: .leading, allowsFullSwipe: true) {
                     Button {
-                        if let index = viewModel.remainders.firstIndex(where: { $0.id == remainder.id }) {
-                            viewModel.addCompletedRemainders(item: index)
-                        }
+                        remainder.isCompleted_.toggle()
+                        CDRemainder.completed(remainder: remainder)
+                        PersistenceController.shared.save()
                     } label: {
-                        
-                        Image(systemName: "checkmark")
-                        
-                        
+                        Label("Completed", systemImage: "checkmark")
                     }
                 }
             

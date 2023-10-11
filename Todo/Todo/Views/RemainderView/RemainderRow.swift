@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-
+import CoreData
 struct RemainderRow: View {
-    @Binding var remainder: RemainderModel
+    @ObservedObject var remainder: CDRemainder
     var color:String
     @State var isClicked:Bool = false
     @FocusState  var isFocused: Bool
@@ -18,12 +18,12 @@ struct RemainderRow: View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
                 TextField("New Reminder", text: $remainder.title)
-                    .foregroundColor(remainder.isComplete ? .secondary : .primary)
+                    .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                     .focused($isFocused, equals: true)
 
                 
-                TextField("Add Note", text: $remainder.description)
-                    .foregroundColor(remainder.isComplete ? .secondary : .primary)
+                TextField("Add Note", text: $remainder.notes)
+                    .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                     .focused($isFocused, equals: true)
 
                 
@@ -34,7 +34,7 @@ struct RemainderRow: View {
                 
                 if !remainder.schedule.isEmpty  && isFocused {
                     TextField("", text: $remainder.schedule)
-                        .foregroundColor(remainder.isComplete ? .secondary : .primary)
+                        .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                      
                 }
             }

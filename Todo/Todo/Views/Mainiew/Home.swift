@@ -10,9 +10,12 @@ import CoreData
 struct Home: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject var model:ListViewManger
-    
+    var context:NSManagedObjectContext
+    @State private var count = 0
     init(context:NSManagedObjectContext){
+        self.context = context
         _model = StateObject(wrappedValue: ListViewManger(context: context))
+       
     }
     
     @State var isClicked: Bool = false
@@ -33,14 +36,13 @@ struct Home: View {
                     Section{
                         ForEach(model.myList,id:\.self.id) { list in
                             NavigationLink {
-//                                RemainderView(viewModel: $list)
+                                RemainderView(model: list)
                             } label: {
                                 HStack{
                                     Image(systemName: list.image)
                                         .foregroundColor(Color(hex: list.color))
                                     Text(list.name)
                                     Spacer()
-                                    Text("\(list.remainders.count)")
                                 }
                             }
                             .listRowInsets(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 15))

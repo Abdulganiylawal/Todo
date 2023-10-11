@@ -21,16 +21,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @available(iOS 17.0, *)
 @main
 struct YourApp: App {
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @Environment(\.scenePhase) var scenePhase
     let persistenceController = PersistenceController.shared
-    
     
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 ContentView(context: persistenceController.container.viewContext)
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .onChange(of: scenePhase) { oldValue , newValue in
                         if newValue == .background{
                             persistenceController.save()

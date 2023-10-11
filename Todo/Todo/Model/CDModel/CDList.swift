@@ -37,16 +37,9 @@ extension CDList{
         }
     }
     
-    //    static func fetch(_ predicate:NSPredicate = .all) -> NSFetchRequest<CDList> {
-    //        let request = CDList.fetchRequest()
-    //        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDList.name_, ascending: true)]
-    //        request.predicate = predicate
-    //        return request
-    //    }
-    
-    var remainders:Set<CDList>{
+    var remainders:Set<CDRemainder>{
         get{
-            (remainders_ as? Set<CDList>) ?? []
+            (remainders_ as? Set<CDRemainder>) ?? []
         }
         set{
             remainders_ = newValue as NSSet

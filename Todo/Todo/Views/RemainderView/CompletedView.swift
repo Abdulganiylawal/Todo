@@ -6,33 +6,36 @@
 //
 
 import SwiftUI
-
+import CoreData
 struct CompletedView: View {
-    var model:ListModel
-//    @Environment(\.presentationMode) var presentationMode
+    @FetchRequest(fetchRequest: CDRemainder.fetch()) var completedRemainders
+    var model:CDList
     
+    init(model:CDList){
+        self.model = model
+        let request = CDRemainder.fetch()
+        let predicate1 = NSPredicate(format: "list == %@", self.model  as CVarArg )
+        let predicate2 = NSPredicate(format: "isCompleted_ == true")
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2])
+        self._completedRemainders = FetchRequest(fetchRequest: request)
+    }
     var body: some View {
         NavigationStack{
             List{
-                ForEach(model.completedRemainders,id: \.id) { remainder in
+                ForEach(completedRemainders) { remainder in
                     HStack(alignment: .top)
                     {
                         filledReminderLabel
                             .frame(width: 20, height: 20)
                         VStack(alignment:.leading){
-                            Text("\(remainder.title)")
-//                                .foregroundColor(Color(hex: model.color))
-                            
-                            Text("\(remainder.description)")
-//                                .foregroundColor(Color(hex: model.color))
-                            
-                            Text("\(remainder.schedule)")
-//                                .foregroundColor(Color(hex: model.color))
+                            Text(remainder.title_ ?? "")
+                            Text(remainder.notes_ ?? "")
+                            Text(remainder.schedule_ ?? "")
                         }
                     }
                     
                 }
-            }
+            }.id(UUID())
             
         }
      
@@ -42,7 +45,6 @@ struct CompletedView: View {
     var filledReminderLabel: some View {
         Circle()
             .stroke(Color(hex: model.color), lineWidth: 2)
-        
             .overlay(alignment: .center) {
                 GeometryReader { geo in
                     VStack {
@@ -57,7 +59,7 @@ struct CompletedView: View {
     
 }
 
-#Preview {
-    let model = ListModel(name: "", image: "", color: "")
-    return CompletedView(model:model)
-}
+//#Preview {
+//    let model = ListModel(name: "", image: "", color: "")
+//    return CompletedView(model:model)
+//}

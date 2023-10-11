@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct DropdownMenu: View {
-    var model:ListModel
+    var model:CDList
     @State var isClicked:Bool = false
-    
-  
     var body: some View {
         Menu {
             Button(action: {

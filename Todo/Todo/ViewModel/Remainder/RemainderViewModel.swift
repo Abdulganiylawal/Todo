@@ -6,32 +6,35 @@
 //
 
 import Foundation
-import Combine
+import CoreData
 
-//class RemainderManager:ObservableObject{
-//    @Published var model:ListModel
-////    @Published var remainders:Set<[RemainderModel]> = []
-////    @Published var CompletedRemainders:Set<[RemainderModel]> = []
-//    @Published var remainder:RemainderModel = RemainderModel(title: "", description: "", schedule: "")
-//    
-//    init(model: ListModel) {
-//        self.model = model
-//        print(model.remainders)
-////        getRemainders()
-//    }
-//    
-////    func getRemainders(){
-////        for remainders in model.remainders{
-////            self.remainders += Set<remainders>
-////        }
-////        print(self.remainders)
-////    }
-//    
-//    func addRemainder(){
-//       
-//    }
-//    
-//    func saveRemainder(){
-//        model.remainders.append(remainder)
-//    }
-//}
+
+class RemainderViewModel:ObservableObject{
+    var model:CDList
+    var context:NSManagedObjectContext
+    @Published var remainders:[CDRemainder] = []
+    @Published var completedRemainders:[CDRemainder] = []
+    
+    init(model: CDList,context:NSManagedObjectContext) {
+        self.model = model
+        self.context = context
+    }
+    
+    func addRemainders(){
+        let remainder :CDRemainder = CDRemainder(context: context, title: "", notes: "", schedule: "")
+        remainder.list = model
+        
+    }
+    
+    func getRemainders(){
+        let requests = CDRemainder.fetchRequest()
+        requests.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.schedule_, ascending: true)]
+        requests.predicate = NSPredicate.all
+        do{
+            let results = try context.fetch(requests)
+            model.remainders = Set(results)
+        }catch{
+            print("\(error.localizedDescription)")
+        }
+    }
+}

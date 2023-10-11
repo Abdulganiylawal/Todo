@@ -24,12 +24,9 @@ struct ListModel:Hashable,Identifiable{
         completedRemainders.append(remainders.remove(at: item))
     }
     
-    
    mutating func delete(item:Int){
         _ =  remainders.remove(at: item)
     }
-    
-
 }
 
 

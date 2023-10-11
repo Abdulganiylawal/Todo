@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 extension CDRemainder{
-    public var id: UUID {
+     public var id: UUID {
         return id_ ?? UUID()
     }
     
@@ -33,21 +33,38 @@ extension CDRemainder{
         }
     }
     
-    var schedule: Date{
+    var schedule: String{
         get{
-            schedule_ ?? Date()
+            schedule_ ?? ""
         }
         set{
             schedule_ = newValue
         }
     }
     
-    convenience init(context:NSManagedObjectContext,title:String,notes:String,schedule:Date){
+    static func completed(remainder:CDRemainder){
+        print(remainder)
+//        delete(remainder: remainder)
+    }
+    
+    static func delete(remainder:CDRemainder){
+        guard let context = remainder.managedObjectContext else {return}
+        context.delete(remainder)
+    }
+    
+    static func fetch(predicate: NSPredicate? = nil) -> NSFetchRequest<CDRemainder> {
+        let request: NSFetchRequest<CDRemainder> = CDRemainder.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.title_, ascending: true)]
+        request.predicate = predicate
+        return request
+    }
+
+    
+    convenience init(context:NSManagedObjectContext,title:String,notes:String,schedule:String){
         self.init(context: context)
         self.title = title
         self.notes = notes
         self.schedule = schedule
-//        iscomplete_ = isCompleted
     }
     
     
