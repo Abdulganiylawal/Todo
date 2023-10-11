@@ -12,7 +12,6 @@
 		104ECFBA2AB6273C0083B3D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 104ECFB92AB6273C0083B3D6 /* Assets.xcassets */; };
 		104ECFBD2AB6273C0083B3D6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 104ECFBC2AB6273C0083B3D6 /* Preview Assets.xcassets */; };
 		104ECFBF2AB6273C0083B3D6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFBE2AB6273C0083B3D6 /* Persistence.swift */; };
-		104ECFC22AB6273C0083B3D6 /* Todo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFC02AB6273C0083B3D6 /* Todo.xcdatamodeld */; };
 		104ECFCD2AB6273C0083B3D6 /* TodoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFCC2AB6273C0083B3D6 /* TodoTests.swift */; };
 		104ECFD72AB6273C0083B3D6 /* TodoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFD62AB6273C0083B3D6 /* TodoUITests.swift */; };
 		104ECFD92AB6273C0083B3D6 /* TodoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFD82AB6273C0083B3D6 /* TodoUITestsLaunchTests.swift */; };
@@ -51,7 +50,6 @@
 		1051EEBB2AD705D000B3C30B /* RemainderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1051EEBA2AD705D000B3C30B /* RemainderModel.swift */; };
 		107075732AC1B8FF00793E13 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075722AC1B8FF00793E13 /* Global.swift */; };
 		107075762AC1C44600793E13 /* AddList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075752AC1C44600793E13 /* AddList.swift */; };
-		107075782AC1C47E00793E13 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075772AC1C47E00793E13 /* ListModel.swift */; };
 		1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070757A2AC1C50700793E13 /* ListViewModel.swift */; };
 		10CE85CC2AC44D6F0086C8DA /* Calender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CE85CB2AC44D6F0086C8DA /* Calender.swift */; };
 		10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */; };
@@ -92,7 +90,6 @@
 		104ECFB92AB6273C0083B3D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		104ECFBC2AB6273C0083B3D6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		104ECFBE2AB6273C0083B3D6 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		104ECFC12AB6273C0083B3D6 /* Todo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Todo.xcdatamodel; sourceTree = "<group>"; };
 		104ECFC32AB6273C0083B3D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		104ECFC82AB6273C0083B3D6 /* TodoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		104ECFCC2AB6273C0083B3D6 /* TodoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTests.swift; sourceTree = "<group>"; };
@@ -116,7 +113,6 @@
 		1051EEBA2AD705D000B3C30B /* RemainderModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemainderModel.swift; sourceTree = "<group>"; };
 		107075722AC1B8FF00793E13 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		107075752AC1C44600793E13 /* AddList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddList.swift; sourceTree = "<group>"; };
-		107075772AC1C47E00793E13 /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		1070757A2AC1C50700793E13 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		10CE85CB2AC44D6F0086C8DA /* Calender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calender.swift; sourceTree = "<group>"; };
 		10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderViewModel.swift; sourceTree = "<group>"; };
@@ -206,10 +202,10 @@
 				104ECFC32AB6273C0083B3D6 /* Info.plist */,
 				104ECFF32AB6370A0083B3D6 /* GoogleService-Info.plist */,
 				104ECFEA2AB6285D0083B3D6 /* Services */,
-				104ECFC02AB6273C0083B3D6 /* Todo.xcdatamodeld */,
 				104ECFB92AB6273C0083B3D6 /* Assets.xcassets */,
 				104ECFBE2AB6273C0083B3D6 /* Persistence.swift */,
 				1050F2302AB8B2CF001EA255 /* Misc */,
+				1051EEAE2AD6D9CF00B3C30B /* CDModel */,
 				104ECFBB2AB6273C0083B3D6 /* Preview Content */,
 			);
 			path = Todo;
@@ -243,10 +239,8 @@
 		104ECFE52AB627B20083B3D6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1051EEAE2AD6D9CF00B3C30B /* CDModel */,
 				104ECFEC2AB6288A0083B3D6 /* AuthModel.swift */,
 				10E0E86D2AB9E74500E2359D /* TabModel.swift */,
-				107075772AC1C47E00793E13 /* ListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -553,12 +547,10 @@
 				104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */,
 				1050F2322AB8B2F5001EA255 /* PasswordField.swift in Sources */,
 				107075732AC1B8FF00793E13 /* Global.swift in Sources */,
-				107075782AC1C47E00793E13 /* ListModel.swift in Sources */,
 				1051EEB32AD6DC4A00B3C30B /* CDList.swift in Sources */,
 				10E0E8712AB9EA1200E2359D /* Home.swift in Sources */,
 				10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */,
 				104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */,
-				104ECFC22AB6273C0083B3D6 /* Todo.xcdatamodeld in Sources */,
 				10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */,
 				104ECFED2AB6288A0083B3D6 /* AuthModel.swift in Sources */,
 				10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */,
@@ -1021,16 +1013,6 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		104ECFC02AB6273C0083B3D6 /* Todo.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				104ECFC12AB6273C0083B3D6 /* Todo.xcdatamodel */,
-			);
-			currentVersion = 104ECFC12AB6273C0083B3D6 /* Todo.xcdatamodel */;
-			path = Todo.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		1051EEAF2AD6D9EA00B3C30B /* TodoModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
