@@ -10,45 +10,47 @@ import CoreData
 struct Home: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject var model:ListViewManger
+    var taskGroup:[TaskGroup] = [.all,.schedule,.today,.completed]
     var context:NSManagedObjectContext
-    @State private var count = 0
+    var taskCount:TaskGroupCount
+    @State private var reloadFlag = false
+    @State var isClicked: Bool = false
     init(context:NSManagedObjectContext){
         self.context = context
         _model = StateObject(wrappedValue: ListViewManger(context: context))
-       
+        taskCount = TaskGroupCount(context: context)
     }
     
-    @State var isClicked: Bool = false
     var body: some View {
         NavigationStack{
             VStack() {
                 List{
                     Section{
-                        All
-                        HStack{
-                            Today
-                            Spacer()
-                            Schedule
-                        }.listRowSeparator(.hidden)
+                        GridView(context: context, taskGroups: taskGroup, model: taskCount)
+                            .id(reloadFlag)
                     }
                     .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 10,  trailing: 0))
+                    .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10,  trailing: 0))
                     Section{
                         ForEach(model.myList,id:\.self.id) { list in
                             NavigationLink {
                                 RemainderView(model: list)
+                              
                             } label: {
                                 HStack{
                                     Image(systemName: list.image)
                                         .foregroundColor(Color(hex: list.color))
                                     Text(list.name)
                                     Spacer()
+                                    Text("\(taskCount.getRemainderCount(list: list))")
                                 }
                             }
                             .listRowInsets(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 15))
                             .swipeActions(allowsFullSwipe:true) {
                                 Button(role: .destructive) {
                                     model.delete(list: list)
+                                    model.fetchList()
+                                    reloadFlag.toggle()
                                 } label: {
                                     Label("Delete", systemImage: "bin.xmark")
                                 }
@@ -81,86 +83,87 @@ struct Home: View {
             .background(Color(hex: colorScheme == .dark ? "000000" : "C4C1A4"))
         }.onAppear {
             model.fetchList()
+            reloadFlag.toggle()
         }
+    }
+}
 
+
+
+
+struct GridView: View {
+    @Environment(\.colorScheme) var colorScheme
+    let context:NSManagedObjectContext
+    var model:TaskGroupCount
+    init(context: NSManagedObjectContext, taskGroups: [TaskGroup], model:TaskGroupCount) {
+        self.context = context
+        self.taskGroups = taskGroups
+        self.model = model
     }
     
-    var All:some View{
-        HStack {
-            VStack {
-                Image(systemName: "tray")
-                    .resizable()
-                    .frame(width: 28, height: 25)
-                    .foregroundColor(Color(hex: colorScheme == .dark ? "27E1C1": "618264"))
-                    .fontWeight(.bold)
-                Text("All")
-                    .font(.body)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color(hex: colorScheme == .dark ? "27E1C1": "618264"))
+    let taskGroups: [TaskGroup]
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
+                ForEach(taskGroups, id: \.self) { taskGroup in
+                    NavigationLink {
+                        GroupedTaskView(selector: taskGroup)
+                    } label: {
+                        CustomView(iconName: taskGroup.iconName, name: taskGroup.name,ColorDark: taskGroup.colorDark,ColorLight: taskGroup.colorLight)
+                    }
+                }
             }
-            Spacer()
-            Text("1")
-                .font(.title2)
-                .fontWeight(.heavy)
+          
         }
-        .frame(maxWidth: .infinity)
-        .frame(height: 60)
-        .padding(10)
-        .background(Color(hex: colorScheme == .dark ? "272829":"FAF2D3"))
-        .cornerRadius(15)
-        .shadow(color: Color.gray.opacity(colorScheme == .light ? 0.5 : 0), radius: 5, x: 0, y: 2)
-        
     }
-    
-    var Today:some View{
+}
+
+extension GridView{
+    func CustomView(iconName:String,name:String,ColorDark:String,ColorLight:String) -> some View{
         HStack{
             VStack(alignment:.leading){
-                Image(systemName: "sun.max")
+                Image(systemName: iconName)
                     .resizable()
                     .frame(width: 25, height: 25)
-                    .foregroundColor(Color(hex: colorScheme == .dark ?  "F8DE22": "FFD966"))
-                Text("Today")
+                    .foregroundColor(Color(hex: colorScheme == .dark ? ColorDark: ColorLight))
+                Text(name)
                     .font(.body)
                     .fontWeight(.bold)
-                    .foregroundColor(Color(hex: colorScheme == .dark ?  "F8DE22":"FFD966"))
+                    .foregroundColor(.secondary)
             }
             Spacer()
-            Text("1")
-                .font(.title2)
-                .fontWeight(.heavy)
-        }
-        .padding(10)
-        .background(Color(hex: colorScheme == .dark ? "272829": "EFB495"))
-        .cornerRadius(15)
-        .shadow(color: Color.gray.opacity(colorScheme == .light ? 0.5 : 0), radius: 5, x: 0, y: 2)
-        
-    }
-    
-    var Schedule:some View{
-        HStack{
-            VStack(alignment:.leading){
-                Image(systemName: "calendar.badge.clock")
-                    .resizable()
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(Color(hex: colorScheme == .dark ? "D80032": "C63D2F"))
-                Text("Scheduled")
-                    .font(.body)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color(hex: colorScheme == .dark ? "D80032": "C63D2F"))
+            if name == "All"{
+                Text("\(model.getCount(item:name))")
+                    .font(.title2)
+                    .fontWeight(.heavy)
+                    .foregroundColor(Color(hex: colorScheme == .dark ? "FFFFFF" :  "0F0F0F" ))
             }
-            Spacer()
-            Text("1")
-                .font(.title2)
-                .fontWeight(.heavy)
+            else if name == "Completed"{
+                Text("\(model.getCount(item:name))")
+                    .font(.title2)
+                    .fontWeight(.heavy)
+                    .foregroundColor(Color(hex: colorScheme == .dark ? "FFFFFF" :  "0F0F0F" ))
+            }
+            else if name == "Schedule"{
+                Text("\(model.getCount(item:name))")
+                    .font(.title2)
+                    .fontWeight(.heavy)
+                    .foregroundColor(Color(hex: colorScheme == .dark ? "FFFFFF" :  "0F0F0F" ))
+            }
+            else if name == "Today"{
+                Text("\(model.getCount(item:name))")
+                    .font(.title2)
+                    .fontWeight(.heavy)
+                    .foregroundColor(Color(hex: colorScheme == .dark ? "FFFFFF" :  "0F0F0F" ))
+            }
         }
-
         .padding(10)
         .background(Color(hex: colorScheme == .dark ? "272829" : "8ECDDD"))
         .cornerRadius(15)
         .shadow(color: Color.gray.opacity(colorScheme == .light ? 0.5 : 0), radius: 5, x: 0, y: 2)
-  
     }
     
+
 }
 
 #Preview
@@ -168,3 +171,59 @@ struct Home: View {
     return Home(context: PersistenceController.shared.container.viewContext)
     
 }
+
+
+// MARK: - Some code i might come back too
+
+
+//    var All:some View{
+//        HStack {
+//            VStack {
+//                Image(systemName: "tray")
+//                    .resizable()
+//                    .frame(width: 28, height: 25)
+//                    .foregroundColor(Color(hex: colorScheme == .dark ? "27E1C1": "618264"))
+//                    .fontWeight(.bold)
+//                Text("All")
+//                    .font(.body)
+//                    .fontWeight(.bold)
+//                    .foregroundColor(Color(hex: colorScheme == .dark ? "27E1C1": "618264"))
+//            }
+//            Spacer()
+//            Text("1")
+//                .font(.title2)
+//                .fontWeight(.heavy)
+//        }
+//        .frame(maxWidth: .infinity)
+//        .frame(height: 60)
+//        .padding(10)
+//        .background(Color(hex: colorScheme == .dark ? "272829":"FAF2D3"))
+//        .cornerRadius(15)
+//        .shadow(color: Color.gray.opacity(colorScheme == .light ? 0.5 : 0), radius: 5, x: 0, y: 2)
+//
+//    }
+//
+//    var Today:some View{
+//        HStack{
+//            VStack(alignment:.leading){
+//                Image(systemName: "sun.max")
+//                    .resizable()
+//                    .frame(width: 25, height: 25)
+//                    .foregroundColor(Color(hex: colorScheme == .dark ?  "F8DE22": "FFD966"))
+//                Text("Today")
+//                    .font(.body)
+//                    .fontWeight(.bold)
+//                    .foregroundColor(Color(hex: colorScheme == .dark ?  "F8DE22":"FFD966"))
+//            }
+//            Spacer()
+//            Text("1")
+//                .font(.title2)
+//                .fontWeight(.heavy)
+//        }
+//        .padding(10)
+//        .background(Color(hex: colorScheme == .dark ? "272829": "EFB495"))
+//        .cornerRadius(15)
+//        .shadow(color: Color.gray.opacity(colorScheme == .light ? 0.5 : 0), radius: 5, x: 0, y: 2)
+//
+//    }
+//

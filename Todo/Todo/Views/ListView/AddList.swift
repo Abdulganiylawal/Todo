@@ -21,7 +21,6 @@ struct AddList: View {
                 if index % itemsPerRow == 0 {
                     let endIndex = min(index + itemsPerRow, popularColors.count)
                     let rowColors = popularColors[index..<endIndex]
-                    
                     ColorRow(rowColors: Array(rowColors), selectedColor: $color)
                 }
             }
@@ -35,7 +34,6 @@ struct AddList: View {
                     if index % itemsPerRow == 0 {
                         let endIndex = min(index + itemsPerRow, todoIcons.count)
                         let rowIcons = todoIcons[index..<endIndex]
-                        
                         IconRow(rowIcons: Array(rowIcons), selectedIcon: $icon,  color: $color)
                     }
                 }

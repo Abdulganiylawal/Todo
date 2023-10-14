@@ -37,11 +37,17 @@ class ListViewManger:ObservableObject{
        
     }
     
-    func delete(list:CDList){
-        guard let context = list.managedObjectContext else{return}
+    func delete(list: CDList) {
+        guard let context = list.managedObjectContext else { return }
+        
+        for remainder in list.remainders {
+            CDRemainder.delete(remainder: remainder)
+        }
         
         context.delete(list)
+        PersistenceController.shared.save()
     }
+
    
     init(context: NSManagedObjectContext){
         self.context = context
@@ -100,4 +106,3 @@ let todoIcons: [String] = [
     "checkmark.rectangle",   // A checkmark inside a rectangle
 ]
 
-let listModels: [ListModel] = Array(repeating: ListModel(name: "Your List Name", image: "list.bullet", color: "D83F31"), count: 2)

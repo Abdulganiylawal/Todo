@@ -11,12 +11,9 @@ struct RemainderView: View {
     var model:CDList
     @Environment(\.managedObjectContext) var context
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
-
-
     
     init(model:CDList){
         self.model = model
-       
         let request = CDRemainder.fetch()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.schedule_, ascending: true)]
         let predicate1 = NSPredicate(format: "list == %@", self.model as CVarArg)
@@ -32,7 +29,7 @@ struct RemainderView: View {
                 List{
                     remainder
                         .focused($isItemFocused,equals: true)
-                        .listStyle(.plain)
+                        .listStyle(PlainListStyle())
                         .padding([.bottom], 10)
                 }
                 .navigationBarTitleDisplayMode(.inline)
@@ -41,7 +38,6 @@ struct RemainderView: View {
                         Button {
                             let remainder = CDRemainder(context: self.context, title: "", notes: "", schedule: "")
                             remainder.list = model
-                            
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 isItemFocused = true
                             }
@@ -103,7 +99,6 @@ struct RemainderView: View {
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button(role: .destructive) {
                         CDRemainder.delete(remainder: remainder)
-                        PersistenceController.shared.save()
                     } label: {
                         Label("Delete", systemImage: "xmark.bin")
                     }
@@ -111,7 +106,6 @@ struct RemainderView: View {
                 .swipeActions(edge: .leading, allowsFullSwipe: true) {
                     Button {
                         remainder.isCompleted_.toggle()
-                        CDRemainder.completed(remainder: remainder)
                         PersistenceController.shared.save()
                     } label: {
                         Label("Completed", systemImage: "checkmark")

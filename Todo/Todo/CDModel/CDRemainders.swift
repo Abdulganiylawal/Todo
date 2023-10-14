@@ -41,11 +41,7 @@ extension CDRemainder{
             schedule_ = newValue
         }
     }
-    
-    static func completed(remainder:CDRemainder){
-        print(remainder)
-//        delete(remainder: remainder)
-    }
+
     
     static func delete(remainder:CDRemainder){
         guard let context = remainder.managedObjectContext else {return}
