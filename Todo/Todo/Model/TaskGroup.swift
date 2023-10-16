@@ -100,7 +100,7 @@ class TaskGroupCount{
         else if item == "Today"{
             let date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy MM dd"
+            dateFormatter.dateFormat = "dd/MM/yyyy"
             let formattedDates = dateFormatter.string(from: date)
             request.predicate = NSPredicate(format: "schedule_.date_ == %@", formattedDates as CVarArg)
         }

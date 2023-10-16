@@ -8,7 +8,8 @@ import SwiftUI
 import CoreData
 @available(iOS 17.0, *)
 struct RemainderView: View {
-    @FocusState  var isItemFocused: Bool
+    @State var isFocused: Bool = false
+    @FocusState var isItemFocused:Bool
     var model:CDList
     @Environment(\.managedObjectContext) var context
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
@@ -28,7 +29,7 @@ struct RemainderView: View {
             VStack {
                 List{
                     remainder
-                        .focused($isItemFocused,equals: true)
+                        .focused($isItemFocused,equals: isFocused)
                         .listStyle(PlainListStyle())
                         .padding([.bottom], 10)
                 }
@@ -40,6 +41,7 @@ struct RemainderView: View {
                             remainder.list = model
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 isItemFocused = true
+                                isFocused = true
                             }
                         } label: {
                             HStack {
@@ -74,10 +76,11 @@ struct RemainderView: View {
                     DropdownMenu(model: model)
                 }
                 ToolbarItem {
-                    if isItemFocused {
+                    if isFocused {
                         Button(action: {
                             withAnimation {
-                                isItemFocused.toggle()
+                                isItemFocused = false
+                                isFocused = false
                             }
                             PersistenceController.shared.save()
                         }) {
@@ -93,7 +96,7 @@ struct RemainderView: View {
     // MARK: -  Remainder Loop
     var remainder: some View{
         ForEach(remainders) { remainder in
-            RemainderRow(remainder: remainder, color: model.color)
+            RemainderRow(remainder: remainder, color: model.color,isFocused: $isFocused)
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                     Button(role: .destructive) {
                         CDRemainder.delete(remainder: remainder)

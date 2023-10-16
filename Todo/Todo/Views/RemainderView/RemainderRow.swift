@@ -12,8 +12,9 @@ struct RemainderRow: View {
     @ObservedObject var remainder: CDRemainder
     var color:String
     @State var isClicked:Bool = false
-    @FocusState  var isFocused: Bool
-    @State private var reloadFlag = false
+    @Binding  var isFocused: Bool
+    @FocusState  var isItemFocused: Bool
+
     @State  var editedDate: String = ""
     
     var body: some View {
@@ -21,11 +22,19 @@ struct RemainderRow: View {
             VStack(alignment: .leading) {
                 TextField("New Reminder", text: $remainder.title)
                     .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                    .focused($isFocused, equals: true)
+                    .focused($isItemFocused,equals: isFocused)
+                    .onTapGesture(perform: {
+                        isFocused = true
+                    })
                 
                 TextField("Add Note", text: $remainder.notes)
                     .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                    .focused($isFocused, equals: true)
+                    .focused($isItemFocused,equals: isFocused)
+                    .onTapGesture(perform: {
+                        isFocused = true
+                        
+                    })
+                  
                 
                 if  let originalDate = remainder.schedule_?.date, let time = remainder.schedule_?.time, let repeatCycle = remainder.schedule_?.repeatCycle,!editedDate.isEmpty{
                     if !isFocused {
@@ -51,23 +60,23 @@ struct RemainderRow: View {
                                 Text(",\(time)")
                                     .foregroundColor(.secondary)
                             }
-                            if !repeatCycle.isEmpty{
+                            else if !repeatCycle.isEmpty{
                                 Text(",\(Image(systemName: "repeat"))\(repeatCycle)")
                                     .foregroundColor(.secondary)
                             }
-                            
+
                         }
                         
                     }
                 }
             }
-            if isFocused{
+            if isItemFocused{
                 infoMenu
             }
         }
         .sheet(isPresented: $isClicked, content: {
             NavigationStack{
-                calender(schedule: $remainder.schedule_, editedDate: $editedDate)
+                calender(dates: dateFromString(editedDate) ?? Date(), isFocused: $isFocused, schedule: $remainder.schedule_, editedDate: $editedDate)
             }
         })
         .onDisappear(perform: {
@@ -112,7 +121,6 @@ struct RemainderRow: View {
                     editedDate = ""
                     remainder.schedule_?.repeatCycle = ""
                     remainder.schedule_?.time = ""
-                    
                 } label: {
                     Label("Remove Due Date", systemImage: "minus.circle")
                 }
@@ -136,5 +144,10 @@ struct RemainderRow: View {
         let dateComponents = component
         let formattedDates = dateFormatter.string(from: dateComponents)
         return formattedDates
+    }
+    func dateFromString(_ dateString: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        return dateFormatter.date(from: dateString)
     }
 }

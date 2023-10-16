@@ -9,10 +9,12 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 struct calender: View {
-    @State private var dates = Date()
+    @State var dates:Date
     @State private var time = Date()
     @State private var showDate = false
     @State private var showTime = false
+    @Binding  var isFocused: Bool
+    @FocusState  var isItemFocused: Bool
     let repeatCycles = ["Never", "Daily", "Weekly", "Monthly", "Yearly"]
     @State private var picked = "Never"
     @Environment(\.presentationMode) var presentationMode
@@ -23,14 +25,14 @@ struct calender: View {
         List {
             Toggle("Date", systemImage: "calendar", isOn: $showDate)
                 .toggleStyle(SwitchToggleStyle(tint: Color(hex: (schedule?.remainder?.list?.color)!)))
-            if showDate {
+            if showDate || !schedule!.date.isEmpty {
                 DatePicker(
                     "Start Date",
                     selection: $dates,
                     displayedComponents: [.date]
                 )
                 .datePickerStyle(.graphical)
-        
+                
             }
             Toggle("Time", systemImage: "clock.badge", isOn: $showTime)
                 .toggleStyle(SwitchToggleStyle(tint: Color(hex: (schedule?.remainder?.list?.color)!)))
@@ -49,6 +51,7 @@ struct calender: View {
                     
                 }
             }
+            if showDate || !schedule!.date.isEmpty {
                 Picker(selection: $picked) {
                     ForEach(repeatCycles,id: \.self){
                         repeatCycle in
@@ -59,8 +62,9 @@ struct calender: View {
                 }.onChange(of: picked, initial: false) { oldValue, newValue in
                     if newValue != "Never"{
                         schedule?.repeatCycle = newValue
-                }
+                    }
                 }.disabled(!showDate)
+            }
         }
         .toolbar(content: {
             ToolbarItem {
@@ -70,29 +74,41 @@ struct calender: View {
                     if showTime{
                         schedule?.time = formattedDatesString(from: time, isTime: true)
                     }
-              
+                    isFocused = false
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Done")
                 }
-
+                
             }
         })
-    }
-    
-    private func formattedDatesString(from component: Date,isTime:Bool) -> String {
-        let dateFormatter = DateFormatter()
-        if isTime{
-            dateFormatter.dateFormat = "HH:mm"
+        .onAppear {
+            if !schedule!.date.isEmpty{
+                showDate.toggle()
+            }
         }
-        else{
-            dateFormatter.dateFormat = "dd/MM/yyyy"
-        }
-        let dateComponents = component
-        let formattedDates = dateFormatter.string(from: dateComponents)
-        return formattedDates
     }
 }
+
+private func formattedDatesString(from component: Date,isTime:Bool) -> String {
+    let dateFormatter = DateFormatter()
+    if isTime{
+        dateFormatter.dateFormat = "HH:mm"
+    }
+    else{
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+    }
+    let dateComponents = component
+    let formattedDates = dateFormatter.string(from: dateComponents)
+    return formattedDates
+}
+
+
+
+
+
+
+
 
 @available(iOS 17.0, *)
 struct calender_Previews: PreviewProvider {
@@ -101,10 +117,12 @@ struct calender_Previews: PreviewProvider {
         let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "", notes: "")
         remainders.list = list
         remainders.schedule_ = CDRemainderSchedule(repeatCycle: "", date: "", time: "", context: PersistenceController.shared.container.viewContext)
-
+        
         return Group {
-            calender(schedule: .constant(remainders.schedule_), editedDate: .constant(""))
+            calender(dates: Date(), isFocused: .constant(true), schedule: .constant(remainders.schedule_), editedDate: .constant(""))
         }
     }
 }
+
+
 
