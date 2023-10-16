@@ -38,12 +38,7 @@ extension CDRemainderSchedule{
         guard let context = schedule.managedObjectContext else{return}
         context.delete(schedule)
     }
-    
-    public override func awakeFromInsert() {
-        self.repeatCycle_ = ""
-        self.date_ = ""
-        self.time_ = ""
-    }
+
     convenience init(repeatCycle:String,date:String,time:String,context:NSManagedObjectContext) {
         self.init(context: context)
         self.repeatCycle = repeatCycle

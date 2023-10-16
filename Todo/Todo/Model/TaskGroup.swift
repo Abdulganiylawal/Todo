@@ -87,7 +87,9 @@ class TaskGroupCount{
         var count = 0
         let request = CDRemainder.fetch()
         if item == "All"{
-            request.predicate = nil
+            let request1 = NSPredicate(format: "title_ != %@", "")
+            let request2 = NSPredicate(format: "notes_ != %@", "")
+             request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [request1,request2])
         }
         else if item == "Completed"{
             request.predicate = NSPredicate(format: "isCompleted_ == true")
@@ -107,6 +109,7 @@ class TaskGroupCount{
         }catch{
             print(error)
         }
+        request.predicate = nil
         return count
     }
  

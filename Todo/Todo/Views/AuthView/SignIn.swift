@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct SignIn: View {
     @StateObject private var ViewModel:AuthViewModel
     
@@ -51,6 +52,7 @@ struct SignIn: View {
 }
 
 
+@available(iOS 17.0, *)
 struct SignIn_Previews: PreviewProvider {
     static let data = AuthenticationManager()
     static var previews: some View {

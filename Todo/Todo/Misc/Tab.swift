@@ -8,6 +8,7 @@
 import SwiftUI
 
 
+@available(iOS 17.0, *)
 extension TabBar{
   
     func CustomTabItem(imageName: String, isActive: Bool) -> some View{

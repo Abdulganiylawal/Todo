@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 
+@available(iOS 17.0, *)
 struct Authiew: View {
     @Environment(\.colorScheme) var colorScheme
     var model = AuthenticationManager()
@@ -38,6 +39,7 @@ struct Authiew: View {
     }
 }
 
+@available(iOS 17.0, *)
 struct Authiew_Previews: PreviewProvider {
 
     static var previews: some View {

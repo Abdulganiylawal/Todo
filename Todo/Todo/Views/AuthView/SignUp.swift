@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct SignUp: View {
     @StateObject private var ViewModel:AuthViewModel
     @State private var isSecure: Bool = true
@@ -48,10 +49,11 @@ struct SignUp: View {
         }
     }
     
-    struct SignUp_Previews: PreviewProvider {
-        static let data = AuthenticationManager()
-        static var previews: some View {
-            SignUp(vm: data)
-        }
+}
+@available(iOS 17.0, *)
+struct SignUp_Previews: PreviewProvider {
+    static let data = AuthenticationManager()
+    static var previews: some View {
+        SignUp(vm: data)
     }
 }

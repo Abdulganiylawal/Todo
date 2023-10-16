@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+@available(iOS 17.0, *)
 struct Home: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject var model:ListViewManger
@@ -165,11 +166,11 @@ extension GridView{
 
 }
 
-#Preview
-{
-    return Home(context: PersistenceController.shared.container.viewContext)
-    
-}
+//#Preview
+//{
+//    return Home(context: PersistenceController.shared.container.viewContext)
+//    
+//}
 
 
 // MARK: - Some code i might come back too

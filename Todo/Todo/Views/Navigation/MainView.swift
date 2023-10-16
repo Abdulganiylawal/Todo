@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+@available(iOS 17.0, *)
 struct MainView: View {
     @AppStorage("SelectedTab") var selectedTab:TabItems = .home
     private var data = AuthenticationManager()
@@ -34,6 +35,7 @@ struct MainView: View {
     }
 }
 
+@available(iOS 17.0, *)
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView(context: PersistenceController.shared.container.viewContext)

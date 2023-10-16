@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct Settings: View {
     @StateObject private var ViewModel:AuthViewModel
     @State var showAuthView = false
@@ -28,6 +29,7 @@ struct Settings: View {
     }
 }
 
+@available(iOS 17.0, *)
 struct Settings_Previews: PreviewProvider {
     static let data = AuthenticationManager()
     static var previews: some View {

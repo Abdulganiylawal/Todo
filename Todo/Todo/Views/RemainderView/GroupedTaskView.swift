@@ -22,7 +22,9 @@ struct GroupedTaskView: View {
         switch selector {
             case .all:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
-                request.predicate = nil
+                let request1 = NSPredicate(format: "title_ != %@", "")
+                let request2 = NSPredicate(format: "notes_ != %@", "")
+                 request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [request1,request2])
             case .completed:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
                 request.predicate = NSPredicate(format: "isCompleted_ == true")
@@ -33,7 +35,7 @@ struct GroupedTaskView: View {
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
                 let date = Date()
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy MM dd"
+                dateFormatter.dateFormat = "dd/MM/yyyy"
                 let formattedDates = dateFormatter.string(from: date)
                 request.predicate = NSPredicate(format: "schedule_.date_ == %@", formattedDates as CVarArg)
         }
@@ -63,9 +65,20 @@ struct GroupedTaskView: View {
                                         .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                                     Text(remainder.notes)
                                         .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                                    Text(remainder.schedule_!.date)
-                                        .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                                        .frame(alignment: .leading)
+                                    if  let originalDate = remainder.schedule_?.date, let time = remainder.schedule_?.time, let repeatCycle = remainder.schedule_?.repeatCycle{
+                                        HStack{
+                                        Text(originalDate)
+                                            .foregroundColor(.secondary)
+                                        if !time.isEmpty{
+                                            Text(",\(time)")
+                                                .foregroundColor(.secondary)
+                                        }
+                                        if !repeatCycle.isEmpty{
+                                            Text(",\(Image(systemName: "repeat"))\(repeatCycle)")
+                                                .foregroundColor(.secondary)
+                                        }
+                                    }
+                                    }
                                 }
                             }
                             

@@ -10,6 +10,7 @@ import CoreData
 import FirebaseAuth
 import FirebaseCore
 
+@available(iOS 17.0, *)
 struct ContentView: View {
     private let model = AuthenticationManager()
     public var context:NSManagedObjectContext
@@ -30,6 +31,7 @@ struct ContentView: View {
 
 }
 
+@available(iOS 17.0, *)
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(context: PersistenceController.shared.container.viewContext)

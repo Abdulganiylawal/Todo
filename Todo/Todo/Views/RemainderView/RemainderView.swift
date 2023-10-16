@@ -6,6 +6,7 @@
 
 import SwiftUI
 import CoreData
+@available(iOS 17.0, *)
 struct RemainderView: View {
     @FocusState  var isItemFocused: Bool
     var model:CDList
@@ -20,8 +21,6 @@ struct RemainderView: View {
         let predicate2 = NSPredicate(format: "isCompleted_ == false")
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2])
         self._remainders = FetchRequest(fetchRequest: request, animation: .bouncy)
-
-
     }
     
     var body: some View {
@@ -88,8 +87,6 @@ struct RemainderView: View {
                     }
                 }
             })
-            
-            
         }
     }
     
@@ -117,12 +114,4 @@ struct RemainderView: View {
     }
 }
 
-
-
-
-
-//#Preview{
-//        let viewModel = ListModel(name: "Example List", image: "listIcon", color: "FF5733")
-//    return RemainderView(viewModel: .constant(viewModel),isItemFocused:)
-//}
 

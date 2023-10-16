@@ -7,13 +7,14 @@
 
 import SwiftUI
 import CoreData
+@available(iOS 17.0, *)
 struct RemainderRow: View {
     @ObservedObject var remainder: CDRemainder
     var color:String
     @State var isClicked:Bool = false
     @FocusState  var isFocused: Bool
     @State private var reloadFlag = false
-    @State private var editedDate: String = " "
+    @State  var editedDate: String = ""
     
     var body: some View {
         HStack(alignment: .top) {
@@ -21,19 +22,42 @@ struct RemainderRow: View {
                 TextField("New Reminder", text: $remainder.title)
                     .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                     .focused($isFocused, equals: true)
-
+                
                 TextField("Add Note", text: $remainder.notes)
                     .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                     .focused($isFocused, equals: true)
                 
-                if  !editedDate.isEmpty && !remainder.schedule_!.date.isEmpty{
+                if  let originalDate = remainder.schedule_?.date, let time = remainder.schedule_?.time, let repeatCycle = remainder.schedule_?.repeatCycle,!editedDate.isEmpty{
                     if !isFocused {
-                        Text(remainder.schedule_!.date)
-                            .frame(alignment: .leading)
+                        HStack{
+                            Text(originalDate)
+                                .foregroundColor(.secondary)
+                            if !time.isEmpty{
+                                Text(",\(time)")
+                                    .foregroundColor(.secondary)
+                            }
+                            if !repeatCycle.isEmpty{
+                                Text(",\(Image(systemName: "repeat"))\(repeatCycle)")
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                        }
                     } else {
-                        TextField("", text: $editedDate)
-                               .frame(alignment: .leading)
-                               .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
+                        HStack{
+                            Text(editedDate)
+                                .foregroundColor(.secondary)
+                                
+                            if !time.isEmpty{
+                                Text(",\(time)")
+                                    .foregroundColor(.secondary)
+                            }
+                            if !repeatCycle.isEmpty{
+                                Text(",\(Image(systemName: "repeat"))\(repeatCycle)")
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                        }
+                        
                     }
                 }
             }
@@ -43,8 +67,14 @@ struct RemainderRow: View {
         }
         .sheet(isPresented: $isClicked, content: {
             NavigationStack{
-                calender(schedule: $remainder.schedule_)
+                calender(schedule: $remainder.schedule_, editedDate: $editedDate)
             }
+        })
+        .onDisappear(perform: {
+            editedDate = remainder.schedule_?.date ?? ""
+        })
+        .onAppear(perform: {
+            editedDate = remainder.schedule_?.date ?? ""
         })
     }
     
@@ -53,38 +83,36 @@ struct RemainderRow: View {
             Menu {
                 Button {
                     let today = Date()
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy MM dd"
-                    let todayDateString = dateFormatter.string(from: today)
-                    remainder.schedule_?.date = todayDateString
+                    let todayDateString = formattedDatesString(from: today)
+                    remainder.schedule_?.date_ = todayDateString
                     editedDate = todayDateString
-                    print(remainder.schedule_?.date)
-                 
+                    
                 } label: {
                     Label("Today", systemImage: "sun.max")
                 }
                 Button {
                     let todayDate = Date()
                     let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: todayDate)!
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy MM dd"
-                    let tomorrowDateString = dateFormatter.string(from: tomorrow)
-                    remainder.schedule_?.date = tomorrowDateString
+                    let tomorrowDateString = formattedDatesString(from: tomorrow)
+                    remainder.schedule_?.date_ = tomorrowDateString
                     editedDate = tomorrowDateString
                 } label: {
                     Label("Tomorrow", systemImage: "sunrise")
                 }
                 Button {
                     isClicked.toggle()
-                   
+                    
                 } label: {
                     Label("Pick a Date", systemImage: "calendar.badge.clock")
                 }
                 Divider()
                 
                 Button(role: .destructive) {
+                    remainder.schedule_?.date = ""
                     editedDate = ""
-                   
+                    remainder.schedule_?.repeatCycle = ""
+                    remainder.schedule_?.time = ""
+                    
                 } label: {
                     Label("Remove Due Date", systemImage: "minus.circle")
                 }
@@ -101,62 +129,12 @@ struct RemainderRow: View {
         }
         .frame(alignment: .leading)
     }
+    
+    private func formattedDatesString(from component: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let dateComponents = component
+        let formattedDates = dateFormatter.string(from: dateComponents)
+        return formattedDates
+    }
 }
-
-
-
-// MARK: - Commented Codes Will Come Back Later
-
-//            Button {
-//                withAnimation {
-//                    remainder.isComplete.toggle()
-//                    isItemFocused.toggle()
-//                    model.addCompletedRemainders([remainder])
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                        withAnimation {
-//                            model.removeRemainder(withID: remainder.id)
-//                        }
-//                    }
-//                }
-//            } label: {
-//                if remainder.isComplete {
-//                    filledReminderLabel
-//                } else {
-//                    emptyReminderLabel
-//                }
-//            }
-//            .frame(width: 20, height: 20)
-//            .buttonStyle(.plain)
-
-//var filledReminderLabel: some View {
-//    Circle()
-//        .stroke(Color(hex: color), lineWidth: 2)
-//
-//        .overlay(alignment: .center) {
-//            GeometryReader { geo in
-//                VStack {
-//                    Circle()
-//                        .fill(Color(hex: color))
-//                        .frame(width: geo.size.width*0.7, height: geo.size.height*0.7, alignment: .center)
-//                }
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//            }
-//        }
-//}
-//
-//var emptyReminderLabel: some View {
-//    Circle()
-//        .stroke(Color(hex: color))
-//
-//}
-//
-
-//struct RemainderRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let reminder = RemainderModel(title: "Sample Reminder", description: "Description", schedule: "2023 10 01")
-//        let viewModel = ListModel(name: "Example List", image: "listIcon", color: "FF5733", remainders: [reminder])
-//        return RemainderRow(remainder: .constant(reminder), color: viewModel.color, model: .constant(viewModel))
-//            .previewLayout(.fixed(width: 300, height: 80))
-//            .padding()
-//    }
-//}

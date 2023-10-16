@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct TabBar: View {
     @AppStorage("SelectedTab") var selectedTab = 0
     private var data = AuthenticationManager()
@@ -53,6 +54,7 @@ struct TabBar: View {
     }
 }
 
+@available(iOS 17.0, *)
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
         TabBar()

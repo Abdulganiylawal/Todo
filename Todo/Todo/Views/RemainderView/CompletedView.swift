@@ -29,8 +29,21 @@ struct CompletedView: View {
                             .frame(width: 20, height: 20)
                         VStack(alignment:.leading){
                             Text(remainder.title_ ?? "")
+                                .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
+                                .frame(alignment: .leading)
                             Text(remainder.notes_ ?? "")
-                            Text(remainder.schedule_?.date ?? "")
+                                .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
+                                .frame(alignment: .leading)
+                            if  let originalDate = remainder.schedule_?.date, let time = remainder.schedule_?.time{
+                                HStack{
+                                    Text(originalDate)
+                                        .foregroundColor(.secondary)
+                                    if !time.isEmpty{
+                                        Text(",\(time)")
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                            }
                         }
                     }
                     
@@ -63,3 +76,5 @@ struct CompletedView: View {
 //    let model = ListModel(name: "", image: "", color: "")
 //    return CompletedView(model:model)
 //}
+
+
