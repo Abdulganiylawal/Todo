@@ -79,7 +79,7 @@ enum TaskGroup: Int, Identifiable, CaseIterable {
 }
 
 class TaskGroupCount{
-     var context:NSManagedObjectContext
+    var context:NSManagedObjectContext
     init(context: NSManagedObjectContext) {
         self.context = context
     }
@@ -93,14 +93,14 @@ class TaskGroupCount{
             request.predicate = NSPredicate(format: "isCompleted_ == true")
         }
         else if item == "Schedule"{
-            request.predicate = NSPredicate(format: "schedule_ != %@", "")
+            request.predicate = NSPredicate(format: "schedule_.date_  != %@", "")
         }
         else if item == "Today"{
             let date = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy MM dd"
             let formattedDates = dateFormatter.string(from: date)
-            request.predicate = NSPredicate(format: "schedule_ == %@", formattedDates as CVarArg)
+            request.predicate = NSPredicate(format: "schedule_.date_ == %@", formattedDates as CVarArg)
         }
         do{
             count = try context.count(for: request)

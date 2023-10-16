@@ -10,7 +10,7 @@ import SwiftUI
 struct calender: View {
     @State private var dates = Date()
     @Environment(\.presentationMode) var presentationMode
-    @Binding var date: String
+    @Binding var schedule:CDRemainderSchedule?
     
     var body: some View {
         List {
@@ -24,7 +24,7 @@ struct calender: View {
         .toolbar(content: {
             ToolbarItem {
                 Button {
-                    date = formattedDatesString(from: dates)
+                    schedule!.date = formattedDatesString(from: dates)
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Done")

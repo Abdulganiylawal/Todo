@@ -30,7 +30,7 @@ struct CompletedView: View {
                         VStack(alignment:.leading){
                             Text(remainder.title_ ?? "")
                             Text(remainder.notes_ ?? "")
-                            Text(remainder.schedule_ ?? "")
+                            Text(remainder.schedule_?.date ?? "")
                         }
                     }
                     

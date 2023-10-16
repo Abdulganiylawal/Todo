@@ -12,13 +12,13 @@ struct Home: View {
     @StateObject var model:ListViewManger
     var taskGroup:[TaskGroup] = [.all,.schedule,.today,.completed]
     var context:NSManagedObjectContext
-    var taskCount:TaskGroupCount
+    var taskCountModel:TaskGroupCount
     @State private var reloadFlag = false
     @State var isClicked: Bool = false
     init(context:NSManagedObjectContext){
         self.context = context
         _model = StateObject(wrappedValue: ListViewManger(context: context))
-        taskCount = TaskGroupCount(context: context)
+        taskCountModel = TaskGroupCount(context: context)
     }
     
     var body: some View {
@@ -26,7 +26,7 @@ struct Home: View {
             VStack() {
                 List{
                     Section{
-                        GridView(context: context, taskGroups: taskGroup, model: taskCount)
+                        GridView(context: context, taskGroups: taskGroup, model: taskCountModel)
                             .id(reloadFlag)
                     }
                     .listRowBackground(Color.clear)
@@ -35,14 +35,13 @@ struct Home: View {
                         ForEach(model.myList,id:\.self.id) { list in
                             NavigationLink {
                                 RemainderView(model: list)
-                              
                             } label: {
                                 HStack{
                                     Image(systemName: list.image)
                                         .foregroundColor(Color(hex: list.color))
                                     Text(list.name)
                                     Spacer()
-                                    Text("\(taskCount.getRemainderCount(list: list))")
+                                    Text("\(taskCountModel.getRemainderCount(list: list))")
                                 }
                             }
                             .listRowInsets(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 15))

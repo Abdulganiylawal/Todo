@@ -12,39 +12,38 @@ struct RemainderRow: View {
     var color:String
     @State var isClicked:Bool = false
     @FocusState  var isFocused: Bool
+    @State private var reloadFlag = false
+    @State private var editedDate: String = " "
     
     var body: some View {
-        
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
                 TextField("New Reminder", text: $remainder.title)
                     .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                     .focused($isFocused, equals: true)
 
-                
                 TextField("Add Note", text: $remainder.notes)
                     .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                     .focused($isFocused, equals: true)
-
                 
-                if  !remainder.schedule.isEmpty && !isFocused {
-                    Text(remainder.schedule)
-                        .frame(alignment: .leading)
-                }
-                
-                if !remainder.schedule.isEmpty  && isFocused {
-                    TextField("", text: $remainder.schedule)
-                        .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                     
+                if  !editedDate.isEmpty && !remainder.schedule_!.date.isEmpty{
+                    if !isFocused {
+                        Text(remainder.schedule_!.date)
+                            .frame(alignment: .leading)
+                    } else {
+                        TextField("", text: $editedDate)
+                               .frame(alignment: .leading)
+                               .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
+                    }
                 }
             }
-            
             if isFocused{
                 infoMenu
             }
-        }.sheet(isPresented: $isClicked, content: {
+        }
+        .sheet(isPresented: $isClicked, content: {
             NavigationStack{
-                calender(date: $remainder.schedule)
+                calender(schedule: $remainder.schedule_)
             }
         })
     }
@@ -57,7 +56,10 @@ struct RemainderRow: View {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy MM dd"
                     let todayDateString = dateFormatter.string(from: today)
-                    remainder.schedule = todayDateString
+                    remainder.schedule_?.date = todayDateString
+                    editedDate = todayDateString
+                    print(remainder.schedule_?.date)
+                 
                 } label: {
                     Label("Today", systemImage: "sun.max")
                 }
@@ -67,19 +69,22 @@ struct RemainderRow: View {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy MM dd"
                     let tomorrowDateString = dateFormatter.string(from: tomorrow)
-                    remainder.schedule = tomorrowDateString
+                    remainder.schedule_?.date = tomorrowDateString
+                    editedDate = tomorrowDateString
                 } label: {
                     Label("Tomorrow", systemImage: "sunrise")
                 }
                 Button {
                     isClicked.toggle()
+                   
                 } label: {
                     Label("Pick a Date", systemImage: "calendar.badge.clock")
                 }
                 Divider()
                 
                 Button(role: .destructive) {
-                    remainder.schedule = ""
+                    editedDate = ""
+                   
                 } label: {
                     Label("Remove Due Date", systemImage: "minus.circle")
                 }

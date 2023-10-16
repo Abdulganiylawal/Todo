@@ -33,18 +33,9 @@ extension CDRemainder{
         }
     }
     
-    var schedule: String{
-        get{
-            schedule_ ?? ""
-        }
-        set{
-            schedule_ = newValue
-        }
-    }
-
-    
     static func delete(remainder:CDRemainder){
         guard let context = remainder.managedObjectContext else {return}
+        CDRemainderSchedule.delete(schedule: remainder.schedule_!)
         context.delete(remainder)
     }
     
@@ -56,12 +47,11 @@ extension CDRemainder{
     }
 
     
-    convenience init(context:NSManagedObjectContext,title:String,notes:String,schedule:String){
+    convenience init(context:NSManagedObjectContext,title:String,notes:String){
         self.init(context: context)
         self.title = title
         self.notes = notes
-        self.schedule = schedule
+        self.schedule_ = CDRemainderSchedule(repeatCycle: "", date: "", time: "", context: context)
+
     }
-    
-    
 }

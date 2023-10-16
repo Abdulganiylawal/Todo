@@ -28,14 +28,14 @@ struct GroupedTaskView: View {
                 request.predicate = NSPredicate(format: "isCompleted_ == true")
             case .schedule:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
-                request.predicate = NSPredicate(format: "schedule_ != %@", "")
+                request.predicate = NSPredicate(format: "schedule_.date_ != %@", "")
             case .today:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
                 let date = Date()
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy MM dd"
                 let formattedDates = dateFormatter.string(from: date)
-                request.predicate = NSPredicate(format: "schedule_ == %@", formattedDates as CVarArg)
+                request.predicate = NSPredicate(format: "schedule_.date_ == %@", formattedDates as CVarArg)
         }
         self._remainders = FetchRequest(fetchRequest: request)
     }
@@ -63,7 +63,8 @@ struct GroupedTaskView: View {
                                         .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                                     Text(remainder.notes)
                                         .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                                    Text(remainder.schedule)
+                                    Text(remainder.schedule_!.date)
+                                        .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                                         .frame(alignment: .leading)
                                 }
                             }
@@ -102,7 +103,6 @@ extension GroupedTaskView {
 
 struct GroupedTaskView_Previews: PreviewProvider {
     static var previews: some View {
-   
         GroupedTaskView(selector: .all)
     }
 }

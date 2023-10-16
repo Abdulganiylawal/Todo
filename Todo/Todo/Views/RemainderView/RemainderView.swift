@@ -15,11 +15,12 @@ struct RemainderView: View {
     init(model:CDList){
         self.model = model
         let request = CDRemainder.fetch()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.schedule_, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.schedule_?.date_, ascending: true)]
         let predicate1 = NSPredicate(format: "list == %@", self.model as CVarArg)
         let predicate2 = NSPredicate(format: "isCompleted_ == false")
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2])
         self._remainders = FetchRequest(fetchRequest: request, animation: .bouncy)
+
 
     }
     
@@ -36,7 +37,7 @@ struct RemainderView: View {
                 .toolbar{
                     ToolbarItemGroup(placement:.bottomBar) {
                         Button {
-                            let remainder = CDRemainder(context: self.context, title: "", notes: "", schedule: "")
+                            let remainder = CDRemainder(context: self.context, title: "", notes: "")
                             remainder.list = model
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                 isItemFocused = true

@@ -11,8 +11,14 @@
         <attribute name="id_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isCompleted_" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="notes_" optional="YES" attributeType="String"/>
-        <attribute name="schedule_" optional="YES" attributeType="String"/>
         <attribute name="title_" optional="YES" attributeType="String"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDList" inverseName="remainders_" inverseEntity="CDList"/>
+        <relationship name="schedule_" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRemainderSchedule" inverseName="remainder" inverseEntity="CDRemainderSchedule"/>
+    </entity>
+    <entity name="CDRemainderSchedule" representedClassName="CDRemainderSchedule" parentEntity="CDRemainder" syncable="YES" codeGenerationType="class">
+        <attribute name="date_" optional="YES" attributeType="String"/>
+        <attribute name="repeatCycle_" optional="YES" attributeType="String"/>
+        <attribute name="time_" optional="YES" attributeType="String"/>
+        <relationship name="remainder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRemainder" inverseName="schedule_" inverseEntity="CDRemainder"/>
     </entity>
 </model>

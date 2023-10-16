@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100CA9122ADC69D9004DCDA1 /* CDRemainderSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100CA9112ADC69D9004DCDA1 /* CDRemainderSchedule.swift */; };
 		104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB52AB6273A0083B3D6 /* TodoApp.swift */; };
 		104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB72AB6273A0083B3D6 /* ContentView.swift */; };
 		104ECFBA2AB6273C0083B3D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 104ECFB92AB6273C0083B3D6 /* Assets.xcassets */; };
@@ -85,6 +86,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		100CA9112ADC69D9004DCDA1 /* CDRemainderSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDRemainderSchedule.swift; sourceTree = "<group>"; };
 		104ECFB22AB627390083B3D6 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		104ECFB52AB6273A0083B3D6 /* TodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoApp.swift; sourceTree = "<group>"; };
 		104ECFB72AB6273A0083B3D6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				1051EEAF2AD6D9EA00B3C30B /* TodoModel.xcdatamodeld */,
+				100CA9112ADC69D9004DCDA1 /* CDRemainderSchedule.swift */,
 				1051EEB22AD6DC4A00B3C30B /* CDList.swift */,
 				1051EEB42AD6DC5200B3C30B /* CDRemainders.swift */,
 				1051EEB62AD6E77B00B3C30B /* PersistenceController.swift */,
@@ -552,6 +555,7 @@
 				1050F2322AB8B2F5001EA255 /* PasswordField.swift in Sources */,
 				107075732AC1B8FF00793E13 /* Global.swift in Sources */,
 				1051EEB32AD6DC4A00B3C30B /* CDList.swift in Sources */,
+				100CA9122ADC69D9004DCDA1 /* CDRemainderSchedule.swift in Sources */,
 				10E0E8712AB9EA1200E2359D /* Home.swift in Sources */,
 				10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */,
 				104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */,
