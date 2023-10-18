@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		100CA9122ADC69D9004DCDA1 /* CDRemainderSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100CA9112ADC69D9004DCDA1 /* CDRemainderSchedule.swift */; };
+		101284892AE050DA00014C76 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101284882AE050DA00014C76 /* SearchViewModel.swift */; };
 		104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB52AB6273A0083B3D6 /* TodoApp.swift */; };
 		104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB72AB6273A0083B3D6 /* ContentView.swift */; };
 		104ECFBA2AB6273C0083B3D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 104ECFB92AB6273C0083B3D6 /* Assets.xcassets */; };
@@ -87,6 +88,7 @@
 
 /* Begin PBXFileReference section */
 		100CA9112ADC69D9004DCDA1 /* CDRemainderSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDRemainderSchedule.swift; sourceTree = "<group>"; };
+		101284882AE050DA00014C76 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		104ECFB22AB627390083B3D6 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		104ECFB52AB6273A0083B3D6 /* TodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoApp.swift; sourceTree = "<group>"; };
 		104ECFB72AB6273A0083B3D6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -176,6 +178,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		101284872AE050CA00014C76 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				101284882AE050DA00014C76 /* SearchViewModel.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		104ECFA92AB627390083B3D6 = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +263,7 @@
 		104ECFE62AB627C40083B3D6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				101284872AE050CA00014C76 /* Search */,
 				10D72A6E2AC3227A00193E93 /* Remainder */,
 				107075792AC1C4EF00793E13 /* LIst */,
 				104ECFEE2AB628C80083B3D6 /* Authentication */,
@@ -548,6 +559,7 @@
 				1051EEB92AD6F1E700B3C30B /* Predicate.swift in Sources */,
 				10A078D52ADB108700FE2BF0 /* GroupedTaskView.swift in Sources */,
 				10E0E8772AB9EF5300E2359D /* Tab.swift in Sources */,
+				101284892AE050DA00014C76 /* SearchViewModel.swift in Sources */,
 				104ECFF02AB628E50083B3D6 /* AuthViewModel.swift in Sources */,
 				1050F2342AB8B862001EA255 /* AuthenticationManager.swift in Sources */,
 				1050F2452AB8E83D001EA255 /* TabBar.swift in Sources */,

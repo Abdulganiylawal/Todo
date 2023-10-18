@@ -20,7 +20,7 @@ struct TabBar: View {
                 Home(context: PersistenceController.shared.container.viewContext)
                     .tag(0)
 
-                Search()
+                Search(context: PersistenceController.shared.container.viewContext)
                     .tag(1)
 
                 Settings(vm: data)

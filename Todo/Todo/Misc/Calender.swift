@@ -75,6 +75,7 @@ struct calender: View {
                         schedule?.time = formattedDatesString(from: time, isTime: true)
                     }
                     isFocused = false
+                    PersistenceController.shared.save()
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Done")
