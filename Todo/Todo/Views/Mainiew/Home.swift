@@ -47,6 +47,7 @@ struct Home: View {
                                     Text("\(taskCountModel.getRemainderCount(list: list))")
                                 }
                             }
+                            .listStyle(.insetGrouped)
                             .listRowInsets(EdgeInsets(top: 15, leading: 10, bottom: 15, trailing: 15))
                             .swipeActions(allowsFullSwipe:true) {
                                 Button(role: .destructive) {
@@ -78,11 +79,9 @@ struct Home: View {
                     }
                 }
                 .scrollContentBackground(.hidden)
-        
                 .navigationTitle("Tasks")
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(hex: colorScheme == .dark ? "000000" : "C4C1A4"))
         }.onAppear {
             model.fetchList()
             reloadFlag.toggle()
@@ -115,14 +114,14 @@ struct GridView: View {
                     }
                 }
             }
-          
+
         }
     }
 }
 
 extension GridView{
     func CustomView(iconName:String,name:String,ColorDark:String,ColorLight:String) -> some View{
-        HStack{
+        HStack(alignment: .top){
             VStack(alignment:.leading){
                 Image(systemName: iconName)
                     .resizable()
@@ -134,38 +133,19 @@ extension GridView{
                     .foregroundColor(.secondary)
             }
             Spacer()
-            if name == "All"{
                 Text("\(model.getCount(item:name))")
                     .font(.title2)
                     .fontWeight(.heavy)
                     .foregroundColor(Color(hex: colorScheme == .dark ? "FFFFFF" :  "0F0F0F" ))
-            }
-            else if name == "Completed"{
-                Text("\(model.getCount(item:name))")
-                    .font(.title2)
-                    .fontWeight(.heavy)
-                    .foregroundColor(Color(hex: colorScheme == .dark ? "FFFFFF" :  "0F0F0F" ))
-            }
-            else if name == "Schedule"{
-                Text("\(model.getCount(item:name))")
-                    .font(.title2)
-                    .fontWeight(.heavy)
-                    .foregroundColor(Color(hex: colorScheme == .dark ? "FFFFFF" :  "0F0F0F" ))
-            }
-            else if name == "Today"{
-                Text("\(model.getCount(item:name))")
-                    .font(.title2)
-                    .fontWeight(.heavy)
-                    .foregroundColor(Color(hex: colorScheme == .dark ? "FFFFFF" :  "0F0F0F" ))
-            }
         }
-        .padding(10)
-        .background(Color(hex: colorScheme == .dark ? "272829" : "8ECDDD"))
-        .cornerRadius(15)
-        .shadow(color: Color.gray.opacity(colorScheme == .light ? 0.5 : 0), radius: 5, x: 0, y: 2)
+        .padding(.top,15)
+        .padding([.bottom,.leading,.trailing],10)
+        .background(
+            Color(hex: colorScheme == .light ? "F1EFEF" : "#1C1C1E"),
+            in: RoundedRectangle(cornerRadius: 15, style: .continuous)
+               
+        )
     }
-    
-
 }
 
 //#Preview

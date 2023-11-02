@@ -15,8 +15,7 @@ struct calender: View {
     @State private var showTime = false
     @Binding  var isFocused: Bool
     @FocusState  var isItemFocused: Bool
-    let repeatCycles = ["Never", "Daily", "Weekly", "Monthly", "Yearly"]
-    @State private var picked = "Never"
+    @State private var picked:RepeatCycle = .never
     @Environment(\.presentationMode) var presentationMode
     @Binding var schedule:CDRemainderSchedule?
     @Binding var editedDate: String
@@ -53,15 +52,15 @@ struct calender: View {
             }
             if showDate || !schedule!.date.isEmpty {
                 Picker(selection: $picked) {
-                    ForEach(repeatCycles,id: \.self){
-                        repeatCycle in
-                        Text(repeatCycle)
+                    ForEach(RepeatCycle.allCases,id: \.self){
+                        cycle in
+                        Text(cycle.rawValue).tag(cycle)
                     }
                 } label: {
                     Label("Repeat", systemImage: "repeat")
                 }.onChange(of: picked, initial: false) { oldValue, newValue in
-                    if newValue != "Never"{
-                        schedule?.repeatCycle = newValue
+                    if newValue != RepeatCycle.never {
+                        schedule?.repeatCycle = newValue.rawValue
                     }
                 }.disabled(!showDate)
             }

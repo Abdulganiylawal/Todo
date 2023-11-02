@@ -14,6 +14,7 @@ struct CompletedView: View {
     init(model:CDList){
         self.model = model
         let request = CDRemainder.fetch()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.schedule_?.date_, ascending: true)]
         let predicate1 = NSPredicate(format: "list == %@", self.model  as CVarArg )
         let predicate2 = NSPredicate(format: "isCompleted_ == true")
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2])
@@ -34,12 +35,16 @@ struct CompletedView: View {
                             Text(remainder.notes_ ?? "")
                                 .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
                                 .frame(alignment: .leading)
-                            if  let originalDate = remainder.schedule_?.date, let time = remainder.schedule_?.time{
+                            if  let originalDate = remainder.schedule_?.date, let time = remainder.schedule_?.time, let repeatCycle = remainder.schedule_?.repeatCycle{
                                 HStack{
                                     Text(originalDate)
                                         .foregroundColor(.secondary)
                                     if !time.isEmpty{
                                         Text(",\(time)")
+                                            .foregroundColor(.secondary)
+                                    }
+                                    if !repeatCycle.isEmpty{
+                                        Text(",\(repeatCycle)")
                                             .foregroundColor(.secondary)
                                     }
                                 }

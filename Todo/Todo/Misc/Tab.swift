@@ -15,11 +15,12 @@ extension TabBar{
         HStack(){
             Spacer()
             Image(systemName: imageName)
-                .resizable()
                 .renderingMode(.template)
-                .foregroundColor(colorScheme == .dark ? .white: .black)
+                .font(.title2)
+                .imageScale(.medium)
+                .foregroundColor(colorScheme == .dark ? .gray: .black)
                 .fontWeight(isActive ?.bold: .regular)
-                .frame(width: 24,height: 24)
+        
             Spacer()
         }
         .frame(height: 50)

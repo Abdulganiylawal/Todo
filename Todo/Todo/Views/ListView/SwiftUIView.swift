@@ -9,7 +9,14 @@ import SwiftUI
 
 struct SwiftUIView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Image(systemName: "house")
+            .symbolRenderingMode(.hierarchical)
+            .foregroundColor(.indigo)
+        
+        Image(systemName: "square.stack.3d.down.right.fill")
+            .symbolRenderingMode(.hierarchical)
+            .foregroundColor(.indigo)
+           
     }
 }
 

@@ -24,20 +24,26 @@ struct GroupedTaskView: View {
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
                 let request1 = NSPredicate(format: "title_ != %@", "")
                 let request2 = NSPredicate(format: "notes_ != %@", "")
-                 request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [request1,request2])
+                let request3 = NSCompoundPredicate(orPredicateWithSubpredicates: [request1,request2])
+                let request4 = NSPredicate(format: "isCompleted_ == false")
+                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request3,request4])
             case .completed:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
                 request.predicate = NSPredicate(format: "isCompleted_ == true")
             case .schedule:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
-                request.predicate = NSPredicate(format: "schedule_.date_ != %@", "")
+                let request1 = NSPredicate(format: "isCompleted_ == false")
+                let request2 = NSPredicate(format: "schedule_.date_  != %@", "")
+                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request1,request2])
             case .today:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
                 let date = Date()
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd/MM/yyyy"
                 let formattedDates = dateFormatter.string(from: date)
-                request.predicate = NSPredicate(format: "schedule_.date_ == %@", formattedDates as CVarArg)
+                let request1 = NSPredicate(format: "schedule_.date_ == %@", formattedDates as CVarArg)
+                let request2 = NSPredicate(format: "isCompleted_ == false")
+                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request1,request2])
         }
         self._remainders = FetchRequest(fetchRequest: request)
     }

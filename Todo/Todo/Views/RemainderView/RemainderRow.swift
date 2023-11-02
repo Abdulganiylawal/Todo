@@ -66,7 +66,6 @@ struct RemainderRow: View {
                             }
 
                         }
-                        
                     }
                 }
             }
@@ -145,9 +144,12 @@ struct RemainderRow: View {
         let formattedDates = dateFormatter.string(from: dateComponents)
         return formattedDates
     }
-    func dateFromString(_ dateString: String) -> Date? {
+    
+    private func dateFromString(_ dateString: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.date(from: dateString)
     }
 }
+
+

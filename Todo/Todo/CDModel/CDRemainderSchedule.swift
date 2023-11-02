@@ -44,6 +44,5 @@ extension CDRemainderSchedule{
         self.repeatCycle = repeatCycle
         self.date = date
         self.time = time
-        
     }
 }

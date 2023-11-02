@@ -10,6 +10,7 @@ import CoreData
 struct RemainderView: View {
     @State var isFocused: Bool = false
     @FocusState var isItemFocused:Bool
+    var repeatCycleManager = RepeatCycleManager()
     var model:CDList
     @Environment(\.managedObjectContext) var context
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
@@ -107,6 +108,9 @@ struct RemainderView: View {
                 .swipeActions(edge: .leading, allowsFullSwipe: true) {
                     Button {
                         remainder.isCompleted_.toggle()
+                        if !remainder.schedule_!.repeatCycle_!.isEmpty {
+                            repeatCycleManager.nextDueDate(remainder: remainder, context: self.context)
+                        }
                         PersistenceController.shared.save()
                     } label: {
                         Label("Completed", systemImage: "checkmark")

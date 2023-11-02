@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		100CA9122ADC69D9004DCDA1 /* CDRemainderSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100CA9112ADC69D9004DCDA1 /* CDRemainderSchedule.swift */; };
 		101284892AE050DA00014C76 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101284882AE050DA00014C76 /* SearchViewModel.swift */; };
+		102DE48E2AF3EC4B00AE9BD4 /* repeatCycleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102DE48D2AF3EC4B00AE9BD4 /* repeatCycleManager.swift */; };
+		10468B462AF40C7A00600B67 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10468B452AF40C7A00600B67 /* SwiftUIView.swift */; };
 		104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB52AB6273A0083B3D6 /* TodoApp.swift */; };
 		104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB72AB6273A0083B3D6 /* ContentView.swift */; };
 		104ECFBA2AB6273C0083B3D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 104ECFB92AB6273C0083B3D6 /* Assets.xcassets */; };
@@ -89,6 +91,8 @@
 /* Begin PBXFileReference section */
 		100CA9112ADC69D9004DCDA1 /* CDRemainderSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDRemainderSchedule.swift; sourceTree = "<group>"; };
 		101284882AE050DA00014C76 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		102DE48D2AF3EC4B00AE9BD4 /* repeatCycleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repeatCycleManager.swift; sourceTree = "<group>"; };
+		10468B452AF40C7A00600B67 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		104ECFB22AB627390083B3D6 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		104ECFB52AB6273A0083B3D6 /* TodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoApp.swift; sourceTree = "<group>"; };
 		104ECFB72AB6273A0083B3D6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -184,6 +188,14 @@
 				101284882AE050DA00014C76 /* SearchViewModel.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		102DE48C2AF3EC2D00AE9BD4 /* RepeatService */ = {
+			isa = PBXGroup;
+			children = (
+				102DE48D2AF3EC4B00AE9BD4 /* repeatCycleManager.swift */,
+			);
+			path = RepeatService;
 			sourceTree = "<group>";
 		};
 		104ECFA92AB627390083B3D6 = {
@@ -296,6 +308,7 @@
 		104ECFEA2AB6285D0083B3D6 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				102DE48C2AF3EC2D00AE9BD4 /* RepeatService */,
 				104ECFEB2AB628690083B3D6 /* AuthServices */,
 			);
 			path = Services;
@@ -357,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				107075752AC1C44600793E13 /* AddList.swift */,
+				10468B452AF40C7A00600B67 /* SwiftUIView.swift */,
 			);
 			path = ListView;
 			sourceTree = "<group>";
@@ -564,6 +578,7 @@
 				1050F2342AB8B862001EA255 /* AuthenticationManager.swift in Sources */,
 				1050F2452AB8E83D001EA255 /* TabBar.swift in Sources */,
 				104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */,
+				102DE48E2AF3EC4B00AE9BD4 /* repeatCycleManager.swift in Sources */,
 				1050F2322AB8B2F5001EA255 /* PasswordField.swift in Sources */,
 				107075732AC1B8FF00793E13 /* Global.swift in Sources */,
 				1051EEB32AD6DC4A00B3C30B /* CDList.swift in Sources */,
@@ -580,6 +595,7 @@
 				10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */,
 				107075762AC1C44600793E13 /* AddList.swift in Sources */,
 				10F9A4F22AC9C50E005B5231 /* CompletedView.swift in Sources */,
+				10468B462AF40C7A00600B67 /* SwiftUIView.swift in Sources */,
 				1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */,
 				1051EEB52AD6DC5200B3C30B /* CDRemainders.swift in Sources */,
 				1051EEB72AD6E77B00B3C30B /* PersistenceController.swift in Sources */,

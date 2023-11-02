@@ -89,20 +89,26 @@ class TaskGroupCount{
         if item == "All"{
             let request1 = NSPredicate(format: "title_ != %@", "")
             let request2 = NSPredicate(format: "notes_ != %@", "")
-             request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [request1,request2])
+            let request3 = NSPredicate(format: "isCompleted_ == false")
+            let request4 = NSCompoundPredicate(orPredicateWithSubpredicates: [request1,request2])
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request3,request4])
         }
         else if item == "Completed"{
             request.predicate = NSPredicate(format: "isCompleted_ == true")
         }
         else if item == "Schedule"{
-            request.predicate = NSPredicate(format: "schedule_.date_  != %@", "")
+            let request1 = NSPredicate(format: "isCompleted_ == false")
+            let request2 = NSPredicate(format: "schedule_.date_  != %@", "")
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request1,request2])
         }
         else if item == "Today"{
             let date = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd/MM/yyyy"
             let formattedDates = dateFormatter.string(from: date)
-            request.predicate = NSPredicate(format: "schedule_.date_ == %@", formattedDates as CVarArg)
+            let request1 = NSPredicate(format: "schedule_.date_ == %@", formattedDates as CVarArg)
+            let request2 = NSPredicate(format: "isCompleted_ == false")
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request1,request2])
         }
         do{
             count = try context.count(for: request)
