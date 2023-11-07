@@ -16,8 +16,6 @@ class ListViewManger:ObservableObject{
     @Published var title = ""
     @Published var isEnabled: Bool = false
     var context:NSManagedObjectContext
-    var imageName:String = ""
-    var colorName:String = ""
 
     func addList(name:String,image:String,color:String){
         myList.append(CDList(name: name, color: color, image: image, context: context))

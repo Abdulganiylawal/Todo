@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		100CA9122ADC69D9004DCDA1 /* CDRemainderSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 100CA9112ADC69D9004DCDA1 /* CDRemainderSchedule.swift */; };
 		101284892AE050DA00014C76 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101284882AE050DA00014C76 /* SearchViewModel.swift */; };
+		102C3EB52AFA79A20037B238 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102C3EB42AFA79A20037B238 /* ListView.swift */; };
+		102C3EB72AFA82FF0037B238 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102C3EB62AFA82FF0037B238 /* Modifiers.swift */; };
+		102C3EB92AFA9EC40037B238 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 102C3EB82AFA9EC40037B238 /* Assets.xcassets */; };
+		102C3EBB2AFAB9050037B238 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102C3EBA2AFAB9050037B238 /* SwiftUIView.swift */; };
 		102DE48E2AF3EC4B00AE9BD4 /* repeatCycleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102DE48D2AF3EC4B00AE9BD4 /* repeatCycleManager.swift */; };
-		10468B462AF40C7A00600B67 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10468B452AF40C7A00600B67 /* SwiftUIView.swift */; };
 		104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB52AB6273A0083B3D6 /* TodoApp.swift */; };
 		104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB72AB6273A0083B3D6 /* ContentView.swift */; };
-		104ECFBA2AB6273C0083B3D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 104ECFB92AB6273C0083B3D6 /* Assets.xcassets */; };
 		104ECFBD2AB6273C0083B3D6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 104ECFBC2AB6273C0083B3D6 /* Preview Assets.xcassets */; };
 		104ECFBF2AB6273C0083B3D6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFBE2AB6273C0083B3D6 /* Persistence.swift */; };
 		104ECFCD2AB6273C0083B3D6 /* TodoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFCC2AB6273C0083B3D6 /* TodoTests.swift */; };
@@ -91,12 +93,14 @@
 /* Begin PBXFileReference section */
 		100CA9112ADC69D9004DCDA1 /* CDRemainderSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDRemainderSchedule.swift; sourceTree = "<group>"; };
 		101284882AE050DA00014C76 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		102C3EB42AFA79A20037B238 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		102C3EB62AFA82FF0037B238 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
+		102C3EB82AFA9EC40037B238 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		102C3EBA2AFAB9050037B238 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		102DE48D2AF3EC4B00AE9BD4 /* repeatCycleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repeatCycleManager.swift; sourceTree = "<group>"; };
-		10468B452AF40C7A00600B67 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		104ECFB22AB627390083B3D6 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		104ECFB52AB6273A0083B3D6 /* TodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoApp.swift; sourceTree = "<group>"; };
 		104ECFB72AB6273A0083B3D6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		104ECFB92AB6273C0083B3D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		104ECFBC2AB6273C0083B3D6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		104ECFBE2AB6273C0083B3D6 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		104ECFC32AB6273C0083B3D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -227,8 +231,8 @@
 				104ECFE62AB627C40083B3D6 /* ViewModel */,
 				104ECFC32AB6273C0083B3D6 /* Info.plist */,
 				104ECFF32AB6370A0083B3D6 /* GoogleService-Info.plist */,
+				102C3EB82AFA9EC40037B238 /* Assets.xcassets */,
 				104ECFEA2AB6285D0083B3D6 /* Services */,
-				104ECFB92AB6273C0083B3D6 /* Assets.xcassets */,
 				104ECFBE2AB6273C0083B3D6 /* Persistence.swift */,
 				1050F2302AB8B2CF001EA255 /* Misc */,
 				1051EEAE2AD6D9CF00B3C30B /* CDModel */,
@@ -349,6 +353,7 @@
 				10E0E87B2ABA0F0300E2359D /* Styles.swift */,
 				10D72A762AC32BFC00193E93 /* DropDownMenu.swift */,
 				10CE85CB2AC44D6F0086C8DA /* Calender.swift */,
+				102C3EB62AFA82FF0037B238 /* Modifiers.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -370,7 +375,8 @@
 			isa = PBXGroup;
 			children = (
 				107075752AC1C44600793E13 /* AddList.swift */,
-				10468B452AF40C7A00600B67 /* SwiftUIView.swift */,
+				102C3EB42AFA79A20037B238 /* ListView.swift */,
+				102C3EBA2AFAB9050037B238 /* SwiftUIView.swift */,
 			);
 			path = ListView;
 			sourceTree = "<group>";
@@ -541,7 +547,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				104ECFBD2AB6273C0083B3D6 /* Preview Assets.xcassets in Resources */,
-				104ECFBA2AB6273C0083B3D6 /* Assets.xcassets in Resources */,
+				102C3EB92AFA9EC40037B238 /* Assets.xcassets in Resources */,
 				104ECFF42AB6370A0083B3D6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -587,19 +593,21 @@
 				10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */,
 				104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */,
 				10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */,
+				102C3EB52AFA79A20037B238 /* ListView.swift in Sources */,
 				104ECFED2AB6288A0083B3D6 /* AuthModel.swift in Sources */,
 				10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */,
 				10E0E87C2ABA0F0300E2359D /* Styles.swift in Sources */,
 				1050F22B2AB8A164001EA255 /* SignUp.swift in Sources */,
+				102C3EB72AFA82FF0037B238 /* Modifiers.swift in Sources */,
 				1050F2292AB8A14D001EA255 /* SignIn.swift in Sources */,
 				10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */,
 				107075762AC1C44600793E13 /* AddList.swift in Sources */,
 				10F9A4F22AC9C50E005B5231 /* CompletedView.swift in Sources */,
-				10468B462AF40C7A00600B67 /* SwiftUIView.swift in Sources */,
 				1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */,
 				1051EEB52AD6DC5200B3C30B /* CDRemainders.swift in Sources */,
 				1051EEB72AD6E77B00B3C30B /* PersistenceController.swift in Sources */,
 				1051EEB12AD6D9EA00B3C30B /* TodoModel.xcdatamodeld in Sources */,
+				102C3EBB2AFAB9050037B238 /* SwiftUIView.swift in Sources */,
 				10D72A792AC34F8900193E93 /* RemainderRow.swift in Sources */,
 				10E0E86E2AB9E74500E2359D /* TabModel.swift in Sources */,
 				10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */,

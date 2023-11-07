@@ -42,11 +42,11 @@ struct RemainderRow: View {
                             Text(originalDate)
                                 .foregroundColor(.secondary)
                             if !time.isEmpty{
-                                Text(",\(time)")
+                                Text(",  \(time)")
                                     .foregroundColor(.secondary)
                             }
                             if !repeatCycle.isEmpty{
-                                Text(",\(Image(systemName: "repeat"))\(repeatCycle)")
+                                Text(", \(Image(systemName: "repeat"))\(repeatCycle)")
                                     .foregroundColor(.secondary)
                             }
                             
@@ -57,11 +57,11 @@ struct RemainderRow: View {
                                 .foregroundColor(.secondary)
                                 
                             if !time.isEmpty{
-                                Text(",\(time)")
+                                Text(", \(time)")
                                     .foregroundColor(.secondary)
                             }
-                            else if !repeatCycle.isEmpty{
-                                Text(",\(Image(systemName: "repeat"))\(repeatCycle)")
+                             if !repeatCycle.isEmpty{
+                                Text(", \(Image(systemName: "repeat"))\(repeatCycle)")
                                     .foregroundColor(.secondary)
                             }
 

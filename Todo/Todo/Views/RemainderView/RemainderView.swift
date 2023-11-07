@@ -108,7 +108,7 @@ struct RemainderView: View {
                 .swipeActions(edge: .leading, allowsFullSwipe: true) {
                     Button {
                         remainder.isCompleted_.toggle()
-                        if !remainder.schedule_!.repeatCycle_!.isEmpty {
+                        if !remainder.schedule_!.repeatCycle.isEmpty {
                             repeatCycleManager.nextDueDate(remainder: remainder, context: self.context)
                         }
                         PersistenceController.shared.save()
