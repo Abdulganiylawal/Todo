@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="CDList" representedClassName="CDList" syncable="YES" codeGenerationType="class">
         <attribute name="color_" optional="YES" attributeType="String"/>
         <attribute name="id_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -17,6 +17,7 @@
     </entity>
     <entity name="CDRemainderSchedule" representedClassName="CDRemainderSchedule" parentEntity="CDRemainder" syncable="YES" codeGenerationType="class">
         <attribute name="date_" optional="YES" attributeType="String"/>
+        <attribute name="duration_" optional="YES" attributeType="String"/>
         <attribute name="repeatCycle_" optional="YES" attributeType="String"/>
         <attribute name="time_" optional="YES" attributeType="String"/>
         <relationship name="remainder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRemainder" inverseName="schedule_" inverseEntity="CDRemainder"/>

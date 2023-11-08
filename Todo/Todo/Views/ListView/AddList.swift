@@ -74,7 +74,6 @@ struct AddList: View {
                     self.name = model.title
                     model.addList(name: self.name, image: self.icon!, color: self.color!)
                     model.title = ""
-               
                     presentationMode.wrappedValue.dismiss()
                     
                 } label: {

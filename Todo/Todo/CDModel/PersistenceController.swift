@@ -29,14 +29,21 @@ struct PersistenceController {
         return controller
     }()
 
-    func save() {
-        let context = container.viewContext
-
-        guard context.hasChanges else { return }
-        do {
-            try context.save()
-        } catch {
-            print("\(error)")
-        }
-    }
+    func save() async {
+   
+          let context = container.viewContext
+          if context.hasChanges {
+              await withCheckedContinuation { continuation in
+                  context.perform {
+                      do {
+                          try context.save()
+                          continuation.resume()
+                      } catch {
+                  
+                          continuation.resume(throwing: error as! Never)
+                      }
+                  }
+              }
+          }
+      }
 }

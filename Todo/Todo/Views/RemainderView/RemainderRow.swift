@@ -75,7 +75,7 @@ struct RemainderRow: View {
         }
         .sheet(isPresented: $isClicked, content: {
             NavigationStack{
-                calender(dates: dateFromString(editedDate) ?? Date(), isFocused: $isFocused, schedule: $remainder.schedule_, editedDate: $editedDate)
+//                calender(dates: dateFromString(editedDate) ?? Date(), isFocused: $isFocused, schedule: $remainder.schedule_, editedDate: $editedDate)
             }
         })
         .onDisappear(perform: {

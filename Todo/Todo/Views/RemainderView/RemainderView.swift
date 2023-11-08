@@ -10,6 +10,7 @@ import CoreData
 struct RemainderView: View {
     @State var isFocused: Bool = false
     @FocusState var isItemFocused:Bool
+    @State var isClicked:Bool = false
     var repeatCycleManager = RepeatCycleManager()
     var model:CDList
     @Environment(\.managedObjectContext) var context
@@ -38,12 +39,13 @@ struct RemainderView: View {
                 .toolbar{
                     ToolbarItemGroup(placement:.bottomBar) {
                         Button {
-                            let remainder = CDRemainder(context: self.context, title: "", notes: "")
-                            remainder.list = model
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                isItemFocused = true
-                                isFocused = true
-                            }
+//                            let remainder = CDRemainder(context: self.context, title: "", notes: "")
+//                            remainder.list = model
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                                isItemFocused = true
+//                                isFocused = true
+                            isClicked.toggle()
+                            
                         } label: {
                             HStack {
                                 Image(systemName: "plus.circle.fill")
@@ -64,6 +66,11 @@ struct RemainderView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .sheet(isPresented: $isClicked, content: {
+                    NavigationStack{
+                        AddRemainder(model: model)
+                    }
+                })
                 .background(
                     Text(remainders.isEmpty ? "Empty" : "")
                 )
@@ -83,7 +90,9 @@ struct RemainderView: View {
                                 isItemFocused = false
                                 isFocused = false
                             }
-                            PersistenceController.shared.save()
+                            Task{
+                                await PersistenceController.shared.save()
+                            }
                         }) {
                             Text("Done")
                                 .foregroundColor(Color(hex: model.color))
@@ -111,7 +120,9 @@ struct RemainderView: View {
                         if !remainder.schedule_!.repeatCycle.isEmpty {
                             repeatCycleManager.nextDueDate(remainder: remainder, context: self.context)
                         }
-                        PersistenceController.shared.save()
+                        Task{
+                            await PersistenceController.shared.save()
+                        }
                     } label: {
                         Label("Completed", systemImage: "checkmark")
                     }

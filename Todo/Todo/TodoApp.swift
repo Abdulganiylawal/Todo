@@ -24,15 +24,19 @@ struct YourApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @Environment(\.scenePhase) var scenePhase
     let persistenceController = PersistenceController.shared
+    @StateObject var sheetManager = SheetManager()
     
     var body: some Scene {
         WindowGroup {
             NavigationView {
                 ContentView(context: persistenceController.container.viewContext)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environmentObject(sheetManager)
                     .onChange(of: scenePhase) { oldValue , newValue in
                         if newValue == .background{
-                            persistenceController.save()
+                            Task{
+                                await persistenceController.save()
+                            }
                         }
                     }
                 

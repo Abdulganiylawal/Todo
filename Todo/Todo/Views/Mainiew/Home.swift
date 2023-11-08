@@ -16,7 +16,8 @@ struct Home: View {
     var ListEssModel:ListEssentials
     @State private var reloadFlag = false
     @State var isClicked: Bool = false
-    
+    let resultGridLayout = [GridItem(.adaptive(minimum: 150), spacing: 10 ,
+                              alignment: .top)]
 
     @GestureState var press = false
     init(context:NSManagedObjectContext){
@@ -36,30 +37,32 @@ struct Home: View {
     
     var body: some View {
         NavigationStack{
-            ScrollView{
+            ScrollView(showsIndicators: false){
                 Section{
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
+                    LazyVGrid(columns: resultGridLayout) {
                         ForEach(TaskGroup.allCases) { taskGroup in
                             ListView(icon: taskGroup.iconName, name: taskGroup.name, color: colorScheme == .light ? taskGroup.colorLight : taskGroup.colorDark, count: ListEssModel.getCount(item: taskGroup.rawValue), remainders: ListEssModel.get3Remainder(for: taskGroup))
-                             
-                            
                         }
                     }
                 }
+                .padding([.top,.leading,.trailing],20)
                 LabeledContent {
                     Button {
                         isClicked.toggle()
                     } label: {
                         Image(systemName: "plus.app.fill")
-                        
-                        
+                            .foregroundStyle(.green)
+                    
                     }
                 } label: {
                     Text("My Lists")
                         .foregroundStyle(.secondary)
+                        .fontWeight(.medium)
                 }
+                .padding([.top,.leading,.trailing],20)
+             
                 Section{
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
+                    LazyVGrid(columns: resultGridLayout) {
                         
                         ForEach(model.myList,id: \.id) { list in
                             NavigationLink {
@@ -69,15 +72,16 @@ struct Home: View {
                                     .contextMenu {
                                         menuItems
                                     }
+                                    
                             }
                         }
                     }
                 }
-                
+                .padding()
             }
             .frame(maxWidth: .infinity)
-            .background(colorScheme == .light ? Color(hex: "C5DFF8").opacity(0.4).frame(width:99999,height:99999) : Color(UIColor.black).frame(width:99999,height: 99999)  )
-            .padding()
+            .background(colorScheme == .light ? Color(hex: "F3EEEA").opacity(0.4).frame(width:99999,height:99999) : Color(UIColor.black).frame(width:99999,height: 99999)  )
+    
             .id(reloadFlag)
         }
         .onAppear {

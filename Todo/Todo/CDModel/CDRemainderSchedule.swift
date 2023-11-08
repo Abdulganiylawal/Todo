@@ -33,16 +33,23 @@ extension CDRemainderSchedule{
             time_ = newValue
         }
     }
-    
+    var duration:String{
+        get{
+            duration_ ?? ""
+        }set{
+            duration_ = newValue
+        }
+    }
     static func delete(schedule:CDRemainderSchedule){
         guard let context = schedule.managedObjectContext else{return}
         context.delete(schedule)
     }
 
-    convenience init(repeatCycle:String,date:String,time:String,context:NSManagedObjectContext) {
+    convenience init(repeatCycle:String,date:String,time:String,duration:String,context:NSManagedObjectContext) {
         self.init(context: context)
         self.repeatCycle = repeatCycle
         self.date = date
         self.time = time
+        self.duration = duration
     }
 }

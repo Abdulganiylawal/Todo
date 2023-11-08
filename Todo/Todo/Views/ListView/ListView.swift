@@ -34,41 +34,48 @@ struct ListView: View {
                 }
                 Spacer()
                 Text("\(count)")
-                    .font(.title3)
+                    .font(.title)
                     .fontWeight(.heavy)
                     .foregroundColor(colorScheme == .dark ? .white : .black)
                 
-            }
+            }.padding(.top,remainders.count == 0 ? 5 : 20)
                 if remainders.count > 0 {
-                    RoundedRectangle(cornerRadius: 5)
+                    RoundedRectangle(cornerRadius: 10)
                         .fill(colorScheme == .dark ? Color.black.opacity(0.3) : Color.white.opacity(1))
                         .overlay(
                             VStack(alignment: .leading) {
                                 ForEach(remainders.prefix(3)) { remainder in
                                     HStack {
                                         Text("•")
-                                            .foregroundColor(Color(hex: color))
-                                            .font(.system(size: 10))
+                                            .foregroundColor(Color(hex:   remainder.list!.color))
+                                            .font(.system(size: 12))
+                                            .fontWeight(.heavy)
                                         Text("\(remainder.title)")
-                                            .foregroundColor(.secondary)
+                                             .foregroundColor(Color(hex:   remainder.list!.color))
                                         Spacer()
                                     }
                                     .padding(.leading,10)
+                                 
                                     .font(.system(size: 10))
                                     .fontWeight(.heavy)
                                 }
+                                
                             }
+                                
+                                .padding([.bottom,.top],20)
                         )
-                        .frame(height: 45)
+                     
+                        .frame(height: 50)
+                        .padding(.bottom,15)
                 }
             
         }
         .padding()
         .padding(.vertical, 10)
-        .frame(height: remainders.count == 0 ? 100 : 130)
+        .frame(height: remainders.count == 0 ? 90 : 145)
         .background(.ultraThinMaterial)
-        .backgroundStyle(cornerRadius: 20)
-        .customBackground(condition: colorScheme == .light, color: color)
+        .backgroundStyle(cornerRadius: 20, opacity: colorScheme == .dark ? 0 : 0.6, colors: color)
+        .customBackground(condition: colorScheme == .dark, color: color)
     }
 }
 
@@ -82,7 +89,7 @@ struct ListView_Previews: PreviewProvider {
         let list = CDList(name: "", color: "D83F31", image: "", context: PersistenceController.shared.container.viewContext)
         let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "")
         remainders.list = list
-        remainders.schedule_ = CDRemainderSchedule(repeatCycle: "", date: "", time: "", context: PersistenceController.shared.container.viewContext)
+        remainders.schedule_ = CDRemainderSchedule(repeatCycle: "", date: "", time: "", duration: "", context: PersistenceController.shared.container.viewContext)
         
         
         

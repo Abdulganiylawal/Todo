@@ -57,7 +57,7 @@ enum TaskGroup: String, Identifiable, CaseIterable {
             case .all:
                 return "6499E9"
             case .today:
-                return "#F4E869"
+                return "FEBF63"
             case .schedule:
                 return "FE0000"
             case .completed:

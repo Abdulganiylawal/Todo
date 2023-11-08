@@ -35,7 +35,7 @@ class ListViewManger:ObservableObject{
        
     }
     
-    func delete(list: CDList) {
+    func delete(list: CDList) async {
         guard let context = list.managedObjectContext else { return }
         
         for remainder in list.remainders {
@@ -43,7 +43,7 @@ class ListViewManger:ObservableObject{
         }
         
         context.delete(list)
-        PersistenceController.shared.save()
+        await PersistenceController.shared.save()
     }
 
    
