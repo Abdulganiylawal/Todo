@@ -1,155 +1,97 @@
+////
+////  SwiftUIView.swift
+////  Todo
+////
+////  Created by Lawal Abdulganiy on 07/11/2023.
+////
 //
-//  RemainderRow.swift
-//  Todo
-//
-//  Created by Lawal Abdulganiy on 26/09/2023.
-//
-
 import SwiftUI
-import CoreData
+
 @available(iOS 17.0, *)
 struct RemainderRow: View {
-    @ObservedObject var remainder: CDRemainder
-    var color:String
-    @State var isClicked:Bool = false
-    @Binding  var isFocused: Bool
-    @FocusState  var isItemFocused: Bool
+    @Environment(\.colorScheme) var colorScheme
+    var color:String = ""
+    var remainder:CDRemainder
+    var dateFormatterModel = DateFormatterModel()
+    let duration:Double
+    
+    var progressInterval: ClosedRange<Date>? {
+        guard let startTimeString = remainder.schedule_?.time,
+              let startDateString = remainder.schedule_?.date,
+              let start = dateTimeFromString(dateString: startDateString, timeString: startTimeString) else {
+            return nil
+        }
+        print(start)
+        let end = start.addingTimeInterval(TimeInterval(self.duration))
+        return start...end
+    }
 
-    @State  var editedDate: String = ""
+
+    init(remainder:CDRemainder, color:String, duration:Double){
+        self.color = color
+        self.remainder = remainder
+        self.duration = duration
+    }
     
     var body: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading) {
-                TextField("New Reminder", text: $remainder.title)
-                    .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                    .focused($isItemFocused,equals: isFocused)
-                    .onTapGesture(perform: {
-                        isFocused = true
-                    })
+        
+        VStack(alignment: .leading, spacing: 8) {
+            Text(remainder.title)
+                .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+            Text(remainder.notes)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .foregroundColor(.primary.opacity(0.7))
+               if let interval = progressInterval {
+                   ProgressView(timerInterval: interval,countsDown: false)
+                       .tint(Color(hex: color))
                 
-                TextField("Add Note", text: $remainder.notes)
-                    .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                    .focused($isItemFocused,equals: isFocused)
-                    .onTapGesture(perform: {
-                        isFocused = true
-                        
-                    })
-                  
-                
-                if  let originalDate = remainder.schedule_?.date, let time = remainder.schedule_?.time, let repeatCycle = remainder.schedule_?.repeatCycle,!editedDate.isEmpty{
-                    if !isFocused {
-                        HStack{
-                            Text(originalDate)
-                                .foregroundColor(.secondary)
-                            if !time.isEmpty{
-                                Text(",  \(time)")
-                                    .foregroundColor(.secondary)
-                            }
-                            if !repeatCycle.isEmpty{
-                                Text(", \(Image(systemName: "repeat"))\(repeatCycle)")
-                                    .foregroundColor(.secondary)
-                            }
-                            
-                        }
-                    } else {
-                        HStack{
-                            Text(editedDate)
-                                .foregroundColor(.secondary)
-                                
-                            if !time.isEmpty{
-                                Text(", \(time)")
-                                    .foregroundColor(.secondary)
-                            }
-                             if !repeatCycle.isEmpty{
-                                Text(", \(Image(systemName: "repeat"))\(repeatCycle)")
-                                    .foregroundColor(.secondary)
-                            }
-
-                        }
-                    }
-                }
             }
-            if isItemFocused{
-                infoMenu
-            }
-        }
-        .sheet(isPresented: $isClicked, content: {
-            NavigationStack{
-//                calender(dates: dateFromString(editedDate) ?? Date(), isFocused: $isFocused, schedule: $remainder.schedule_, editedDate: $editedDate)
-            }
-        })
-        .onDisappear(perform: {
-            editedDate = remainder.schedule_?.date ?? ""
-        })
-        .onAppear(perform: {
-            editedDate = remainder.schedule_?.date ?? ""
-        })
-    }
-    
-    var infoMenu:some View{
-        Menu {
-            Menu {
-                Button {
-                    let today = Date()
-                    let todayDateString = formattedDatesString(from: today)
-                    remainder.schedule_?.date_ = todayDateString
-                    editedDate = todayDateString
-                    
-                } label: {
-                    Label("Today", systemImage: "sun.max")
-                }
-                Button {
-                    let todayDate = Date()
-                    let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: todayDate)!
-                    let tomorrowDateString = formattedDatesString(from: tomorrow)
-                    remainder.schedule_?.date_ = tomorrowDateString
-                    editedDate = tomorrowDateString
-                } label: {
-                    Label("Tomorrow", systemImage: "sunrise")
-                }
-                Button {
-                    isClicked.toggle()
-                    
-                } label: {
-                    Label("Pick a Date", systemImage: "calendar.badge.clock")
-                }
-                Divider()
-                
-                Button(role: .destructive) {
-                    remainder.schedule_?.date = ""
-                    editedDate = ""
-                    remainder.schedule_?.repeatCycle = ""
-                    remainder.schedule_?.time = ""
-                } label: {
-                    Label("Remove Due Date", systemImage: "minus.circle")
-                }
-                
-            } label: {
-                Label("Due Date", systemImage: "calendar")
+            Divider()
+                .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+            HStack{
+                Text(remainder.schedule_?.date ?? "")
+                    .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+                Text(remainder.schedule_?.time ?? "")
+                    .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+                Text(remainder.schedule_?.repeatCycle ?? "")
+                    .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
             }
             
-        } label: {
-            Image(systemName: "info.circle")
-                .resizable()
-                .frame(width: 20, height: 20)
-                .foregroundColor(Color(hex:color))
         }
-        .frame(alignment: .leading)
+        .padding(20)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(.ultraThinMaterial)
+                .stroke(Color(hex: color)).opacity(colorScheme == .dark ? 0.4 : 0.7)
+                .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
+        )
     }
     
-    private func formattedDatesString(from component: Date) -> String {
+    func dateTimeFromString(dateString: String, timeString: String) -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let dateComponents = component
-        let formattedDates = dateFormatter.string(from: dateComponents)
-        return formattedDates
-    }
-    
-    private func dateFromString(_ dateString: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        return dateFormatter.date(from: dateString)
+        dateFormatter.dateFormat = "dd/MM/yyyy h:mm a" // e.g., "26-08-02 6:23 AM"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Handles 12/24 hour time format
+
+        let combinedString = "\(dateString) \(timeString)"
+        return dateFormatter.date(from: combinedString)
     }
 }
 
 
+@available(iOS 17.0, *)
+struct SwiftUIView_Previews: PreviewProvider {
+    
+    static var previews: some View{
+        let list = CDList(name: "", color: "D83F31", image: "", context: PersistenceController.shared.container.viewContext)
+        let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum")
+        remainders.list = list
+        remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, context: PersistenceController.shared.container.viewContext)
+        return Group {
+            RemainderRow(remainder: remainders, color: "D83F31", duration: 0.0)
+        }
+    }
+}
+
+
+ 
