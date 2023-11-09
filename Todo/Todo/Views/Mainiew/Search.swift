@@ -41,7 +41,8 @@ struct Search: View {
                 .listRowSeparator(.hidden)
                 .listStyle(PlainListStyle())
             }
-        }
+        }.frame(maxWidth:.infinity,maxHeight:.infinity)
+        
     }
 }
 
@@ -180,5 +181,6 @@ struct DateTimeView: View {
 struct Search_Previews: PreviewProvider {
     static var previews: some View {
         Search(context: PersistenceController.shared.container.viewContext)
+            .preferredColorScheme(.dark)
     }
 }

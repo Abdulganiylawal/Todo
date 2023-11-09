@@ -40,7 +40,7 @@ struct TabBar: View {
                 .padding(3)
             }
             .frame(maxWidth: .infinity)
-            .background(Color(hex: colorScheme == .light ? "FFFFFF" :  "000000"))
+
             .overlay(
                 GeometryReader { geometry in
                     Color.gray.opacity(0.5)

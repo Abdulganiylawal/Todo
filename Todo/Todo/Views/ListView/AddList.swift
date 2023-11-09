@@ -61,13 +61,20 @@ struct AddList: View {
                 }
                 Section {
                     colorGrid
+                       
                 }
+           
                 Section {
                     IconGrid
+                        
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        
             }
+          
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -166,5 +173,6 @@ struct AddList_Previews: PreviewProvider {
         let model = ListViewManger(context: PersistenceController.shared.container.viewContext)
             
         AddList(manager: model)
+            .preferredColorScheme(.dark)
     }
 }

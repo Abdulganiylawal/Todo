@@ -10,13 +10,13 @@ import SwiftUI
 @available(iOS 17.0, *)
 struct AddRemainder: View {
     @StateObject var  model:AddRemainderModel
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     @FocusState var isFocused:Bool
     @State var isDateClicked:Bool = false
     @State var isTimeClicked:Bool = false
     @State var isEndTimeClicked:Bool = false
     @State var isRepeatClicked:Bool = false
-    @State var focused:Bool = false
     @EnvironmentObject var sheetManager:SheetManager
     var dateFormatter = DateFormatterModel()
     
@@ -26,7 +26,7 @@ struct AddRemainder: View {
     var body: some View {
         VStack(alignment:.leading){
             TextField("", text: $model.name)
-                .foregroundStyle(Color.white)
+                .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
                 .focused($isFocused)
                 .onTapGesture {
                     isFocused.toggle()
@@ -188,12 +188,14 @@ struct AddRemainder: View {
                             sheetManager.dismiss()
                         }
                     .placeholder(when: model.notes.isEmpty) {
-                        Text("Add notes").foregroundColor(.gray)
+                        Text("Add notes")
+                            .foregroundColor(.gray)
                     }
             }.padding(.leading,15)
             Divider()
             Spacer()
-        }.navigationTitle("New Task")
+        }
+        .navigationTitle("New Task")
             .foregroundStyle(Color(hex: model.model.color))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
@@ -209,14 +211,15 @@ struct AddRemainder: View {
                     Button(action: {
                         Task{
                             model.durationTime = dateFormatter.timeDifference(from: model.time, to: model.endTime)
-                            await model.addRemainders(title: model.name, notes: model.notes, repeatcycle: model.repeatCycle, date: model.date, time: model.time, duration:model.durationTime ?? "" )
+                            await model.addRemainders(title: model.name, notes: model.notes, repeatcycle: model.repeatCycle, date: model.date, time: model.time, duration:model.durationTime ?? 0.0 )
                             isFocused = true
                             presentationMode.wrappedValue.dismiss()
                         }
                     }, label: {
                         Text("Create")
-                            .foregroundStyle(Color(hex: model.model.color))
-                    })
+                            .foregroundStyle(Color(hex: model.isClickable ? model.model.color : "F1EFEF"))
+                    }
+                    ).disabled(!model.isClickable)
                 }
             })
             .onAppear(perform: {
@@ -266,6 +269,7 @@ struct AddRemainder_Previews: PreviewProvider {
         return Group {
             AddRemainder(model: CDList(name: "Test", color: "7EAA92", image: "book", context: PersistenceController.shared.container.viewContext))
                 .environmentObject(SheetManager())
+                .preferredColorScheme(.dark)
         }
     }
 }
@@ -278,11 +282,12 @@ struct ActionButton: View {
     let width: CGFloat
     let height: CGFloat
     let action: () -> Void
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         Button(action: action, label: {
             RoundedRectangle(cornerRadius: 5)
-                .foregroundStyle(Color(hex: colorHex)).opacity(0.6)
+                .foregroundStyle(Color(hex: colorHex)).opacity(0.6 )
                 .frame(width: width, height: height)
                 .overlay {
                     Label(text, systemImage: imageName)

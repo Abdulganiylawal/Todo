@@ -18,7 +18,7 @@ extension TabBar{
                 .renderingMode(.template)
                 .font(.title2)
                 .imageScale(.medium)
-                .foregroundColor(colorScheme == .dark ? .gray: .black)
+                .foregroundColor( .gray)
                 .fontWeight(isActive ?.bold: .regular)
         
             Spacer()

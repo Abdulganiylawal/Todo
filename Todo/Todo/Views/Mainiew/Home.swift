@@ -16,7 +16,7 @@ struct Home: View {
     var ListEssModel:ListEssentials
     @State private var reloadFlag = false
     @State var isClicked: Bool = false
-    let resultGridLayout = [GridItem(.adaptive(minimum: 150), spacing: 10 ,
+    let resultGridLayout = [GridItem(.adaptive(minimum: 150), spacing: 20,
                               alignment: .top)]
 
     @GestureState var press = false
@@ -69,9 +69,11 @@ struct Home: View {
                                 RemainderView(model: list)
                             } label: {
                                 ListView(icon: list.image, name: list.name, color: list.color, count: ListEssModel.getRemainderCount(list: list), remainders: ListEssModel.get3Remainder(for: list))
+                                    .toolbarRole(.editor)
                                     .contextMenu {
                                         menuItems
                                     }
+                                
                                     
                             }
                         }
@@ -79,11 +81,24 @@ struct Home: View {
                 }
                 .padding()
             }
+            .clipped()
             .frame(maxWidth: .infinity)
-            .background(colorScheme == .light ? Color(hex: "F3EEEA").opacity(0.4).frame(width:99999,height:99999) : Color(UIColor.black).frame(width:99999,height: 99999)  )
-    
+//            .background(colorScheme == .light ? Color(hex: "B0A695").opacity(0.4).frame(width:99999,height:99999) : Color(UIColor.black).frame(width:99999,height: 99999)  )
             .id(reloadFlag)
         }
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden()
+        
+        .toolbar(content: {
+            
+                ToolbarItem(placement: .topBarLeading) {
+                    Image(systemName: "gearshape")
+                        .foregroundStyle(Color(hex: "F0DE36"))
+                        .font(.body)
+                }
+            
+        })
         .onAppear {
             model.fetchList()
             reloadFlag.toggle()
@@ -104,6 +119,7 @@ struct Home_Previews: PreviewProvider {
         
         return Group {
             Home(context: PersistenceController.shared.container.viewContext)
+                .preferredColorScheme(.dark)
         }
     }
 }

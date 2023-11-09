@@ -24,3 +24,12 @@ extension Color {
     }
 }
 
+struct WithBackgroundProgressViewStyle: ProgressViewStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        ProgressView(configuration)
+            .padding(8)
+            .background(Color.gray.opacity(0.25))
+    
+            .cornerRadius(8)
+    }
+}

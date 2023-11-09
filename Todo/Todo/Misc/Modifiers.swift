@@ -16,7 +16,7 @@ struct OutlineOverlay: ViewModifier {
     func body(content: Content) -> some View {
         content.overlay(
             RoundedRectangle(cornerRadius: cornerRadius)
-                .stroke(Color(hex: colors)).opacity(colorScheme == .dark ? 0.6 : 0.2)
+                .stroke(Color(hex: colors)).opacity( 1 )
                 .blendMode(.overlay)
         )
     }
@@ -31,7 +31,7 @@ struct BackgroundColor: ViewModifier {
         content
             .overlay(
                 Color(Color(hex: color))
-                    .opacity(colorScheme == .dark ? opacity : 0.3)
+                    .opacity(opacity)
                     .blendMode(.overlay)
                   
             )
@@ -70,21 +70,58 @@ extension View {
 @available(iOS 17.0, *)
 extension View {
     @ViewBuilder
-    func customBackground(condition: Bool, color: String) -> some View {
-        if condition {
-            background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(LinearGradient(colors: [Color(hex: color).opacity(0.3), Color(UIColor.black).opacity(0.2)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                
-            )
-        }else{
-            background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(LinearGradient(colors: [Color(hex: color).opacity(0.2), Color(hex: color).opacity(0.2)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                
-            )
-            .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x: 0, y: 10)
-        }
+    func customBackground(colorScheme:ColorScheme, color: String) -> some View {
+        background(
+            RoundedRectangle(cornerRadius: 20)
+            
+                .fill(LinearGradient(colors: [Color(hex: color).opacity(0.1), Color(UIColor.black).opacity(0.1) ], startPoint: .topLeading, endPoint: .bottomTrailing ))
+            
+            
+        )
+        //        if colorScheme == .dark {
+        //            background(
+        //                RoundedRectangle(cornerRadius: 20)
+        //
+        //                    .fill(LinearGradient(colors: [Color(hex: color).opacity(0.1), Color(UIColor.black).opacity(0.1) ], startPoint: .topLeading, endPoint: .bottomTrailing ))
+        //
+        //
+        //            )
+        //        }
+        //        }else{
+        //            background(
+        //                RoundedRectangle(cornerRadius: 20)
+        //                    .fill(LinearGradient(colors: [Color(hex: color).opacity(0.3),Color(hex: color).opacity(0.1  )], startPoint: .topLeading, endPoint: .bottomTrailing))
+        //
+        //
+        //            )
+        //            .shadow(color: Color("Shadow").opacity(0.2), radius: 5, x: 0, y: 10)
+        //        }
+    }
+    
+    @ViewBuilder
+    func customBackgroundForRemainderRow(colorscheme:ColorScheme, color: String) -> some View {
+        
+        background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(LinearGradient(colors: [Color(hex: color).opacity(0.3),Color(hex: color).opacity(0.2), Color(UIColor.black).opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing))
+        )
+        //        if colorscheme == .dark{
+        //            background(
+        //                RoundedRectangle(cornerRadius: 20)
+        //                    .fill(LinearGradient(colors: [Color(hex: color).opacity(0.3),Color(hex: color).opacity(0.2), Color(UIColor.black).opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing))
+        //            )
+        //        }
+        //        else{
+        //            background(
+        //                RoundedRectangle(cornerRadius: 20)
+        //                    .fill(LinearGradient(colors: [Color(hex: color).opacity(0.5),Color(hex: color).opacity(0.3),Color(hex: color).opacity(0.3)], startPoint: .topLeading, endPoint: .bottomTrailing))
+        //
+        //            )
+        //            .shadow(color: Color(hex: color).opacity(0.2), radius: 5, x: 0, y: 10)
+        //        }
+        //    }
+        //
+        
     }
 }
 

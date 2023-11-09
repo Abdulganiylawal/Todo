@@ -36,42 +36,74 @@ struct RemainderRow: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing: 8) {
-            Text(remainder.title)
-                .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
-            Text(remainder.notes)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .foregroundColor(.primary.opacity(0.7))
-               if let interval = progressInterval {
-                   ProgressView(timerInterval: interval,countsDown: false)
-                       .tint(Color(hex: color))
+            if !remainder.title.isEmpty {
+                  Text(remainder.title)
+                    .foregroundStyle(Color.white)
+              }
+              if !remainder.notes.isEmpty {
+                  Text(remainder.notes)
+                      .foregroundStyle(.secondary)
+                      .frame(maxWidth: .infinity, alignment: .leading)
+                      .foregroundColor(.primary.opacity(0.7))
+              }
+            if let interval = progressInterval, duration != 0.0 {
+                ProgressView(timerInterval: interval,countsDown: false)
+                    .tint(Color(hex: color))
                 
             }
+        
             Divider()
-                .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
-            HStack{
-                Text(remainder.schedule_?.date ?? "")
-                    .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
-                Text(remainder.schedule_?.time ?? "")
-                    .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
-                Text(remainder.schedule_?.repeatCycle ?? "")
-                    .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+                .foregroundStyle(Color.white)
+            HStack {
+                if let date = remainder.schedule_?.date, !date.isEmpty {
+                    HStack {
+                        Image(systemName: "calendar")
+                        Text(date)
+                            .font(.body)
+                    }
+                    .foregroundStyle(Color.white)
+                    Spacer() // This will push all items to the edges of the available space
+                }
+                
+                
+
+                if let time = remainder.schedule_?.time, !time.isEmpty {
+                    HStack {
+                        Image(systemName: "clock")
+                        Text(time)
+                            .font(.body)
+                    }
+                    .foregroundStyle(Color.white)
+                    Spacer() // This will push all items to the edges of the available space
+                }
+                
+                
+                if let repeatCycle = remainder.schedule_?.repeatCycle, !repeatCycle.isEmpty {
+                    HStack {
+                        Image(systemName: "repeat")
+                        Text(repeatCycle)
+                            .font(.body)
+                    }
+                    .foregroundStyle(Color.white)
+    
+                }
             }
-            
+
+
         }
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(.ultraThinMaterial)
-                .stroke(Color(hex: color)).opacity(colorScheme == .dark ? 0.4 : 0.7)
+                .stroke(Color(hex: color)).opacity( 0.4 )
                 .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
         )
     }
     
     func dateTimeFromString(dateString: String, timeString: String) -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy h:mm a" // e.g., "26-08-02 6:23 AM"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Handles 12/24 hour time format
+        dateFormatter.dateFormat = "dd/MM/yyyy h:mm a"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
         let combinedString = "\(dateString) \(timeString)"
         return dateFormatter.date(from: combinedString)
@@ -84,7 +116,7 @@ struct SwiftUIView_Previews: PreviewProvider {
     
     static var previews: some View{
         let list = CDList(name: "", color: "D83F31", image: "", context: PersistenceController.shared.container.viewContext)
-        let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum")
+        let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "")
         remainders.list = list
         remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, context: PersistenceController.shared.container.viewContext)
         return Group {

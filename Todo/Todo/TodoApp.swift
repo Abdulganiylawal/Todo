@@ -30,6 +30,7 @@ struct YourApp: App {
         WindowGroup {
             NavigationView {
                 ContentView(context: persistenceController.container.viewContext)
+                    .preferredColorScheme(.dark)
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .environmentObject(sheetManager)
                     .onChange(of: scenePhase) { oldValue , newValue in

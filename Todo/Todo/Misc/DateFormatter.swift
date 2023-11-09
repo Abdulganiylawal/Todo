@@ -25,31 +25,28 @@ class DateFormatterModel{
         return formattedDates
     }
 
-    func timeDifference(from startTime: String, to endTime: String) -> String? {
+    func timeDifference(from startTime: String, to endTime: String) -> Double? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
         dateFormatter.timeZone = TimeZone.current
 
         guard let start = dateFormatter.date(from: startTime),
-              var end = dateFormatter.date(from: endTime) else {
+              let end = dateFormatter.date(from: endTime) else {
             return nil
         }
+        
+        // If the end time is before the start time, assume it's on the next day
+        let adjustedEnd = end < start ? Calendar.current.date(byAdding: .day, value: 1, to: end)! : end
 
-     
-        if end < start {
-            var dayComponent = DateComponents()
-            dayComponent.day = 1
-            end = Calendar.current.date(byAdding: dayComponent, to: end) ?? end
-        }
+        let difference = Calendar.current.dateComponents([.second], from: start, to: adjustedEnd)
 
-        let difference = Calendar.current.dateComponents([.hour, .minute], from: start, to: end)
-
-        if let hour = difference.hour, let minute = difference.minute {
-            return String(format: "%02d:%02d", hour, minute)
-        } else {
-            return nil
-        }
+        // Return the difference in seconds
+      
+        return Double(difference.second ?? 0)
     }
+
+
+ 
 
 
 }
