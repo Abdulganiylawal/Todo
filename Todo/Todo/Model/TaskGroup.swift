@@ -63,18 +63,17 @@ enum TaskGroup: String, Identifiable, CaseIterable {
             case .completed:
                 return "03C988"
         }
-    }
-    
+    }  
     var colorDark:String{
         switch self {
             case .all:
-                return "6499E9"
+                return "6e7b8b"
             case .today:
-                return "FFFF00"
+                return "#FFEB3B"
             case .schedule:
-                return "FE0000"
+                return "#3AAFA9"
             case .completed:
-                return "03C988"
+                return "#9CCC65"
         }
     }
 }

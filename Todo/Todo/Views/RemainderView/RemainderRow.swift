@@ -88,15 +88,27 @@ struct RemainderRow: View {
     
                 }
             }
-
+            HStack{
+                Spacer()
+                if  remainder.isCompleted_{
+                    Text("Completed")
+                        .font(.caption)
+                        .padding(8)
+                        .background(.ultraThinMaterial)
+                        .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
+                     
+                }
+            }
 
         }
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(.ultraThinMaterial)
-                .stroke(Color(hex: color)).opacity( 0.4 )
+                .backgroundStyle1(cornerRadius: 20, opacity: 0.4)
                 .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
+            
+
         )
     }
     
@@ -116,14 +128,13 @@ struct SwiftUIView_Previews: PreviewProvider {
     
     static var previews: some View{
         let list = CDList(name: "", color: "D83F31", image: "", context: PersistenceController.shared.container.viewContext)
-        let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "")
+        let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "djdjdjlkjnankasnckcnkscnknc")
         remainders.list = list
+        remainders.isCompleted_ = true
         remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, context: PersistenceController.shared.container.viewContext)
         return Group {
-            RemainderRow(remainder: remainders, color: "D83F31", duration: 0.0)
+            RemainderRow(remainder: remainders, color:  "#84A4C8", duration: 0.0)
         }
     }
 }
 
-
- 

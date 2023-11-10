@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-
-let popularColors: [String] = [
+let popularColors1: [String] = [
     "#FFF7D4", "#EBF1FA", "#DBF6F4", "#FEE5E1", "#CEFDDF",
        "#EAF1C8", "#F0F392", "#FAE3B1", "#F4E869", "#E3D3F3",
        "#ECDB88", "#EDC0F9", "#B4DCEA", "#B1E5C0", "#A0EACD",
@@ -29,4 +27,15 @@ let popularColors: [String] = [
        "#D4A7B8", "#93D2C7", "#A0EACD", "#829CD6", "#B1AB8A",
        "#8A9ADD", "#9983E3", "#C8AEAB", "#E3D3F3", "#84A4C8"
 ]
+
+
+
+let popularColors: [String] = ["#ffde22","#ff414e","#a28089",
+                               "#ffa8b6",
+                               "#59ce8f",
+                               "#e8f9fd",
+                               "#c2edda",
+                               "#12343b",
+                               "#e1b382",
+                               "#c89666" ]
  

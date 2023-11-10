@@ -27,12 +27,14 @@ struct RemainderView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        
             VStack {
                 ScrollView(showsIndicators: false){
                     remainder
                         .padding()
                 }
+               
+                .environmentObject(SheetManager())
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar{
                     ToolbarItemGroup(placement:.bottomBar) {
@@ -61,13 +63,18 @@ struct RemainderView: View {
                 .sheet(isPresented: $isClicked, content: {
                     NavigationStack{
                         AddRemainder(model: model)
+                            .environmentObject(SheetManager())
+                   
                     }
                 })
                 .background(
                     Text(remainders.isEmpty ? "Empty" : "")
                 )
                 
-            }.toolbar(content: {
+            }
+          
+            
+            .toolbar(content: {
                 ToolbarItemGroup(placement: .principal) {
                     Text(model.name)
                         .foregroundColor(Color(hex: model.color))
@@ -76,7 +83,7 @@ struct RemainderView: View {
                     DropdownMenu(model: model)
                 }
             })
-        }
+        
     }
     
     // MARK: -  Remainder Loop

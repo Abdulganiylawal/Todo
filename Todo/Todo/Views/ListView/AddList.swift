@@ -10,7 +10,7 @@ struct AddList: View {
         self._model = ObservedObject(wrappedValue: manager)
     }
     
-    @State var color: String? = "D83F31"
+    @State var color: String? = "#ff414e"
     @State var icon: String? = "list.bullet"
     @State var name:String = ""
     

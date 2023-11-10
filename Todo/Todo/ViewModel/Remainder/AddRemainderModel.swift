@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreData
 class AddRemainderModel: ObservableObject{
     @Published var name: String = ""
      @Published var notes: String = ""
@@ -16,10 +17,14 @@ class AddRemainderModel: ObservableObject{
     @Published var durationTime: Double? = 0.0
      @Published var endTime: String = ""
     @Published var isClickable:Bool = false
+    @Published var duration:String = ""
+    
+
     
     let model:CDList
     init(model: CDList) {
         self.model = model
+  
         clickable
             .assign(to: &$isClickable)
     }
@@ -34,8 +39,8 @@ class AddRemainderModel: ObservableObject{
     func addRemainders(title:String,notes:String,repeatcycle:String,date:String,time:String,duration:Double) async{
         let remainder = CDRemainder(context: PersistenceController.shared.container.viewContext, title: title, notes: notes)
         remainder.schedule_ = CDRemainderSchedule(repeatCycle: repeatcycle, date: date, time: time, duration: duration, context: PersistenceController.shared.container.viewContext)
+        
         remainder.list = model
-        print(remainder.schedule_?.duration_)
         await PersistenceController.shared.save()
     }
 }

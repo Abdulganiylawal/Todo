@@ -42,7 +42,8 @@ struct calender: View {
             
             .background(
                 RoundedRectangle(cornerRadius: 20.0)
-                .stroke(Color(hex: color)).opacity(colorScheme == .dark ? 0.8 : 1)
+                   .backgroundStyle1(cornerRadius: 20, opacity: 0.4)
+                   .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
                 .frame(width:370, height: 400)
                 .opacity(0.1)
             

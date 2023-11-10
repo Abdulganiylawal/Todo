@@ -18,7 +18,7 @@ struct Duration: View {
     var body: some View {
         HStack{
             DatePicker(
-                "Time:",
+                "",
                 selection: $times,
                 displayedComponents: .hourAndMinute
             )
@@ -42,8 +42,9 @@ struct Duration: View {
             
             .background(
                 RoundedRectangle(cornerRadius: 20.0)
-                    .stroke(Color(hex: color)).opacity(colorScheme == .dark ? 0.6 : 1)
-             
+                
+                   .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
+                   .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
                      .frame(width:370, height: 300)
                     .opacity(0.1)
                 
@@ -57,5 +58,5 @@ struct Duration: View {
 }
 @available(iOS 17.0, *)
 #Preview {
-    Duration(didClose: {}, time: .constant("Date()"),  color: "7EAA92")
+    Duration(didClose: {}, time: .constant("Date()"),  color: "#84A4C8")
 }

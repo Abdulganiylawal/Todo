@@ -26,10 +26,10 @@ struct AddRemainder: View {
     var body: some View {
         VStack(alignment:.leading){
             TextField("", text: $model.name)
-                .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+                .foregroundStyle( Color.white)
                 .focused($isFocused)
                 .onTapGesture {
-                    isFocused.toggle()
+                    
                     sheetManager.dismiss()
                 }
                 .placeholder(when: model.name.isEmpty) {
@@ -73,23 +73,28 @@ struct AddRemainder: View {
             }
             VStack{
                 if !model.time.isEmpty{
+                    
                     LabeledContent {
                         Button(role: .destructive) {
                             model.time = ""
                         } label: {
                             Image(systemName: "trash")
                                 .foregroundStyle(Color.red)
+                            
                                 .padding(.trailing,10)
                         }
                     } label: {
                         HStack{
                             Image(systemName: "clock")
                             Text(model.time)
+                        
                                 .foregroundStyle(Color.white)
                         }
+                   
                     }
                     .padding(.bottom,5)
                 }
+                
                 if !model.endTime.isEmpty{
                     LabeledContent {
                         Button(role: .destructive) {
@@ -130,9 +135,10 @@ struct AddRemainder: View {
             .padding(.leading,15)
             
             ScrollView(.horizontal,showsIndicators: false){
+                
                 HStack{
-                    ActionButton(text: "Date", imageName: "calendar", colorHex: model.model.color, width: 90, height: 35, action: {
-                        withAnimation(.spring) {
+                    ActionButton(text: "Date", imageName: "calendar", colorHex: model.model.color, width: 100, height: 35, action: {
+                        withAnimation(.bouncy) {
                             isFocused = false
                             isDateClicked.toggle()
                             isTimeClicked = false
@@ -141,8 +147,8 @@ struct AddRemainder: View {
                             sheetManager.present()
                         }})
                     
-                    ActionButton(text: "Time", imageName: "clock", colorHex: model.model.color, width: 90, height: 35 ,action:{
-                        withAnimation(.spring) {
+                    ActionButton(text: "Time", imageName: "clock", colorHex: model.model.color, width: 100, height: 35 ,action:{
+                        withAnimation(.easeOut) {
                             isFocused = false
                             isTimeClicked.toggle()
                             isDateClicked = false
@@ -152,8 +158,8 @@ struct AddRemainder: View {
                             sheetManager.present()
                         }
                     })
-                    ActionButton(text: "End Time", imageName: "stopwatch.fill", colorHex: model.model.color, width: 120, height: 35, action:{
-                        withAnimation(.spring) {
+                    ActionButton(text: "End Time", imageName: "stopwatch.fill", colorHex: model.model.color, width: 130, height: 35, action:{
+                        withAnimation(.easeOut) {
                             isFocused = false
                             isEndTimeClicked.toggle()
                             isTimeClicked = false
@@ -163,9 +169,9 @@ struct AddRemainder: View {
                             
                         }
                     } )
-    
-                    ActionButton(text: "Repeat", imageName: "repeat", colorHex: model.model.color, width: 100, height: 35, action: {
-                        withAnimation(.spring) {
+                    
+                    ActionButton(text: "Repeat", imageName: "repeat", colorHex: model.model.color, width: 130, height: 35, action: {
+                        withAnimation(.easeOut) {
                             isFocused = false
                             isRepeatClicked.toggle()
                             isDateClicked = false
@@ -175,6 +181,7 @@ struct AddRemainder: View {
                         }
                     })
                 }.padding()
+            
             }
             Divider()
             Section{
@@ -224,6 +231,10 @@ struct AddRemainder: View {
             })
             .onAppear(perform: {
                 isFocused.toggle()
+            })
+            .onDisappear(perform: {
+                isFocused.toggle()
+                sheetManager.dismiss()
             })
             .overlay(alignment: .bottom) {
                 if sheetManager.action.isPresented{
@@ -287,12 +298,14 @@ struct ActionButton: View {
     var body: some View {
         Button(action: action, label: {
             RoundedRectangle(cornerRadius: 5)
-                .foregroundStyle(Color(hex: colorHex)).opacity(0.6 )
+                .foregroundStyle(Color(hex: colorHex)).opacity(0.5 )
                 .frame(width: width, height: height)
                 .overlay {
                     Label(text, systemImage: imageName)
                         .foregroundStyle(Color.white)
                 }
-        })
+        }
+        )
+        .backgroundStyle1(cornerRadius: 5, opacity: 0.1)
     }
 }

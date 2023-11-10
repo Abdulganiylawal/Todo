@@ -38,18 +38,45 @@ struct ListView: View {
                     .fontWeight(.heavy)
                     .foregroundColor(Color(hex: color) )
                 
+            }.padding(.top,remainders.count == 0 ? 5 : 20)
+            if remainders.count > 0 {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill( Color(hex: "#C0C0C0").opacity(0.1))
+//                    .backgroundStyle1(cornerRadius: 10, opacity: 0.1)
+                    .overlay(
+                        VStack(alignment: .leading) {
+                            ForEach(remainders.prefix(3)) { remainder in
+                                HStack {
+                                    Text("•")
+                                        .foregroundColor(Color(hex: remainder.list!.color).opacity(0.8))
+                                        .font(.system(size: 13))
+                                        .fontWeight(.heavy)
+                                    Text("\(remainder.title)")
+                                        .foregroundColor(Color(hex: remainder.list!.color).opacity(0.8))
+                                    Spacer()
+                                }
+                                .padding(.leading,10)
+                                .font(.system(size: 10))
+                                .fontWeight(.heavy)
+                            }
+                        }
+                            .padding([.bottom,.top],20)
+                    )
+                    .frame(height: 55)
+                    .padding(.bottom,15)
+                
             }
             
         }
         .padding()
         .padding(.vertical, 10)
-        .frame(height:  90 )
-        .background(.ultraThinMaterial
-        )
-        .backgroundStyle(cornerRadius: 20, opacity: 0.1, colors: color)
-        .customBackground(colorScheme: colorScheme, color: color)
+        .frame(height: remainders.count == 0 ? 90 : 160)
+        .background(RoundedRectangle(cornerRadius: 20)
 
-        
+            .fill(LinearGradient(colors: [Color(hex: color).opacity(0.2),Color(hex: color).opacity(0.21),Color(hex: color).opacity(0.15),Color(hex: color).opacity(0.05)], startPoint: .topLeading, endPoint: .bottomTrailing))
+            .backgroundStyle1(cornerRadius: 20, opacity: 0.1)
+                    
+        )
     }
 }
 
@@ -85,7 +112,7 @@ struct ListView_Previews: PreviewProvider {
 //                    .foregroundColor(Color(hex: color))
 //                    .font(.title3)
 //                    .fontWeight(.bold)
-//                
+//
 //                Text(name)
 //                    .foregroundColor(Color(hex: color))
 //                    .font(.body)
@@ -96,7 +123,7 @@ struct ListView_Previews: PreviewProvider {
 //                .font(.title)
 //                .fontWeight(.heavy)
 //                .foregroundColor(Color(hex: color) )
-//            
+//
 //        }.padding(.top,remainders.count == 0 ? 5 : 20)
 ////                if remainders.count > 0 {
 ////                    RoundedRectangle(cornerRadius: 10)
@@ -126,7 +153,7 @@ struct ListView_Previews: PreviewProvider {
 ////                        .frame(height: 50)
 ////                        .padding(.bottom,15)
 ////                }
-//        
+//
 //    }
 //    .padding()
 //    .padding(.vertical, 10)
@@ -137,5 +164,5 @@ struct ListView_Previews: PreviewProvider {
 //    .backgroundStyle(cornerRadius: 20, opacity: colorScheme == .dark ? 0 : 0, colors: color)
 //    .customBackground(colorScheme: colorScheme, color: color)
 //
-//    
+//
 //}

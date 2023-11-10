@@ -9,30 +9,16 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 struct Settings: View {
-    @StateObject private var ViewModel:AuthViewModel
-    @State var showAuthView = false
-    
-    init(vm:AuthenticationManager){
-        _ViewModel = StateObject(wrappedValue: AuthViewModel(AuthModel: vm))
-    }
+ 
     var body: some View {
-        Button {
-            ViewModel.signOut()
-            showAuthView.toggle()
-        } label: {
-            Text("Log out")
-        }.fullScreenCover(isPresented:$showAuthView) {
-            NavigationStack{
-                Authiew()
-            }
-        }
+        Text("Hello")
     }
 }
 
 @available(iOS 17.0, *)
 struct Settings_Previews: PreviewProvider {
-    static let data = AuthenticationManager()
+
     static var previews: some View {
-        Settings(vm: data)
+        Settings()
     }
 }

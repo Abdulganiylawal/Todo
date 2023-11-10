@@ -19,7 +19,7 @@ struct TimeView: View {
     var body: some View {
         VStack{
             DatePicker(
-                "Time:",
+                "",
                 selection: $times,
                 displayedComponents: .hourAndMinute
             )
@@ -43,8 +43,9 @@ struct TimeView: View {
             
             .background(
                 RoundedRectangle(cornerRadius: 20.0)
-                    .stroke(Color(hex: color)).opacity(colorScheme == .dark ? 0.6 : 1)
                  
+                    .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
+                    .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
                     .frame(width:370, height: 300)
                 .opacity(0.1)
                 

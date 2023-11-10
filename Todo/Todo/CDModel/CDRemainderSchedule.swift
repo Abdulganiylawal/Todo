@@ -42,13 +42,7 @@ extension CDRemainderSchedule{
         }
     }
     
-    var endDuration:Double{
-        get{
-            endDuration_
-        }set{
-            endDuration_ = newValue
-        }
-    }
+ 
     static func delete(schedule:CDRemainderSchedule){
         guard let context = schedule.managedObjectContext else{return}
         context.delete(schedule)
@@ -60,6 +54,6 @@ extension CDRemainderSchedule{
         self.date = date
         self.time = time
         self.duration = duration
-        self.endDuration = duration
+     
     }
 }

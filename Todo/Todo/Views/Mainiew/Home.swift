@@ -12,19 +12,18 @@ import Combine
 struct Home: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject var model:ListViewManger
+    @EnvironmentObject var navigationManager:NavigationManager
     var context:NSManagedObjectContext
     var ListEssModel:ListEssentials
     @State private var reloadFlag = false
     @State var isClicked: Bool = false
     let resultGridLayout = [GridItem(.adaptive(minimum: 150), spacing: 20,
-                              alignment: .top)]
-
-    @GestureState var press = false
+                                     alignment: .top)]
     init(context:NSManagedObjectContext){
         self.context = context
         _model = StateObject(wrappedValue: ListViewManger(context: context))
         ListEssModel = ListEssentials(context: context)
-      
+        
     }
     
     var menuItems: some View {
@@ -33,26 +32,28 @@ struct Home: View {
             Button("Action 2", action: {})
             Button("Action 3", action: {})
         }
-   }
+    }
     
     var body: some View {
-        NavigationStack{
+        NavigationStack(path: $navigationManager.routes){
             ScrollView(showsIndicators: false){
                 Section{
                     LazyVGrid(columns: resultGridLayout) {
                         ForEach(TaskGroup.allCases) { taskGroup in
-                            ListView(icon: taskGroup.iconName, name: taskGroup.name, color: colorScheme == .light ? taskGroup.colorLight : taskGroup.colorDark, count: ListEssModel.getCount(item: taskGroup.rawValue), remainders: ListEssModel.get3Remainder(for: taskGroup))
+                            ListView(icon: taskGroup.iconName, name: taskGroup.name, color: taskGroup.colorDark, count: ListEssModel.getCount(item: taskGroup.rawValue), remainders: ListEssModel.get3Remainder(for: taskGroup))
+                              
                         }
                     }
                 }
                 .padding([.top,.leading,.trailing],20)
+                .id(reloadFlag)
                 LabeledContent {
                     Button {
                         isClicked.toggle()
                     } label: {
                         Image(systemName: "plus.app.fill")
                             .foregroundStyle(.green)
-                    
+                        
                     }
                 } label: {
                     Text("My Lists")
@@ -60,55 +61,72 @@ struct Home: View {
                         .fontWeight(.medium)
                 }
                 .padding([.top,.leading,.trailing],20)
-             
+                
                 Section{
                     LazyVGrid(columns: resultGridLayout) {
-                        
                         ForEach(model.myList,id: \.id) { list in
-                            NavigationLink {
-                                RemainderView(model: list)
-                            } label: {
+                            NavigationLink(value: Route.remainderView(model: list)) {
                                 ListView(icon: list.image, name: list.name, color: list.color, count: ListEssModel.getRemainderCount(list: list), remainders: ListEssModel.get3Remainder(for: list))
-                                    .toolbarRole(.editor)
+                                
+//                                    .toolbarRole(.editor)
                                     .contextMenu {
                                         menuItems
                                     }
                                 
-                                    
                             }
                         }
                     }
                 }
+                .id(reloadFlag)
                 .padding()
             }
-            .clipped()
-            .frame(maxWidth: .infinity)
-//            .background(colorScheme == .light ? Color(hex: "B0A695").opacity(0.4).frame(width:99999,height:99999) : Color(UIColor.black).frame(width:99999,height: 99999)  )
-            .id(reloadFlag)
-        }
-        .navigationTitle("")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden()
-        
-        .toolbar(content: {
+          
+            .navigationTitle("")
+         
             
+            .toolbar(content: {
                 ToolbarItem(placement: .topBarLeading) {
-                    Image(systemName: "gearshape")
-                        .foregroundStyle(Color(hex: "F0DE36"))
-                        .font(.body)
+                    NavigationLink(value: Route.SettingsView) {
+                        Image(systemName: "gearshape")
+                        
+//                            .padding()
+                            .font(.system(size: 15, weight: .bold))
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.secondary)
+                            .background(.ultraThinMaterial)
+                            .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
+                        
+                    
+                    }
+                    
                 }
-            
-        })
-        .onAppear {
-            model.fetchList()
-            reloadFlag.toggle()
-        }
-        .sheet(isPresented: $isClicked) {
-            NavigationStack{
-                AddList(manager: model)
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(value: Route.SearchView) {
+                        Image(systemName: "magnifyingglass")
+                           
+//                            .padding()
+                            .font(.system(size: 15, weight: .bold))
+                            .frame(width: 40, height: 40)
+                            .foregroundColor(.secondary)
+                            .background(.ultraThinMaterial)
+                            .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
+                         
+                    }
+                }
+                
+            })
+            .onAppear {
+                model.fetchList()
+                reloadFlag.toggle()
             }
+            .sheet(isPresented: $isClicked) {
+                NavigationStack{
+                    AddList(manager: model)
+                }
+            }
+       
+            .navigationDestination(for: Route.self)  {  $0}
         }
-     
     }
 }
 
@@ -120,6 +138,8 @@ struct Home_Previews: PreviewProvider {
         return Group {
             Home(context: PersistenceController.shared.container.viewContext)
                 .preferredColorScheme(.dark)
+                .environmentObject(NavigationManager())
+            
         }
     }
 }
