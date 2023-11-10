@@ -26,9 +26,13 @@ struct ListView: View {
                         .foregroundColor(Color(hex: color))
                         .font(.title3)
                         .fontWeight(.bold)
+                        .frame(width: 40, height: 40)
+                    
+                        .backgroundStyle1(cornerRadius: 10, opacity: 0.1)
+                    
                     
                     Text(name)
-                        .foregroundColor(Color(hex: color))
+                        .foregroundColor(Color(hex: "6e7b8b"))
                         .font(.body)
                         .fontWeight(.bold)
                 }
@@ -36,45 +40,19 @@ struct ListView: View {
                 Text("\(count)")
                     .font(.title)
                     .fontWeight(.heavy)
-                    .foregroundColor(Color(hex: color) )
-                
-            }.padding(.top,remainders.count == 0 ? 5 : 20)
-            if remainders.count > 0 {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill( Color(hex: "#C0C0C0").opacity(0.1))
-//                    .backgroundStyle1(cornerRadius: 10, opacity: 0.1)
-                    .overlay(
-                        VStack(alignment: .leading) {
-                            ForEach(remainders.prefix(3)) { remainder in
-                                HStack {
-                                    Text("•")
-                                        .foregroundColor(Color(hex: remainder.list!.color).opacity(0.8))
-                                        .font(.system(size: 13))
-                                        .fontWeight(.heavy)
-                                    Text("\(remainder.title)")
-                                        .foregroundColor(Color(hex: remainder.list!.color).opacity(0.8))
-                                    Spacer()
-                                }
-                                .padding(.leading,10)
-                                .font(.system(size: 10))
-                                .fontWeight(.heavy)
-                            }
-                        }
-                            .padding([.bottom,.top],20)
-                    )
-                    .frame(height: 55)
-                    .padding(.bottom,15)
+                    .foregroundColor(Color(hex: "6e7b8b") )
                 
             }
             
         }
         .padding()
         .padding(.vertical, 10)
-        .frame(height: remainders.count == 0 ? 90 : 160)
+        .frame(height:  90)
         .background(RoundedRectangle(cornerRadius: 20)
 
-            .fill(LinearGradient(colors: [Color(hex: color).opacity(0.2),Color(hex: color).opacity(0.21),Color(hex: color).opacity(0.15),Color(hex: color).opacity(0.05)], startPoint: .topLeading, endPoint: .bottomTrailing))
+            .fill(LinearGradient(colors: [Color(hex: "6e7b8b").opacity(0.3),Color(hex: "6e7b8b").opacity(0.2),Color(hex: "6e7b8b").opacity(0.05)], startPoint: .topTrailing, endPoint: .bottomLeading))
             .backgroundStyle1(cornerRadius: 20, opacity: 0.1)
+
                     
         )
     }

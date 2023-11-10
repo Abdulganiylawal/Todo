@@ -18,7 +18,7 @@ class ListViewManger:ObservableObject{
     var context:NSManagedObjectContext
     
     func addList(name:String,image:String,color:String){
-        myList.append(CDList(name: name, color: color, image: image, context: context))
+        myList.append(CDList(name: name, color: color , image: image, context: context))
     }
     
     

@@ -23,66 +23,55 @@ struct RemainderView: View {
         let predicate2 = NSPredicate(format: "isCompleted_ == false")
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2])
         self._remainders = FetchRequest(fetchRequest: request, animation: .bouncy)
-   
+        
     }
     
     var body: some View {
         
-            VStack {
-                ScrollView(showsIndicators: false){
-                    remainder
-                        .padding()
-                }
-               
-                .environmentObject(SheetManager())
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar{
-                    ToolbarItemGroup(placement:.bottomBar) {
-                        Button {
-                            isClicked.toggle()
-                        } label: {
-                            HStack {
-                                Image(systemName: "plus.circle.fill")
-                                    .resizable()
-                                    .foregroundColor(Color(hex: model.color))
-                                    .frame(width: 20, height: 20)
-                                
-                                Text("New Todo")
-                                    .fontWeight(.bold)
-                                    .foregroundColor(Color(hex: model.color))
-                            }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.horizontal, 20)
-                        }
-                        Spacer()
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-              
-                .sheet(isPresented: $isClicked, content: {
-                    NavigationStack{
-                        AddRemainder(model: model)
-                            .environmentObject(SheetManager())
-                   
-                    }
-                })
-                .background(
-                    Text(remainders.isEmpty ? "Empty" : "")
-                )
-                
+        ZStack(alignment:.bottomLeading) {
+            ScrollView(showsIndicators: false){
+                remainder
+                    .padding()
             }
-          
+            Button {
+                isClicked.toggle()
+            } label: {
+                Spacer()
+                Image(systemName: "plus")
+                    .foregroundColor(Color(hex: model.color))
+                    .font(.body)
+                    .fontWeight(.bold)
+                    .padding()
+                    .background(.ultraThinMaterial)
+                    .backgroundStyle1(cornerRadius: 20,opacity: 0)
+                    .padding()
+                   
+            }
+            .padding(.top,630)
+            .frame(alignment: .bottomTrailing)
             
-            .toolbar(content: {
-                ToolbarItemGroup(placement: .principal) {
-                    Text(model.name)
-                        .foregroundColor(Color(hex: model.color))
-                }
-                ToolbarItem {
-                    DropdownMenu(model: model)
+            .environmentObject(SheetManager())
+            .navigationBarTitleDisplayMode(.inline)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .sheet(isPresented: $isClicked, content: {
+                NavigationStack{
+                    AddRemainder(model: model)
+                        .environmentObject(SheetManager())
                 }
             })
+            .background(
+                Text(remainders.isEmpty ? "Empty" : "")
+            )
+        }
+        .toolbar(content: {
+            ToolbarItemGroup(placement: .principal) {
+                Text(model.name)
+                    .foregroundColor(Color(hex: model.color))
+            }
+            ToolbarItem {
+                DropdownMenu(model: model)
+            }
+        })
         
     }
     
