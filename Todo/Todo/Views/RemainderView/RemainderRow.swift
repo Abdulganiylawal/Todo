@@ -14,6 +14,9 @@ struct RemainderRow: View {
     var remainder:CDRemainder
     var dateFormatterModel = DateFormatterModel()
     let duration:Double
+
+    
+  
     
     var progressInterval: ClosedRange<Date>? {
         guard let startTimeString = remainder.schedule_?.time,
@@ -39,6 +42,7 @@ struct RemainderRow: View {
             if !remainder.title.isEmpty {
                   Text(remainder.title)
                     .foregroundStyle(Color.white)
+               
               }
               if !remainder.notes.isEmpty {
                   Text(remainder.notes)
@@ -60,9 +64,11 @@ struct RemainderRow: View {
                         Image(systemName: "calendar")
                         Text(date)
                             .font(.body)
+                         
+                       
                     }
-                    .foregroundStyle(Color.white)
-                    Spacer() // This will push all items to the edges of the available space
+                    .foregroundStyle(.secondary)
+                    Spacer()
                 }
                 
                 
@@ -73,7 +79,7 @@ struct RemainderRow: View {
                         Text(time)
                             .font(.body)
                     }
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(.secondary)
                     Spacer() // This will push all items to the edges of the available space
                 }
                 
@@ -84,7 +90,7 @@ struct RemainderRow: View {
                         Text(repeatCycle)
                             .font(.body)
                     }
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(.secondary)
     
                 }
             }

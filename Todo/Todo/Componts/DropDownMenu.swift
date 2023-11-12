@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct DropdownMenu: View {
     var model:CDList
     @State var isClicked:Bool = false

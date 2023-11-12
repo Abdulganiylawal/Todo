@@ -13,6 +13,7 @@ enum Route{
     case remainderView(model:CDList)
     case SettingsView
     case SearchView
+    case groupTaskView(selector:TaskGroup)
 }
 
 extension Route:Hashable{
@@ -24,14 +25,16 @@ extension Route:Hashable{
         switch (lhs, rhs){
                 
             case (.remainderView(let lhs),.remainderView(let rhs)):
-                return lhs == rhs
+                return lhs.objectID == rhs.objectID
                 
             case (.SearchView,.SearchView):
                 return true
             
             case (.SettingsView,.SettingsView):
                 return true
-            
+                
+            case (.groupTaskView(selector:let lhs),.groupTaskView(selector: let rhs)):
+                return lhs.id == rhs.id
             default:
                 return false
         }
@@ -51,6 +54,8 @@ extension Route:View{
             case .SearchView:
                Search()
 //                    .withCustomBackButton(state: state)
+            case .groupTaskView(selector: let selector):
+                GroupedTaskView(selector: selector)
         }
     }
 }

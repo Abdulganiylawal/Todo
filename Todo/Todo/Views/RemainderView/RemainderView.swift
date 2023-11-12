@@ -9,11 +9,13 @@ import CoreData
 @available(iOS 17.0, *)
 struct RemainderView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State var isClicked:Bool = false
-    var repeatCycleManager = RepeatCycleManager()
-    var model:CDList
+    @State private var isClicked:Bool = false
+     private var repeatCycleManager = RepeatCycleManager()
+    private var model:CDList
     @Environment(\.managedObjectContext) var context
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
+    @State private var selectedRemainder:CDRemainder? = nil
+ 
     
     init(model:CDList){
         self.model = model
@@ -28,43 +30,43 @@ struct RemainderView: View {
     
     var body: some View {
         
-        ZStack(alignment:.bottomLeading) {
+        ZStack(alignment:.bottomTrailing) {
             ScrollView(showsIndicators: false){
                 remainder
                     .padding()
             }
-            Button {
-                isClicked.toggle()
-            } label: {
-                Spacer()
-                Image(systemName: "plus")
-                    .foregroundColor(Color(hex: model.color))
-                    .font(.body)
-                    .fontWeight(.bold)
-                    .padding()
-                    .background(.ultraThinMaterial)
-                    .backgroundStyle1(cornerRadius: 20,opacity: 0)
-                    .padding()
-                   
-            }
-            .padding(.top,630)
-            .frame(alignment: .bottomTrailing)
-            
-            .environmentObject(SheetManager())
-            .navigationBarTitleDisplayMode(.inline)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .sheet(isPresented: $isClicked, content: {
-                NavigationStack{
-                    AddRemainder(model: model)
-                        .environmentObject(SheetManager())
+            Spacer()
+            Spacer()
+            Image(systemName: "plus")
+                .foregroundColor(Color(hex: model.color))
+                .font(.body)
+                .fontWeight(.bold)
+                .padding()
+                .background(.ultraThinMaterial)
+                .backgroundStyle1(cornerRadius: 20,opacity: 0)
+                .padding()
+                .onTapGesture {
+                    isClicked.toggle()
                 }
-            })
-            .background(
-                Text(remainders.isEmpty ? "Empty" : "")
-            )
+                .padding(.top,630)
+                .padding(.leading,300)
+            
+            
+                .environmentObject(SheetManager())
+                .navigationBarTitleDisplayMode(.inline)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .sheet(isPresented: $isClicked, content: {
+                    NavigationStack{
+                        AddRemainder(model: model)
+                            .environmentObject(SheetManager())
+                    }
+                })
+                .background(
+                    Text(remainders.isEmpty ? "Empty" : "")
+                )
         }
         .toolbar(content: {
-            ToolbarItemGroup(placement: .principal) {
+            ToolbarItem(placement: .principal) {
                 Text(model.name)
                     .foregroundColor(Color(hex: model.color))
             }
@@ -77,11 +79,29 @@ struct RemainderView: View {
     
     // MARK: -  Remainder Loop
     var remainder: some View{
-        ForEach(remainders) { remainder in
-            RemainderRow(remainder: remainder, color: model.color, duration: remainder.schedule_?.duration ?? 0.0)
+        ForEach(remainders,id: \.self) { remainder in
+         
+            RemainderRow(remainder: remainder, color: model.color, duration:remainder.schedule_?.duration ?? 0.0)
                 .padding(.bottom,10)
+                
+                .contextMenu {
+                        Group {
+                            Button("Edit Remainders", action: {
+                                selectedRemainder = remainder
+                                print( remainder.schedule_?.duration )
+                            })
+                            Button("Action 2", action: {})
+                            Button("Action 3", action: {})
+                        }
+                    
+                }
+           
+        }
+        .sheet(item: $selectedRemainder) {  remainder in
+            NavigationStack{
+                EditRemainder(remainders: .constant(remainder))
+            }
         }
     }
 }
-
 

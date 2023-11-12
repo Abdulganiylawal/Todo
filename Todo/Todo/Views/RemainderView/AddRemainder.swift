@@ -10,7 +10,7 @@ import SwiftUI
 @available(iOS 17.0, *)
 struct AddRemainder: View {
     @StateObject var  model:AddRemainderModel
-    @Environment(\.colorScheme) var colorScheme
+
     @Environment(\.presentationMode) var presentationMode
     @FocusState var isFocused:Bool
     @State var isDateClicked:Bool = false
@@ -19,6 +19,7 @@ struct AddRemainder: View {
     @State var isRepeatClicked:Bool = false
     @EnvironmentObject var sheetManager:SheetManager
     var dateFormatter = DateFormatterModel()
+
     
     init(model:CDList){
         _model = StateObject(wrappedValue:AddRemainderModel(model: model))
@@ -191,7 +192,6 @@ struct AddRemainder: View {
                 TextField("", text: $model.notes)
                     .foregroundStyle(Color.white)
                     .onTapGesture {
-                      
                             sheetManager.dismiss()
                         }
                     .placeholder(when: model.notes.isEmpty) {
@@ -224,7 +224,7 @@ struct AddRemainder: View {
                         }
                     }, label: {
                         Text("Create")
-                            .foregroundStyle(Color(hex: model.isClickable ? model.model.color : "F1EFEF"))
+                            .foregroundStyle(Color(hex: model.isClickable ? model.model.color : "BE3144"))
                     }
                     ).disabled(!model.isClickable)
                 }

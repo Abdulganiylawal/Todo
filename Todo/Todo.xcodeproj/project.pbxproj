@@ -47,6 +47,7 @@
 		1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070757A2AC1C50700793E13 /* ListViewModel.swift */; };
 		1091F4DE2AFE63EB00A367A5 /* RoutingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1091F4DD2AFE63EB00A367A5 /* RoutingModel.swift */; };
 		1091F4E12AFE679200A367A5 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1091F4E02AFE679200A367A5 /* NavigationManager.swift */; };
+		1099B7692B0165DF007264F8 /* EditRemainder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1099B7682B0165DF007264F8 /* EditRemainder.swift */; };
 		10A078D32ADAF3F900FE2BF0 /* TaskGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A078D22ADAF3F900FE2BF0 /* TaskGroup.swift */; };
 		10A078D52ADB108700FE2BF0 /* GroupedTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A078D42ADB108700FE2BF0 /* GroupedTaskView.swift */; };
 		10CE85CC2AC44D6F0086C8DA /* Calender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CE85CB2AC44D6F0086C8DA /* Calender.swift */; };
@@ -122,6 +123,7 @@
 		1070757A2AC1C50700793E13 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		1091F4DD2AFE63EB00A367A5 /* RoutingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingModel.swift; sourceTree = "<group>"; };
 		1091F4E02AFE679200A367A5 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
+		1099B7682B0165DF007264F8 /* EditRemainder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRemainder.swift; sourceTree = "<group>"; };
 		10A078D22ADAF3F900FE2BF0 /* TaskGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGroup.swift; sourceTree = "<group>"; };
 		10A078D42ADB108700FE2BF0 /* GroupedTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedTaskView.swift; sourceTree = "<group>"; };
 		10CE85CB2AC44D6F0086C8DA /* Calender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calender.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				10F9A4F12AC9C50E005B5231 /* CompletedView.swift */,
 				10A078D42ADB108700FE2BF0 /* GroupedTaskView.swift */,
 				105936CA2AFBC37200823D41 /* AddRemainder.swift */,
+				1099B7682B0165DF007264F8 /* EditRemainder.swift */,
 			);
 			path = RemainderView;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				105936D32AFBD75500823D41 /* Repeat.swift in Sources */,
 				1091F4DE2AFE63EB00A367A5 /* RoutingModel.swift in Sources */,
 				10A078D52ADB108700FE2BF0 /* GroupedTaskView.swift in Sources */,
+				1099B7692B0165DF007264F8 /* EditRemainder.swift in Sources */,
 				101284892AE050DA00014C76 /* SearchViewModel.swift in Sources */,
 				10132CE92AFC369200B8DFAF /* ArrayOfColors.swift in Sources */,
 				104ECFF02AB628E50083B3D6 /* AuthViewModel.swift in Sources */,

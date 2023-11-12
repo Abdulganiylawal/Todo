@@ -67,7 +67,7 @@ enum TaskGroup: String, Identifiable, CaseIterable {
     var colorDark:String{
         switch self {
             case .all:
-                return "6e7b8b"
+                return "6499E9"
             case .today:
                 return "#FFEB3B"
             case .schedule:
@@ -178,4 +178,5 @@ class ListEssentials{
     }
     
 }
+
 

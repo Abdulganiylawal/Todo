@@ -8,17 +8,31 @@
 import SwiftUI
 import CoreData
 
+@available(iOS 17.0, *)
 struct GroupedTaskView: View {
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
+    var selector:TaskGroup
     
-    var remaindersByList: [String: [CDRemainder]] {
+    private var remaindersByList: [String: [CDRemainder]] {
         Dictionary(grouping: remainders) { remainder in
             remainder.list!.name
         }
     }
     
+    private var remaindersByMonth: [String: [CDRemainder]] {
+        Dictionary(
+            grouping: remainders)
+        { remainder in
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd-mm-yy"
+            return  (remainder.schedule_?.date_)!
+        }
+    }
+    
+    
     init(selector: TaskGroup) {
         let request = CDRemainder.fetch()
+        self.selector = selector
         switch selector {
             case .all:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
@@ -49,54 +63,88 @@ struct GroupedTaskView: View {
     }
     
     var body: some View {
-        List {
-            ForEach(remaindersByList.keys.sorted(), id: \.self) { listName in
-                if let listColor = remaindersByList[listName]?.first?.list?.color {
-                    Section(header: Text(listName)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color(hex: listColor))
-                    ) {
-                        ForEach(remaindersByList[listName] ?? [], id: \.self) { remainder in
-                            HStack(alignment: .top) {
-                                if remainder.isCompleted_ {
-                                    FilledCircle(color: remainder.list!.color)
-                                        .frame(width: 20, height: 20)
-                                } else {
-                                    EmptyCircle(color: remainder.list!.color)
-                                        .frame(width: 20, height: 20)
-                                }
-                                VStack(alignment: .leading) {
-                                    Text(remainder.title)
-                                        .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                                    Text(remainder.notes)
-                                        .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                                    if  let originalDate = remainder.schedule_?.date, let time = remainder.schedule_?.time, let repeatCycle = remainder.schedule_?.repeatCycle{
-                                        HStack{
-                                        Text(originalDate)
-                                            .foregroundColor(.secondary)
-                                        if !time.isEmpty{
-                                            Text(",\(time)")
-                                                .foregroundColor(.secondary)
-                                        }
-                                        if !repeatCycle.isEmpty{
-                                            Text(",\(Image(systemName: "repeat"))\(repeatCycle)")
-                                                .foregroundColor(.secondary)
-                                        }
-                                    }
-                                    }
-                                }
-                            }
-                            
-                        }
-                    }
-                }
-            }
-            
-        }.listStyle(PlainListStyle())
+        switch selector{
+            case .all, .completed:
+                allAndCompletedView
+                    .padding(0)
+                
+            case .schedule:
+                scheduleView
+                    .padding(0)
+            case .today:
+                todayView
+                    .padding(0)
+        }
     }
+    var allAndCompletedView: some View {
+        List {
+            ForEach(remainders, id: \.self) {
+                remainder in
+                RemainderRow(remainder: remainder, color: selector.colorDark, duration: remainder.schedule_?.duration ?? 0.0)
+                    .overlay {
+                        Text(remainder.list!.name)
+                            .foregroundStyle(Color(hex: remainder.list!.color))
+                            .font(.caption)
+                            .padding(8)
+                            .background(.ultraThinMaterial)
+                            .backgroundStyle1(cornerRadius: 10, opacity: 0.2)
+                            .padding(.leading,270)
+                            .padding(.top,-45)
+                    }
+            }
+            .listRowSeparator(.hidden)
+        }
+        .listStyle(PlainListStyle())
+    }
+    
+    
+    
+    var scheduleView:some View{
+        List{
+            ForEach(remainders, id: \.self) {
+                remainder in
+                RemainderRow(remainder: remainder, color: selector.colorDark, duration: remainder.schedule_?.duration ?? 0.0)
+                    .overlay {
+                        ZStack(alignment: .topTrailing){
+                            Text(remainder.list!.name)
+                                .foregroundStyle(Color(hex: remainder.list!.color))
+                                .font(.caption)
+                                .padding(8)
+                                .background(.ultraThinMaterial)
+                                .backgroundStyle1(cornerRadius: 10, opacity: 0.2)
+                        }
+                        .frame(alignment: .topTrailing)
+                    }
+            }
+            .listRowSeparator(.hidden)
+        }
+        .listStyle(PlainListStyle())
+    }
+    
+    var todayView:some View{
+        List{
+            ForEach(remainders, id: \.self) {
+                remainder in
+                RemainderRow(remainder: remainder, color: selector.colorDark, duration: remainder.schedule_?.duration ?? 0.0)
+                    .overlay {
+                        Text(remainder.list!.name)
+                            .foregroundStyle(Color(hex: remainder.list!.color))
+                            .font(.caption)
+                            .padding(8)
+                            .background(.ultraThinMaterial)
+                            .backgroundStyle1(cornerRadius: 10, opacity: 0.2)
+                            .padding(.leading,270)
+                            .padding(.top,-35)
+                    }
+          
+            }
+            .listRowSeparator(.hidden)
+        }
+        .listStyle(PlainListStyle())
+    }
+    
 }
-
+@available(iOS 17.0, *)
 extension GroupedTaskView {
     
     func FilledCircle(color:String) ->some View{
@@ -120,8 +168,10 @@ extension GroupedTaskView {
     
 }
 
+@available(iOS 17.0, *)
 struct GroupedTaskView_Previews: PreviewProvider {
     static var previews: some View {
         GroupedTaskView(selector: .all)
     }
 }
+

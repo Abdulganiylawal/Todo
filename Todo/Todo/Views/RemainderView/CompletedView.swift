@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+@available(iOS 17.0, *)
 struct CompletedView: View {
     @FetchRequest(fetchRequest: CDRemainder.fetch()) var completedRemainders
     var model:CDList
@@ -20,61 +21,19 @@ struct CompletedView: View {
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2])
         self._completedRemainders = FetchRequest(fetchRequest: request)
     }
+    
     var body: some View {
-        NavigationStack{
-            List{
-                ForEach(completedRemainders) { remainder in
-                    HStack(alignment: .top)
-                    {
-                        filledReminderLabel
-                            .frame(width: 20, height: 20)
-                        VStack(alignment:.leading){
-                            Text(remainder.title_ ?? "")
-                                .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                                .frame(alignment: .leading)
-                            Text(remainder.notes_ ?? "")
-                                .foregroundColor(remainder.isCompleted_ ? .secondary : .primary)
-                                .frame(alignment: .leading)
-                            if  let originalDate = remainder.schedule_?.date, let time = remainder.schedule_?.time, let repeatCycle = remainder.schedule_?.repeatCycle{
-                                HStack{
-                                    Text(originalDate)
-                                        .foregroundColor(.secondary)
-                                    if !time.isEmpty{
-                                        Text(",\(time)")
-                                            .foregroundColor(.secondary)
-                                    }
-                                    if !repeatCycle.isEmpty{
-                                        Text(",\(repeatCycle)")
-                                            .foregroundColor(.secondary)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
+            ScrollView{
+                ForEach(completedRemainders){
+                    remainder in
+                    RemainderRow(remainder: remainder, color: model.color, duration: remainder.schedule_?.duration ?? 0.0)
                 }
-            }.id(UUID())
+            }
             
-        }
+        
      
         
     }
-    
-    var filledReminderLabel: some View {
-        Circle()
-            .stroke(Color(hex: model.color), lineWidth: 2)
-            .overlay(alignment: .center) {
-                GeometryReader { geo in
-                    VStack {
-                        Circle()
-                            .fill(Color(hex: model.color))
-                            .frame(width: geo.size.width*0.7, height: geo.size.height*0.7, alignment: .center)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-            }
-    }
-    
 }
 
 //#Preview {
