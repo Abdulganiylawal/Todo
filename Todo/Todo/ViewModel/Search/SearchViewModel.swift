@@ -9,10 +9,6 @@ import Foundation
 import CoreData
 import Combine
 
-import Foundation
-import CoreData
-import Combine
-
 class SearchViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var results: [CDRemainder] = []

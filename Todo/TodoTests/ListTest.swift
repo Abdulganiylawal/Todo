@@ -6,30 +6,61 @@
 //
 
 import XCTest
+import CoreData
+@testable import Todo
 
 final class ListTest: XCTestCase {
+    
+    private var modelTest:ListViewManger!
+    var context:NSManagedObjectContext!
 
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        modelTest = ListViewManger(context: PersistenceController.Testing.container.newBackgroundContext())
+        context =  PersistenceController.Testing.container.newBackgroundContext()
+        
+        
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        context = nil
+        modelTest = nil
+ 
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testListHasAValueWhenAddedTo(){
+        modelTest.addList(name: "Testing", image: "list.bullet", color: "#a28089")
+        XCTAssert(modelTest.myList.count == 1, "Theu should be an element in  mylist")
     }
+    
+    func testListShouldBeEmptyWhenDeleted(){
+        let list = CDList(name: "Testing", color: "#a28089", image: "list.bullet", context: context)
+        expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
+                return true
+            }
+            do{
+              try context.save()
+            }catch{
+                print(error.localizedDescription)
+            }
+        waitForExpectations(timeout: 2.0) { error in
+                XCTAssertNil(error, "Save did not occur")
+            }
+        
+        CDList.delete(list: list)
+        let request = CDList.fetchRequest()
+        request.predicate = NSPredicate.all
+        let result = try? context.fetch(request)
+        XCTAssertTrue(result!.isEmpty, "The result should be empty")
+    }
+    
+    
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+//    func testPerformanceExample() throws {
+//        // This is an example of a performance test case.
+//        self.measure {
+//            // Put the code you want to measure the time of here.
+//        }
+//    }
 
 }

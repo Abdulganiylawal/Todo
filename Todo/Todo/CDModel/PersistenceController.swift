@@ -24,13 +24,12 @@ struct PersistenceController {
         }
     }
 
-    static var preview: PersistenceController = {
+    static var Testing: PersistenceController = {
         let controller = PersistenceController(inMemory: true)
         return controller
     }()
 
     func save() async {
-   
           let context = container.viewContext
           if context.hasChanges {
               await withCheckedContinuation { continuation in

@@ -33,7 +33,7 @@ struct AddRemainder: View {
                     
                     sheetManager.dismiss()
                 }
-                .placeholder(when: model.name.isEmpty) {
+                .placeholder(when: model.name.isEmpty, alignment: .leading) {
                     Text("Task descriptions").foregroundColor(.gray)
                 }
                 .padding()
@@ -194,7 +194,7 @@ struct AddRemainder: View {
                     .onTapGesture {
                             sheetManager.dismiss()
                         }
-                    .placeholder(when: model.notes.isEmpty) {
+                    .placeholder(when: model.notes.isEmpty, alignment: .leading) {
                         Text("Add notes")
                             .foregroundColor(.gray)
                     }

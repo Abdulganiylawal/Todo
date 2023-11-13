@@ -46,6 +46,19 @@ extension CDList{
         }
     }
     
+    static func delete(list: CDList){
+        guard let context = list.managedObjectContext else { return }
+        
+        for remainder in list.remainders {
+            CDRemainder.delete(remainder: remainder)
+        }
+        context.delete(list)
+        Task{
+            await PersistenceController.shared.save()
+        }
+    }
+    
+    
     public override func awakeFromInsert() {
         self.id_ = UUID()
     }
@@ -59,10 +72,5 @@ extension CDList{
         self.image = image
     }
     
-    static var example:CDList = {
-        let context = PersistenceController.preview.container.viewContext
-        let list = CDList(name: "Lawal", color: "8ECDDD", image: "calendar.badge.clock", context: context)
-        
-        return list
-    }()
+    
 }

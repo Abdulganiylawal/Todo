@@ -51,19 +51,7 @@ enum TaskGroup: String, Identifiable, CaseIterable {
                 return "checkmark"
         }
     }
-    
-    var colorLight:String{
-        switch self {
-            case .all:
-                return "6499E9"
-            case .today:
-                return "FFFF00"
-            case .schedule:
-                return "FE0000"
-            case .completed:
-                return "03C988"
-        }
-    }  
+ 
     var colorDark:String{
         switch self {
             case .all:

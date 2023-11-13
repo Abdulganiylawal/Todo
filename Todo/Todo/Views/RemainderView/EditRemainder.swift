@@ -27,7 +27,7 @@ struct EditRemainder: View {
                     
                     sheetManager.dismiss()
                 }
-                .placeholder(when: remainders.title.isEmpty) {
+                .placeholder(when: remainders.title.isEmpty, alignment: .center) {
                     Text("Task descriptions").foregroundColor(.gray)
                 }
                 .padding()
@@ -189,7 +189,7 @@ struct EditRemainder: View {
                     .onTapGesture {
                             sheetManager.dismiss()
                         }
-                    .placeholder(when: remainders.notes.isEmpty) {
+                    .placeholder(when: remainders.notes.isEmpty, alignment: .leading) {
                         Text("Add notes")
                             .foregroundColor(.gray)
                     }
@@ -200,12 +200,6 @@ struct EditRemainder: View {
             date = remainders.schedule_?.date_ ?? ""
             time = remainders.schedule_?.time_ ?? ""
             repeatCycle = remainders.schedule_?.repeatCycle_ ?? ""
-            
-        })
-        .onDisappear(perform: {
-             remainders.schedule_?.date_  = date
-            remainders.schedule_?.time_   = time
-             remainders.schedule_?.repeatCycle_  = repeatCycle
         })
         .navigationTitle("New Task")
             .foregroundStyle(Color(hex: remainders.list!.color_!))
@@ -222,12 +216,14 @@ struct EditRemainder: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         remainders.schedule_?.date_  = date
-                       remainders.schedule_?.time_   = time
+                        remainders.schedule_?.time_   = time
                         remainders.schedule_?.repeatCycle_  = repeatCycle
                         isFocused = true
                         if let time = remainders.schedule_?.time_{
                             let durationTime = dateFormatter.timeDifference(from: time, to: self.endTime)
-                            remainders.schedule_?.duration_ = durationTime ?? 0.0
+                            if !(remainders.schedule_?.duration_.isZero)! {
+                                remainders.schedule_?.duration_ = durationTime ?? 0.0
+                            }
                         }
                         Task{
                             await PersistenceController.shared.save()

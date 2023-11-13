@@ -20,6 +20,7 @@ struct Home: View {
     @State var isClicked: Bool = false
     let resultGridLayout = [GridItem(.adaptive(minimum: 150), spacing: 15,
                                      alignment: .top)]
+    @State private var selectedList:CDList? = nil
     init(context:NSManagedObjectContext){
         self.context = context
         _model = StateObject(wrappedValue: ListViewManger(context: context))
@@ -39,6 +40,7 @@ struct Home: View {
                             ForEach(TaskGroup.allCases) { taskGroup in
                                 NavigationLink(value: Route.groupTaskView(selector: taskGroup)) {
                                     ListView(icon: taskGroup.iconName, name: taskGroup.name, color: taskGroup.colorDark, count: ListEssModel.getCount(item: taskGroup.rawValue), remainders: ListEssModel.get3Remainder(for: taskGroup))
+                                    
                                 }
                                 
                                 
@@ -58,41 +60,36 @@ struct Home: View {
                     
                     Section{
                         LazyVGrid(columns: resultGridLayout) {
-                            ForEach(model.myList,id: \.id) { list in
+                        ForEach(model.myList,id: \.id) { list in
                                 NavigationLink(value: Route.remainderView(model: list)) {
                                     ListView(icon: list.image, name: list.name, color: list.color, count: ListEssModel.getRemainderCount(list: list), remainders: ListEssModel.get3Remainder(for: list))
-//                                        .contextMenu {
-//                                            menuItems
-//                                        }
-//                                        .sheet(isPresented: $isClicked) {
-//                                            NavigationStack{
-//                                                EditRemainder(remainders: li)
-//                                            }
-//                                            
-//                                        }
+                                    
+                                    .contextMenu {
+                                            Group {
+                                                Button("Edit List", action: {
+                                                    selectedList = list
+                                                        model.fetchList()
+                                                })
+                                                Button("Delete List", action: {
+                                                    CDList.delete(list: list)
+                                                    model.fetchList()
+                                                   
+                                                })
+                                               
+                                            }
+                                    }
                                 }
                             }
+                        
                         }
-                        .id(reloadFlag)
+                        .fullScreenCover(item: $selectedList) { list in
+                            NavigationStack{
+                                EditList(list: .constant(list), model: self.model)
+                            }
+                        }
                         .padding()
-                        
-                        
                     }
-                    
-                    
-                    Spacer()
-                    Image(systemName: "plus")
-                        .foregroundColor(Color(hex: "6e7b8b"))
-                        .font(.body)
-                        .fontWeight(.bold)
-                        .padding()
-                        .background(.ultraThinMaterial)
-                        .backgroundStyle1(cornerRadius: 20,opacity: 0)
-                        .padding()
-                        .onTapGesture {
-                            isClicked.toggle()
-                        }
-                    
+                    .id(reloadFlag)
                         .navigationTitle("")
                         .toolbar(content: {
                             ToolbarItem(placement: .topBarLeading) {
@@ -100,22 +97,17 @@ struct Home: View {
                                     Image(systemName: "gearshape")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
-                                        .foregroundColor(.secondary)
-                                        .background(.ultraThinMaterial)
-                                        .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
-                                    
-                                    
+                                        .foregroundColor(Color(hex: "6e7b8b"))
+                                        
                                 }
-                                
                             }
                             ToolbarItem(placement: .topBarTrailing) {
-                                NavigationLink(value: Route.SearchView) {
+                                NavigationLink(value: Route.searchView(context: context)) {
                                     Image(systemName: "magnifyingglass")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
-                                        .foregroundColor(.secondary)
-                                        .background(.ultraThinMaterial)
-                                        .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
+                                        .foregroundColor(Color(hex: "6e7b8b"))
+                                        
                                     
                                 }
                             }
@@ -132,9 +124,19 @@ struct Home: View {
                         }
                     
                 }
-                
+                Spacer()
+                Image(systemName: "plus")
+                    .foregroundColor(Color(hex: "6e7b8b"))
+                    .font(.body)
+                    .fontWeight(.bold)
+                    .padding()
+                    .background(.ultraThinMaterial)
+                    .backgroundStyle1(cornerRadius: 20,opacity: 0)
+                    .padding()
+                    .onTapGesture {
+                        isClicked.toggle()
+                    }
                 .navigationDestination(for: Route.self)  {  $0}
-                
             }
         }
     }

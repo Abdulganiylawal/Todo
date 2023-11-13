@@ -13,11 +13,15 @@ struct RemainderRow: View {
     var color:String = ""
     var remainder:CDRemainder
     var dateFormatterModel = DateFormatterModel()
-    let duration:Double
-
+    var duration:Double
+    var select:String = ""
     
-  
-    
+    init(color: String, remainder: CDRemainder, duration: Double, select: String) {
+          self.color = color
+          self.remainder = remainder
+          self.duration = duration
+          self.select = select
+      }
     var progressInterval: ClosedRange<Date>? {
         guard let startTimeString = remainder.schedule_?.time,
               let startDateString = remainder.schedule_?.date,
@@ -39,11 +43,23 @@ struct RemainderRow: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing: 8) {
-            if !remainder.title.isEmpty {
-                  Text(remainder.title)
-                    .foregroundStyle(Color.white)
-               
-              }
+            HStack{
+                if !remainder.title.isEmpty {
+                    Text(remainder.title)
+                        .foregroundStyle(Color.white)
+                    
+                }
+                Spacer()
+                if !select.isEmpty{
+                    Text(remainder.list?.name ?? "" )
+                        .font(.caption)
+                        .foregroundStyle(Color(hex: remainder.list?.color ?? ""))
+                        .padding(8)
+                        .background(.ultraThinMaterial)
+                        .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
+                     
+                }
+            }.padding(0)
               if !remainder.notes.isEmpty {
                   Text(remainder.notes)
                       .foregroundStyle(.secondary)
@@ -59,13 +75,12 @@ struct RemainderRow: View {
             Divider()
                 .foregroundStyle(Color.white)
             HStack {
-                if let date = remainder.schedule_?.date, !date.isEmpty {
+                if let date = remainder.schedule_?.date_, !date.isEmpty {
                     HStack {
                         Image(systemName: "calendar")
+                            .font(.subheadline)
                         Text(date)
-                            .font(.body)
-                         
-                       
+                            .font(.subheadline)
                     }
                     .foregroundStyle(.secondary)
                     Spacer()
@@ -76,20 +91,28 @@ struct RemainderRow: View {
                 if let time = remainder.schedule_?.time, !time.isEmpty {
                     HStack {
                         Image(systemName: "clock")
+                            .font(.subheadline)
                         Text(time)
-                            .font(.body)
+                            .font(.subheadline)
+              
                     }
                     .foregroundStyle(.secondary)
-                    Spacer() // This will push all items to the edges of the available space
+                    .font(.body)
+                    if let repeatCycle = remainder.schedule_?.repeatCycle, !repeatCycle.isEmpty{
+                        Spacer()
+                    }
+                    
                 }
                 
                 
                 if let repeatCycle = remainder.schedule_?.repeatCycle, !repeatCycle.isEmpty {
                     HStack {
                         Image(systemName: "repeat")
+                            .font(.subheadline)
                         Text(repeatCycle)
-                            .font(.body)
+                            .font(.subheadline)
                     }
+                    .font(.body)
                     .foregroundStyle(.secondary)
     
                 }
@@ -99,6 +122,7 @@ struct RemainderRow: View {
                 if  remainder.isCompleted_{
                     Text("Completed")
                         .font(.caption)
+                        .foregroundStyle(.secondary)
                         .padding(8)
                         .background(.ultraThinMaterial)
                         .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
@@ -107,7 +131,7 @@ struct RemainderRow: View {
             }
 
         }
-        .padding(20)
+        .padding()
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(.ultraThinMaterial)
@@ -133,7 +157,7 @@ struct RemainderRow: View {
 struct SwiftUIView_Previews: PreviewProvider {
     
     static var previews: some View{
-        let list = CDList(name: "", color: "D83F31", image: "", context: PersistenceController.shared.container.viewContext)
+        let list = CDList(name: "Testing", color: "D83F31", image: "", context: PersistenceController.shared.container.viewContext)
         let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "djdjdjlkjnankasnckcnkscnknc")
         remainders.list = list
         remainders.isCompleted_ = true

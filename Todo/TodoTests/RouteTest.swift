@@ -6,24 +6,39 @@
 //
 
 import XCTest
-
+@testable import Todo
 final class RouteTest: XCTestCase {
+    private var model:NavigationManager!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        model = NavigationManager()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        model = nil
+    }
+    
+    func testRouteShouldBeEmptyWhenInitialized(){
+        XCTAssertEqual(model.routes.isEmpty, true)
+    }
+    
+    func testRouteShouldHaveAnElementWhenPushedFunctionIsCalled(){
+        model.push(to: .SettingsView)
+        XCTAssertEqual(model.routes.count >= 1, true, "Route should have one element")
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testRouteShouldHave2ElementWhenPushedFunctionIsCalledTwice(){
+        model.push(to: .SettingsView)
+        model.push(to: .groupTaskView(selector: .all))
+        XCTAssertEqual(model.routes.count >= 2, true, "Route should have two element")
     }
+    
+    func testRouteShouldHaveNoElementWhenGoBackFunctionIsCalled(){
+        model.push(to: .SettingsView)
+        model.goBack()
+        XCTAssertEqual(model.routes.count == 0, true, "Route should be empty")
+    }
+  
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

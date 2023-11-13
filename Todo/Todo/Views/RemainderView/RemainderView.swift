@@ -15,6 +15,8 @@ struct RemainderView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
     @State private var selectedRemainder:CDRemainder? = nil
+
+
  
     
     init(model:CDList){
@@ -35,7 +37,6 @@ struct RemainderView: View {
                 remainder
                     .padding()
             }
-            Spacer()
             Spacer()
             Image(systemName: "plus")
                 .foregroundColor(Color(hex: model.color))
@@ -81,17 +82,25 @@ struct RemainderView: View {
     var remainder: some View{
         ForEach(remainders,id: \.self) { remainder in
          
-            RemainderRow(remainder: remainder, color: model.color, duration:remainder.schedule_?.duration ?? 0.0)
+            RemainderRow(color: model.color, remainder: remainder, duration:remainder.schedule_?.duration ?? 0.0,select: "")
                 .padding(.bottom,10)
                 
                 .contextMenu {
                         Group {
                             Button("Edit Remainders", action: {
                                 selectedRemainder = remainder
-                                print( remainder.schedule_?.duration )
                             })
-                            Button("Action 2", action: {})
-                            Button("Action 3", action: {})
+                            Button("Delete Remainders", action: {
+                                CDRemainder.delete(remainder: remainder)
+                            })
+                            Button("Completed", action: {
+                                remainder.isCompleted_ = true
+                                guard let repeatCycle = remainder.schedule_?.repeatCycle, !repeatCycle.isEmpty else{return}
+                                repeatCycleManager.nextDueDate(remainder: remainder, context: context)
+                                Task{
+                                    await PersistenceController.shared.save()
+                                }
+                            })
                         }
                     
                 }

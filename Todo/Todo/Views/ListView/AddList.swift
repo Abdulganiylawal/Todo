@@ -5,76 +5,47 @@ struct AddList: View {
     let itemsPerRow = 6
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var model:ListViewManger
+    @State var color: String? = "#ffde22"
+    @State var icon: String? = "list.bullet"
+    @State var name:String = ""
+    let resultGridLayout = [GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible())]
     
     init(manager: ListViewManger){
         self._model = ObservedObject(wrappedValue: manager)
     }
-    
-    @State var color: String? = "#ff414e"
-    @State var icon: String? = "list.bullet"
-    @State var name:String = ""
-    
-    var colorGrid: some View {
-        
-        VStack(spacing: 16) {
-            ForEach(0..<popularColors.count, id: \.self) { index in
-                if index % itemsPerRow == 0 {
-                    let endIndex = min(index + itemsPerRow, popularColors.count)
-                    let rowColors = popularColors[index..<endIndex]
-                    ColorRow(rowColors: Array(rowColors), selectedColor: $color)
-                }
-            }
-        }
-        .padding()
-    }
-    
-    var IconGrid: some View {
-            VStack(spacing: 16) {
-                ForEach(0..<todoIcons.count, id: \.self) { index in
-                    if index % itemsPerRow == 0 {
-                        let endIndex = min(index + itemsPerRow, todoIcons.count)
-                        let rowIcons = todoIcons[index..<endIndex]
-                        IconRow(rowIcons: Array(rowIcons), selectedIcon: $icon,  color: $color)
-                    }
-                }
-            }
-            .padding()
-    }
-    
+  
     var body: some View {
         VStack {
             Form {
                 Section {
                     TextField("", text: $model.title)
-                        .font(.system(size: 30, weight: .regular))
+                        .font(.system(size: 20, weight: .semibold))
                         .multilineTextAlignment(.center)
-                        .background(
-                            ZStack(alignment: .leading) {
-                                if model.title.isEmpty {
-                                    Text("Title")
-                                        .font(.system(size: 25, weight: .regular))
-                                        .foregroundColor(.gray)
-                                        .padding(.horizontal, 10)
-                                }
-                            }
-                        )
+                        .placeholder(when: model.title.isEmpty, alignment: .center) {
+                            Text("Task").foregroundColor(.gray)
+                                .frame(alignment: .center)
+//                                .padding(.horizontal,150)
+                        }
                 }
                 Section {
-                    colorGrid
-                       
+                    LazyVGrid(columns: resultGridLayout,spacing: 10, content: {
+                        ForEach(popularColors, id: \.self) { color in
+                            ColorCapsule(color: color, selectedColor: $color)
+                        }
+                    })
+                    
                 }
-           
                 Section {
-                    IconGrid
-                        
+                    LazyVGrid(columns: resultGridLayout,spacing: 10, content: {
+                        ForEach(todoIcons, id: \.self) { icon in
+                            IconView(icon: icon, selectedIcon: $icon, color: $color)
+                        }
+                    })
+                    
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        
             }
-          
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -96,34 +67,6 @@ struct AddList: View {
     }
 }
 
-struct ColorRow: View {
-    let rowColors: [String]
-    @Binding var selectedColor: String?
-    
-    var body: some View {
-        HStack(spacing: 16) {
-            ForEach(rowColors, id: \.self) { color in
-                ColorCapsule(color: color, selectedColor: $selectedColor)
-            }
-        }
-    }
-}
-
-
-
-struct IconRow: View {
-    let rowIcons: [String]
-    @Binding var selectedIcon: String?
-    @Binding var color:String?
-    
-    var body: some View {
-        HStack(spacing: 16) {
-            ForEach(rowIcons, id: \.self) { icon in
-                IconView(icon: icon, selectedIcon: $selectedIcon, color: $color)
-            }
-        }
-    }
-}
 
 struct IconView: View {
     let icon: String
@@ -136,6 +79,7 @@ struct IconView: View {
             .foregroundColor(.gray)
             .onTapGesture {
                 self.selectedIcon = icon
+               
             }
             .overlay(
                 Image(systemName: icon)
@@ -156,6 +100,7 @@ struct ColorCapsule: View {
             .frame(width: 40, height: 40)
             .onTapGesture {
                 self.selectedColor = color.description
+                
             }
             .overlay(
                 Circle()
@@ -171,7 +116,7 @@ struct AddList_Previews: PreviewProvider {
     
     static var previews: some View {
         let model = ListViewManger(context: PersistenceController.shared.container.viewContext)
-            
+        
         AddList(manager: model)
             .preferredColorScheme(.dark)
     }

@@ -37,6 +37,9 @@ extension CDRemainder{
         guard let context = remainder.managedObjectContext else {return}
         CDRemainderSchedule.delete(schedule: remainder.schedule_!)
         context.delete(remainder)
+        Task{
+            await PersistenceController.shared.save()
+        }
     }
     
     static func fetch(predicate: NSPredicate? = nil) -> NSFetchRequest<CDRemainder> {

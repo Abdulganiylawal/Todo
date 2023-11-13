@@ -50,10 +50,8 @@ struct ListView: View {
         .frame(height:  90)
         .background(RoundedRectangle(cornerRadius: 20)
 
-            .fill(LinearGradient(colors: [Color(hex: "6e7b8b").opacity(0.3),Color(hex: "6e7b8b").opacity(0.2),Color(hex: "6e7b8b").opacity(0.05)], startPoint: .topTrailing, endPoint: .bottomLeading))
-            .backgroundStyle1(cornerRadius: 20, opacity: 0.1)
-
-                    
+            .fill(LinearGradient(colors: [Color(hex: "6e7b8b").opacity(0.15),Color(hex: "6e7b8b").opacity(0.1),Color(hex: "6e7b8b").opacity(0.05)], startPoint: .topTrailing, endPoint: .bottomLeading))
+            .backgroundStyle1(cornerRadius: 20, opacity: 0.1)        
         )
     }
 }

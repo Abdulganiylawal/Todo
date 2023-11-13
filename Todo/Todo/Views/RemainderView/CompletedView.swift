@@ -28,7 +28,7 @@ struct CompletedView: View {
                     remainder in
                     RemainderRow(remainder: remainder, color: model.color, duration: remainder.schedule_?.duration ?? 0.0)
                 }
-            }
+            }.padding()
             
         
      

@@ -12,7 +12,7 @@ import SwiftUI
 enum Route{
     case remainderView(model:CDList)
     case SettingsView
-    case SearchView
+    case searchView(context:NSManagedObjectContext)
     case groupTaskView(selector:TaskGroup)
 }
 
@@ -27,8 +27,8 @@ extension Route:Hashable{
             case (.remainderView(let lhs),.remainderView(let rhs)):
                 return lhs.objectID == rhs.objectID
                 
-            case (.SearchView,.SearchView):
-                return true
+            case (.searchView(let lhs),.searchView(let rhs)):
+                return lhs == rhs
             
             case (.SettingsView,.SettingsView):
                 return true
@@ -51,8 +51,8 @@ extension Route:View{
             case .SettingsView:
                 Settings()
 //                    .withCustomBackButton(state: state)
-            case .SearchView:
-               Search()
+            case .searchView(let context):
+                SearchView(context: context)
 //                    .withCustomBackButton(state: state)
             case .groupTaskView(selector: let selector):
                 GroupedTaskView(selector: selector)

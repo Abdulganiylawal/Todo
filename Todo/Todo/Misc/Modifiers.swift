@@ -85,7 +85,7 @@ extension View {
         
         background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(LinearGradient(colors: [Color(hex: color).opacity(0.3),Color(hex: color).opacity(0.2), Color(UIColor.black).opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                .fill(LinearGradient(colors: [Color(hex: color).opacity(0.3),Color(hex: color).opacity(0.2), Color(hex: color).opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing))
         )
     
     }
@@ -94,7 +94,7 @@ extension View {
 extension View {
     func placeholder<Content: View>(
         when shouldShow: Bool,
-        alignment: Alignment = .leading,
+        alignment: Alignment ,
         @ViewBuilder placeholder: () -> Content) -> some View {
 
         ZStack(alignment: alignment) {

@@ -77,96 +77,62 @@ struct GroupedTaskView: View {
         }
     }
     var allAndCompletedView: some View {
-        List {
+        ScrollView(showsIndicators: false) {
             ForEach(remainders, id: \.self) {
                 remainder in
-                RemainderRow(remainder: remainder, color: selector.colorDark, duration: remainder.schedule_?.duration ?? 0.0)
-                    .overlay {
-                        Text(remainder.list!.name)
-                            .foregroundStyle(Color(hex: remainder.list!.color))
-                            .font(.caption)
-                            .padding(8)
-                            .background(.ultraThinMaterial)
-                            .backgroundStyle1(cornerRadius: 10, opacity: 0.2)
-                            .padding(.leading,270)
-                            .padding(.top,-45)
-                    }
+                RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "allandcompleted")
+                    .padding(.bottom,10)
+                
             }
-            .listRowSeparator(.hidden)
+            .padding()
+            .toolbar(content: {
+                    ToolbarItem(placement: .principal) {
+                        Text(selector.rawValue.capitalized)
+                            .foregroundColor(Color(hex: selector.colorDark))
+                    }
+                })
         }
-        .listStyle(PlainListStyle())
     }
     
     
     
     var scheduleView:some View{
-        List{
+        ScrollView(showsIndicators: false){
             ForEach(remainders, id: \.self) {
                 remainder in
-                RemainderRow(remainder: remainder, color: selector.colorDark, duration: remainder.schedule_?.duration ?? 0.0)
-                    .overlay {
-                        ZStack(alignment: .topTrailing){
-                            Text(remainder.list!.name)
-                                .foregroundStyle(Color(hex: remainder.list!.color))
-                                .font(.caption)
-                                .padding(8)
-                                .background(.ultraThinMaterial)
-                                .backgroundStyle1(cornerRadius: 10, opacity: 0.2)
-                        }
-                        .frame(alignment: .topTrailing)
-                    }
+                RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "schedule")
+                    .padding(.bottom,10)
             }
-            .listRowSeparator(.hidden)
+            .padding()
+            .toolbar(content: {
+                ToolbarItem(placement: .principal) {
+                    Text(selector.rawValue.capitalized)
+                        .foregroundColor(Color(hex: selector.colorDark))
+                }
+            })
         }
-        .listStyle(PlainListStyle())
+   
     }
     
     var todayView:some View{
-        List{
+        ScrollView(showsIndicators: false){
             ForEach(remainders, id: \.self) {
                 remainder in
-                RemainderRow(remainder: remainder, color: selector.colorDark, duration: remainder.schedule_?.duration ?? 0.0)
-                    .overlay {
-                        Text(remainder.list!.name)
-                            .foregroundStyle(Color(hex: remainder.list!.color))
-                            .font(.caption)
-                            .padding(8)
-                            .background(.ultraThinMaterial)
-                            .backgroundStyle1(cornerRadius: 10, opacity: 0.2)
-                            .padding(.leading,270)
-                            .padding(.top,-35)
-                    }
-          
+                RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "today")
+                    .padding(.bottom,10)
             }
-            .listRowSeparator(.hidden)
-        }
-        .listStyle(PlainListStyle())
-    }
     
-}
-@available(iOS 17.0, *)
-extension GroupedTaskView {
-    
-    func FilledCircle(color:String) ->some View{
-        Circle()
-            .stroke(Color(hex: color), lineWidth: 2)
-            .overlay(alignment: .center) {
-                GeometryReader { geo in
-                    VStack {
-                        Circle()
-                            .fill(Color(hex: color))
-                            .frame(width: geo.size.width*0.7, height: geo.size.height*0.7, alignment: .center)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }.padding()
+        .toolbar(content: {
+                ToolbarItem(placement: .principal) {
+                    Text(selector.rawValue.capitalized)
+                        .foregroundColor(Color(hex: selector.colorDark))
                 }
-            }
-    }
-    func EmptyCircle(color:String) -> some View{
-        return Circle()
-            .stroke(Color(hex: color))
+            })
     }
     
 }
+
 
 @available(iOS 17.0, *)
 struct GroupedTaskView_Previews: PreviewProvider {
