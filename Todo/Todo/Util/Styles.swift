@@ -24,24 +24,4 @@ extension Color {
     }
 }
 
-struct WithBackgroundProgressViewStyle: ProgressViewStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        ProgressView(configuration)
-            .padding(8)
-            .background(Color.gray.opacity(0.25))
-    
-            .cornerRadius(8)
-    }
-}
 
-struct BackButton: View {
-    let action: () -> Void
-    let color:String
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: "arrow.backward")
-                .foregroundStyle(Color(hex: color))
-        }
-        .font(.title)
-    }
-}

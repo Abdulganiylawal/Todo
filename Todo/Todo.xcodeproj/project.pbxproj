@@ -43,6 +43,7 @@
 		105936D02AFBD72D00823D41 /* Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105936CF2AFBD72D00823D41 /* Duration.swift */; };
 		105936D32AFBD75500823D41 /* Repeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105936D22AFBD75500823D41 /* Repeat.swift */; };
 		105AAC4E2AFD251400F44993 /* DurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105AAC4D2AFD251400F44993 /* DurationManager.swift */; };
+		106B7D052B6FB7CD00E5ABCF /* GroupedTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106B7D042B6FB7CD00E5ABCF /* GroupedTaskModel.swift */; };
 		107075762AC1C44600793E13 /* AddList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075752AC1C44600793E13 /* AddList.swift */; };
 		1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070757A2AC1C50700793E13 /* ListViewModel.swift */; };
 		1091F4DE2AFE63EB00A367A5 /* RoutingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1091F4DD2AFE63EB00A367A5 /* RoutingModel.swift */; };
@@ -112,6 +113,7 @@
 		105936CF2AFBD72D00823D41 /* Duration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Duration.swift; sourceTree = "<group>"; };
 		105936D22AFBD75500823D41 /* Repeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repeat.swift; sourceTree = "<group>"; };
 		105AAC4D2AFD251400F44993 /* DurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationManager.swift; sourceTree = "<group>"; };
+		106B7D042B6FB7CD00E5ABCF /* GroupedTaskModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedTaskModel.swift; sourceTree = "<group>"; };
 		107075752AC1C44600793E13 /* AddList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddList.swift; sourceTree = "<group>"; };
 		1070757A2AC1C50700793E13 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		1091F4DD2AFE63EB00A367A5 /* RoutingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutingModel.swift; sourceTree = "<group>"; };
@@ -196,7 +198,7 @@
 				104ECFEA2AB6285D0083B3D6 /* Services */,
 				104ECFBE2AB6273C0083B3D6 /* Persistence.swift */,
 				105936CC2AFBD50300823D41 /* Componts */,
-				1050F2302AB8B2CF001EA255 /* Misc */,
+				1050F2302AB8B2CF001EA255 /* Util */,
 				1051EEAE2AD6D9CF00B3C30B /* CDModel */,
 				104ECFBB2AB6273C0083B3D6 /* Preview Content */,
 			);
@@ -234,6 +236,7 @@
 		104ECFE62AB627C40083B3D6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				106B7D032B6FB7B700E5ABCF /* GroupTaskedModel */,
 				101284872AE050CA00014C76 /* Search */,
 				10D72A6E2AC3227A00193E93 /* Remainder */,
 				107075792AC1C4EF00793E13 /* LIst */,
@@ -298,7 +301,7 @@
 			path = AuthView;
 			sourceTree = "<group>";
 		};
-		1050F2302AB8B2CF001EA255 /* Misc */ = {
+		1050F2302AB8B2CF001EA255 /* Util */ = {
 			isa = PBXGroup;
 			children = (
 				10E0E87B2ABA0F0300E2359D /* Styles.swift */,
@@ -307,7 +310,7 @@
 				10132CE62AFBF51400B8DFAF /* SheetManager.swift */,
 				105AAC4D2AFD251400F44993 /* DurationManager.swift */,
 			);
-			path = Misc;
+			path = Util;
 			sourceTree = "<group>";
 		};
 		1051EEAE2AD6D9CF00B3C30B /* CDModel */ = {
@@ -336,6 +339,14 @@
 				10132CEA2AFC36D100B8DFAF /* ArraysOfIcons.swift */,
 			);
 			path = Componts;
+			sourceTree = "<group>";
+		};
+		106B7D032B6FB7B700E5ABCF /* GroupTaskedModel */ = {
+			isa = PBXGroup;
+			children = (
+				106B7D042B6FB7CD00E5ABCF /* GroupedTaskModel.swift */,
+			);
+			path = GroupTaskedModel;
 			sourceTree = "<group>";
 		};
 		107075742AC1C43200793E13 /* ListView */ = {
@@ -443,7 +454,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					104ECFB12AB627390083B3D6 = {
 						CreatedOnToolsVersion = 14.2;
@@ -539,6 +550,7 @@
 				105936CE2AFBD53700823D41 /* TimeView.swift in Sources */,
 				10F9A4F22AC9C50E005B5231 /* CompletedView.swift in Sources */,
 				105936CB2AFBC37200823D41 /* AddRemainder.swift in Sources */,
+				106B7D052B6FB7CD00E5ABCF /* GroupedTaskModel.swift in Sources */,
 				1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */,
 				1051EEB52AD6DC5200B3C30B /* CDRemainders.swift in Sources */,
 				1051EEB72AD6E77B00B3C30B /* PersistenceController.swift in Sources */,

@@ -10,29 +10,33 @@ import CoreData
 
 @available(iOS 17.0, *)
 struct GroupedTaskView: View {
+    @State private var selectedRemainder:CDRemainder? = nil
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
-    var selector:TaskGroup
+    private var GroupLogicModel = Grouping()
+    private let selector:TaskGroup
+    private var repeatCycleManager = RepeatCycleManager()
+    @State private var reloadFlag = true
     
-    private var remaindersByList: [String: [CDRemainder]] {
-        Dictionary(grouping: remainders) { remainder in
-            remainder.list!.name
+    private var groupedByRemainderListName:[String:[CDRemainder]]{
+        Dictionary(grouping: remainders) { el in
+            GroupLogicModel.groupByName(remainder: el)
         }
     }
     
-    private var remaindersByMonth: [String: [CDRemainder]] {
-        Dictionary(
-            grouping: remainders)
-        { remainder in
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd-mm-yy"
-            return  (remainder.schedule_?.date_)!
+    private var timeOfDay: [String:[CDRemainder]] {
+        Dictionary(grouping:remainders) { el in
+            GroupLogicModel.groupByTimeOfDay(for: el)
         }
     }
     
-    
-    init(selector: TaskGroup) {
-        let request = CDRemainder.fetch()
+    private var byMonth: [String:[CDRemainder]] {
+        Dictionary(grouping:remainders) { el in
+            GroupLogicModel.groupByMonth(for: el)
+        }
+    }
+    init(selector: TaskGroup,context:NSManagedObjectContext) {
         self.selector = selector
+        let request = CDRemainder.fetch()
         switch selector {
             case .all:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
@@ -63,81 +67,157 @@ struct GroupedTaskView: View {
     }
     
     var body: some View {
-        switch selector{
-            case .all, .completed:
-                allAndCompletedView
-                    .padding(0)
-                
-            case .schedule:
-                scheduleView
-                    .padding(0)
-            case .today:
-                todayView
-                    .padding(0)
+        Group{
+            switch selector{
+                case .all, .completed:
+                    allAndCompletedView
+                        
+                case .schedule:
+                    scheduleView
+                       
+                        .padding(0)
+                case .today:
+                    todayView
+                      
+                        .padding(0)
+            }
+            
+        }
+        .id(reloadFlag)
+        .sheet(item: $selectedRemainder) {  remainder in
+            NavigationStack{
+                EditRemainder(remainders: .constant(remainder) , id:$reloadFlag)
+            }
+            .presentationBackground(.ultraThinMaterial)
+            .presentationCornerRadius(16)
         }
     }
+    
     var allAndCompletedView: some View {
         ScrollView(showsIndicators: false) {
-            ForEach(remainders, id: \.self) {
-                remainder in
-                RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "allandcompleted")
-                    .padding(.bottom,10)
+            ForEach(groupedByRemainderListName.sorted(by: {$0.key < $1.key}),id:\.key){
+                key,value in
+                Section {
+                    
+                    ForEach(value){ remainder in
+                        RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "")
+                            .padding(.bottom,10)
+                            .contextMenu {
+                                Button("Delete Remainders", action: {
+                                        CDRemainder.delete(remainder: remainder)
+                                })
+                            }
+                    }
+                } header: {
+                    Text(key)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color(hex: value[0].list!.color_!).opacity(0.5))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
                 
             }
+            
             .padding()
-            .toolbar(content: {
-                    ToolbarItem(placement: .principal) {
-                        Text(selector.rawValue.capitalized)
-                            .foregroundColor(Color(hex: selector.colorDark))
-                    }
-                })
-        }
-    }
-    
-    
-    
-    var scheduleView:some View{
-        ScrollView(showsIndicators: false){
-            ForEach(remainders, id: \.self) {
-                remainder in
-                RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "schedule")
-                    .padding(.bottom,10)
+            
+        }.toolbar(content: {
+            ToolbarItem(placement: .principal) {
+                Text(selector.rawValue.capitalized)
+                    .foregroundColor(Color(hex: selector.colorDark))
             }
-            .padding()
-            .toolbar(content: {
-                ToolbarItem(placement: .principal) {
-                    Text(selector.rawValue.capitalized)
-                        .foregroundColor(Color(hex: selector.colorDark))
-                }
-            })
-        }
-   
+        })
     }
+    
+    
     
     var todayView:some View{
         ScrollView(showsIndicators: false){
-            ForEach(remainders, id: \.self) {
-                remainder in
-                RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "today")
-                    .padding(.bottom,10)
-            }
-    
-        }.padding()
-        .toolbar(content: {
-                ToolbarItem(placement: .principal) {
-                    Text(selector.rawValue.capitalized)
-                        .foregroundColor(Color(hex: selector.colorDark))
+            ForEach(timeOfDay.sorted(by: {$0.value[0].schedule_!.time_!.description < $1.value[0].schedule_!.time_!.description}), id: \.key) {
+                key, value in
+                Section {
+                    ForEach(value){ (remainder:CDRemainder) in
+                        RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "today")
+                            .contextMenu {
+                                Group {
+                                    Button("Edit Remainders", action: {
+                                       selectedRemainder = remainder
+                                    }
+                                    )
+                                    Button("Delete Remainders", action: {
+                                        
+                                            CDRemainder.delete(remainder: remainder)
+                                         
+                                      
+                                    })
+                                    Button("Completed", action: {
+                                        remainder.isCompleted_ = true
+                                        
+                                        guard let repeatCycle = remainder.schedule_?.repeatCycle, !repeatCycle.isEmpty else{return}
+                                        repeatCycleManager.nextDueDate(remainder: remainder, context: PersistenceController.shared.container.viewContext)
+                                  
+                                            CDRemainder.delete(remainder: remainder)
+                                      
+                                        Task{
+                                            
+                                            await PersistenceController.shared.save()
+                                        }
+                                    })
+                                }
+                                
+                            }
+                        
+                    }
+                } header: {
+                    Text(key)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color(hex: selector.colorDark).opacity(0.5))
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-            })
+            }
+            .padding()
+        }
+        .toolbar(content: {
+            ToolbarItem(placement: .principal) {
+                Text(selector.rawValue.capitalized)
+                    .foregroundColor(Color(hex: selector.colorDark))
+            }
+        })
+        
+    }
+    
+    var scheduleView:some View{
+        ScrollView(showsIndicators: false){
+            ForEach(byMonth.sorted(by: {$0.value[0].schedule_!.time_!.description < $1.value[0].schedule_!.time_!.description}), id: \.key) {
+                key, value in
+                Section {
+                    ForEach(value){ remainder in
+                        RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "today")
+                            .contextMenu {
+                                Button("Delete Remainders", action: {
+                                  
+                                        CDRemainder.delete(remainder: remainder)
+                                  
+                                  
+                                })
+                            }
+                    }
+                } header: {
+                    Text(key)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(Color(hex: selector.colorDark).opacity(0.5))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding()
+        }
+        .toolbar(content: {
+            ToolbarItem(placement: .principal) {
+                Text(selector.rawValue.capitalized)
+                    .foregroundColor(Color(hex: selector.colorDark))
+            }
+        })
     }
     
 }
-
-
-@available(iOS 17.0, *)
-struct GroupedTaskView_Previews: PreviewProvider {
-    static var previews: some View {
-        GroupedTaskView(selector: .all)
-    }
-}
-

@@ -104,28 +104,7 @@ extension View {
     }
 }
 
-struct BackButtonModifier: ViewModifier {
-    @ObservedObject var navigationState:NavigationManager
-    var color:String
-    
-    func body(content: Content) -> some View {
-        content
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    BackButton(action: {
-                        navigationState.reset()
-                    }, color: color)
-                }
-            }
-    }
-}
 
-extension View {
-    func withCustomBackButton(state:NavigationManager , color:String = "0802A3") -> some View {
-        modifier(BackButtonModifier(navigationState: state, color: color))
-    }
-}
 
 // MARK: - Going to be using this for buttons
 struct OutlineOverlay1: ViewModifier {

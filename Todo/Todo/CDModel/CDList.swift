@@ -13,6 +13,14 @@ extension CDList{
         return id_ ?? UUID()
     }
     
+    var date:Date{
+        get{
+           date_ ?? Date()
+        }set{
+            date_ = Date()
+        }
+    }
+    
     var name:String{
         get{
             name_ ?? " "
@@ -45,6 +53,14 @@ extension CDList{
             remainders_ = newValue as NSSet
         }
     }
+    
+    static func fetch(predicate: NSPredicate? = nil) -> NSFetchRequest<CDList> {
+        let request: NSFetchRequest<CDList> = CDList.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDList.date_, ascending: true)]
+        request.predicate = predicate
+        return request
+    }
+
     
     static func delete(list: CDList){
         guard let context = list.managedObjectContext else { return }

@@ -14,6 +14,7 @@ struct EditRemainder: View {
     @State var date = ""
     @State var time = ""
     @State var repeatCycle = ""
+    @Binding var id:Bool
     @EnvironmentObject var sheetManager:SheetManager
     var dateFormatter = DateFormatterModel()
 
@@ -32,7 +33,7 @@ struct EditRemainder: View {
                 }
                 .padding()
             Divider()
-            if  self.date.isEmpty {
+            if self.date.isEmpty {
                 if let listImage = remainders.list?.image, let listColor = remainders.list?.color, let listName = remainders.list?.name {
                     HStack {
                         Image(systemName: listImage)
@@ -200,6 +201,7 @@ struct EditRemainder: View {
             date = remainders.schedule_?.date_ ?? ""
             time = remainders.schedule_?.time_ ?? ""
             repeatCycle = remainders.schedule_?.repeatCycle_ ?? ""
+        
         })
         .navigationTitle("New Task")
             .foregroundStyle(Color(hex: remainders.list!.color_!))
@@ -208,13 +210,16 @@ struct EditRemainder: View {
                 ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
                         isFocused = true
-                        presentationMode.wrappedValue.dismiss()}, label: {
+                        
+                        presentationMode.wrappedValue.dismiss()
+                    }, label: {
                         Text("Cancel")
                             .foregroundStyle(Color(hex: remainders.list!.color_!))
                     })
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
+                  
                         remainders.schedule_?.date_  = date
                         remainders.schedule_?.time_   = time
                         remainders.schedule_?.repeatCycle_  = repeatCycle
@@ -228,6 +233,7 @@ struct EditRemainder: View {
                         Task{
                             await PersistenceController.shared.save()
                         }
+                        self.id.toggle()
                         presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Done")
@@ -284,7 +290,7 @@ struct EditRemainder_Previews: PreviewProvider {
         remainders.isCompleted_ = true
         remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, context: PersistenceController.shared.container.viewContext)
         return Group {
-            EditRemainder(remainders: .constant(remainders))
+            EditRemainder(remainders: .constant(remainders), id: .constant(false))
                 .environmentObject(SheetManager())
                 .preferredColorScheme(.dark)
         }

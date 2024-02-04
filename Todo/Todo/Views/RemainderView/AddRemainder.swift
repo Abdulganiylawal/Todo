@@ -38,6 +38,7 @@ struct AddRemainder: View {
                 }
                 .padding()
                
+          
               
             Divider()
             if model.date.isEmpty{
@@ -216,12 +217,23 @@ struct AddRemainder: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        Task{
+                        Task {
+                            if model.date.isEmpty {
+                                let currentDate = Date()
+                                model.date = DateFormatterModel.shared.formattedDatesString(from: currentDate, isTime: false)
+        
+                            }
+                            if model.time.isEmpty{
+                                let currentDate = Date()
+                                model.time = DateFormatterModel.shared.formattedDatesString(from: currentDate, isTime: true)
+                            }
                             model.durationTime = dateFormatter.timeDifference(from: model.time, to: model.endTime)
-                            await model.addRemainders(title: model.name, notes: model.notes, repeatcycle: model.repeatCycle, date: model.date, time: model.time, duration:model.durationTime ?? 0.0 )
+                            await model.addRemainders(title: model.name, notes: model.notes, repeatcycle: model.repeatCycle, date: model.date, time: model.time, duration: model.durationTime ?? 0.0)
+                            
                             isFocused = true
                             presentationMode.wrappedValue.dismiss()
                         }
+
                     }, label: {
                         Text("Create")
                             .foregroundStyle(Color(hex: model.isClickable ? model.model.color : "BE3144"))
@@ -232,10 +244,7 @@ struct AddRemainder: View {
             .onAppear(perform: {
                 isFocused.toggle()
             })
-            .onDisappear(perform: {
-                isFocused.toggle()
-                sheetManager.dismiss()
-            })
+            
             .overlay(alignment: .bottom) {
                 if sheetManager.action.isPresented{
                     if isDateClicked{

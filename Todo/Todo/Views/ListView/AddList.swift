@@ -8,6 +8,7 @@ struct AddList: View {
     @State var color: String? = "#ffde22"
     @State var icon: String? = "list.bullet"
     @State var name:String = ""
+    @FocusState private var isFocused:Bool
     let resultGridLayout = [GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible())]
     
     init(manager: ListViewManger){
@@ -21,6 +22,7 @@ struct AddList: View {
                     TextField("", text: $model.title)
                         .font(.system(size: 20, weight: .semibold))
                         .multilineTextAlignment(.center)
+                        .focused($isFocused)
                         .placeholder(when: model.title.isEmpty, alignment: .center) {
                             Text("Task").foregroundColor(.gray)
                                 .frame(alignment: .center)
@@ -46,6 +48,9 @@ struct AddList: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear(perform: {
+            isFocused.toggle()
+        })
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -100,7 +105,6 @@ struct ColorCapsule: View {
             .frame(width: 40, height: 40)
             .onTapGesture {
                 self.selectedColor = color.description
-                
             }
             .overlay(
                 Circle()

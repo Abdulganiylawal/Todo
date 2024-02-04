@@ -37,9 +37,7 @@ struct Duration: View {
                 })
                 .padding(-30)
             }
-            
             .transition(.move(edge: .bottom))
-            
             .background(
                 RoundedRectangle(cornerRadius: 20.0)
                 
@@ -49,8 +47,12 @@ struct Duration: View {
                     .opacity(0.1)
                 
             )
-            
+
+       
         }
+       
+        
+    
         .padding(.top,30)
         .padding()
    

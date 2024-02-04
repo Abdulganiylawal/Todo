@@ -12,7 +12,6 @@ struct RemainderRow: View {
     @Environment(\.colorScheme) var colorScheme
     var color:String = ""
     var remainder:CDRemainder
-    var dateFormatterModel = DateFormatterModel()
     var duration:Double
     var select:String = ""
     
@@ -28,7 +27,6 @@ struct RemainderRow: View {
               let start = dateTimeFromString(dateString: startDateString, timeString: startTimeString) else {
             return nil
         }
-        print(start)
         let end = start.addingTimeInterval(TimeInterval(self.duration))
         return start...end
     }
@@ -163,7 +161,7 @@ struct SwiftUIView_Previews: PreviewProvider {
         remainders.isCompleted_ = true
         remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, context: PersistenceController.shared.container.viewContext)
         return Group {
-            RemainderRow(remainder: remainders, color:  "#84A4C8", duration: 0.0)
+            RemainderRow(remainder: remainders, color:  "#4A4C8", duration: 0.0)
         }
     }
 }

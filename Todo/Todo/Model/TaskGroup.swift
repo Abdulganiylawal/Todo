@@ -123,48 +123,6 @@ class ListEssentials{
         return count
     }
     
-    func get3Remainder(for item:Any) -> [CDRemainder]{
-        var remainder = [CDRemainder]()
-        let request = CDRemainder.fetch()
-        
-        switch item{
-            case TaskGroup.all:
-                request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
-                let request1 = NSPredicate(format: "title_ != %@", "")
-                let request2 = NSPredicate(format: "notes_ != %@", "")
-                let request3 = NSCompoundPredicate(orPredicateWithSubpredicates: [request1,request2])
-                let request4 = NSPredicate(format: "isCompleted_ == false")
-                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request3,request4])
-            case TaskGroup.completed:
-                request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
-                request.predicate = NSPredicate(format: "isCompleted_ == true")
-            case TaskGroup.schedule:
-                request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
-                let request1 = NSPredicate(format: "isCompleted_ == false")
-                let request2 = NSPredicate(format: "schedule_.date_  != %@", "")
-                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request1,request2])
-            case TaskGroup.today:
-                request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
-                let date = Date()
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd/MM/yyyy"
-                let formattedDates = dateFormatter.string(from: date)
-                let request1 = NSPredicate(format: "schedule_.date_ == %@", formattedDates as CVarArg)
-                let request2 = NSPredicate(format: "isCompleted_ == false")
-                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request1,request2])
-            default:
-                let predicate1 = NSPredicate(format: "list == %@", item as! CVarArg)
-                let predicate2 = NSPredicate(format: "isCompleted_ == false")
-                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2])
-        }
-        do{
-            remainder = try context.fetch(request)
-        }catch{
-            print(error)
-        }
-        return remainder
-    }
-    
 }
 
 

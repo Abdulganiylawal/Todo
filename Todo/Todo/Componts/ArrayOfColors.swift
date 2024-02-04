@@ -37,5 +37,6 @@ let popularColors: [String] = ["#ffde22","#ff414e","#a28089",
                                "#c2edda",
                                "#12343b",
                                "#e1b382",
-                               "#c89666" ]
+                               "#c89666",
+                               "#4A4C8"]
  

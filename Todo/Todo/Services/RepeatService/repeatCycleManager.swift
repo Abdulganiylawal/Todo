@@ -52,7 +52,7 @@ struct RepeatCycleManager {
     }
     
     private func dateFromString(_ dateString: String) -> Date? {
-        print(dateString)
+       
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")

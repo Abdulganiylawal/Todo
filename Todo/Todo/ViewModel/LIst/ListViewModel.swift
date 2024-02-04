@@ -21,49 +21,34 @@ class ListViewManger:ObservableObject{
         myList.append(CDList(name: name, color: color , image: image, context: context))
     }
     
-    func editList(cdList: CDList, name: String?, image: String?, color: String?) {
-        guard let index = myList.firstIndex(where: { list in
-            list.id == cdList.id
-        }) else {
-            print("Failed")
-            return
-        }
-        var updatedList = myList[index]
-        print("before = \(myList[index])")
-        if let name = name {
-            updatedList.name = name
-        }
+//    func editList(cdList: CDList, name: String?, image: String?, color: String?) {
+//        guard let index = myList.firstIndex(where: { list in
+//            $0.id == cdList.id
+//        }) else {
+//            print("Failed")
+//            return
+//        }
+//        let updatedList = myList[index]
+//        print("before = \(myList[index])")
+//        if let name = name {
+//            updatedList.name = name
+//        }
+//
+//        if let image = image {
+//            updatedList.image = image
+//        }
+//
+//        if let color = color {
+//            updatedList.color = color
+//        }
+//        
+//        DispatchQueue.main.async {
+//            self.myList[index] = updatedList
+//            self.objectWillChange.send()
+//        }
+//        print("updated = \(myList[index])")
+//    }
 
-        if let image = image {
-            updatedList.image = image
-        }
-
-        if let color = color {
-            updatedList.color = color
-        }
-        
-        DispatchQueue.main.async {
-            self.myList[index] = updatedList
-            self.objectWillChange.send()
-        }
-        print("updated = \(myList[index])")
-    }
-
-    
-    func fetchList() {
-        let request = CDList.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDList.name_, ascending: true)]
-        request.predicate = NSPredicate.all
-        do{
-            let result =  try context.fetch(request)
-            myList = result
-        }catch{
-            print("\(error)")
-        }
-        
-    }
-    
-  
     
     init(context: NSManagedObjectContext){
         self.context = context

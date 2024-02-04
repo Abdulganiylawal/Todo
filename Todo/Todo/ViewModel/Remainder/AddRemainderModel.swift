@@ -36,11 +36,16 @@ class AddRemainderModel: ObservableObject{
             }.eraseToAnyPublisher()
     }()
     
-    func addRemainders(title:String,notes:String,repeatcycle:String,date:String,time:String,duration:Double) async{
+    func addRemainders(title:String,notes:String,repeatcycle:String,date:String,time:String?,duration:Double) async{
         let remainder = CDRemainder(context: PersistenceController.shared.container.viewContext, title: title, notes: notes)
-        remainder.schedule_ = CDRemainderSchedule(repeatCycle: repeatcycle, date: date, time: time, duration: duration, context: PersistenceController.shared.container.viewContext)
+        remainder.schedule_ = CDRemainderSchedule(repeatCycle: repeatcycle, date: date, time: time ??  DateFormatterModel.shared.formattedDatesString(from: Date(), isTime: true), duration: duration, context: PersistenceController.shared.container.viewContext)
         
         remainder.list = model
+        print(remainder)
         await PersistenceController.shared.save()
     }
+
+
 }
+
+

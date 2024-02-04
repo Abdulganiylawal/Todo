@@ -15,7 +15,8 @@ struct ListView: View {
     @State var name:String
     @State var color:String
     @State var count:Int
-    @State var remainders:[CDRemainder]
+
+   
     var body: some View {
         VStack{
             HStack(alignment: .top){
@@ -27,7 +28,7 @@ struct ListView: View {
                         .font(.title3)
                         .fontWeight(.bold)
                         .frame(width: 40, height: 40)
-                    
+
                         .backgroundStyle1(cornerRadius: 10, opacity: 0.1)
                     
                     
@@ -50,8 +51,8 @@ struct ListView: View {
         .frame(height:  90)
         .background(RoundedRectangle(cornerRadius: 20)
 
-            .fill(LinearGradient(colors: [Color(hex: "6e7b8b").opacity(0.15),Color(hex: "6e7b8b").opacity(0.1),Color(hex: "6e7b8b").opacity(0.05)], startPoint: .topTrailing, endPoint: .bottomLeading))
-            .backgroundStyle1(cornerRadius: 20, opacity: 0.1)        
+            .fill(LinearGradient(colors: [Color(hex: "#acb7ae").opacity(0.15),Color(hex:  "#acb7ae").opacity(0.1)], startPoint: .topTrailing, endPoint: .bottomLeading))
+            .backgroundStyle1(cornerRadius: 20, opacity: 0.1)
         )
     }
 }
@@ -71,7 +72,7 @@ struct ListView_Previews: PreviewProvider {
         
         
         return Group {
-            ListView(icon: "calendar", name: "Todo", color:  "FEBF63", count:  6, remainders: [remainders])
+            ListView(icon: "calendar", name: "Todo", color:  "FEBF63", count:  6)
                 .preferredColorScheme(.dark)
         }
     }

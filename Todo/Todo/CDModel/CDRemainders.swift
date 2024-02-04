@@ -17,6 +17,14 @@ extension CDRemainder{
         self.id_ = UUID()
     }
     
+    var createdDate:Date{
+        get{
+           createdDate_ ?? Date()
+        }set{
+            createdDate_ = Date()
+        }
+    }
+    
     var title:String{
         get{
            title_ ?? ""
@@ -54,6 +62,7 @@ extension CDRemainder{
         self.init(context: context)
         self.title = title
         self.notes = notes
+        self.createdDate = Date()
         self.schedule_ = CDRemainderSchedule(repeatCycle: "", date: "", time: "", duration: 0.0, context: context)
     }
 }

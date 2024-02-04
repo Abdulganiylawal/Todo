@@ -6,9 +6,11 @@ struct EditList: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var list:CDList
     @ObservedObject  var model:ListViewManger
-    @State private var color: String? = "#ffde22"
-    @State private var icon: String? = "list.bullet"
+    @State private var color:String? = "#ffde22"
+    @State private var icon:String? = "list.bullet"
     @State private var name:String = ""
+    @Binding  var reloadFlag:Bool
+    @FocusState private var isFocused:Bool
     private let resultGridLayout = [GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible())]
   
     var body: some View {
@@ -16,9 +18,9 @@ struct EditList: View {
             Form {
                 Section {
                     TextField("", text: $name)
+                        .focused($isFocused)
                         .font(.system(size: 20, weight: .semibold))
                         .multilineTextAlignment(.center)
-
                 }
                 Section {
                     LazyVGrid(columns: resultGridLayout,spacing: 10, content: {
@@ -26,7 +28,7 @@ struct EditList: View {
                             ColorCapsule(color: color, selectedColor: $color)
                         }
                     })
-                    
+
                 }
                 Section {
                     LazyVGrid(columns: resultGridLayout,spacing: 10, content: {
@@ -34,22 +36,25 @@ struct EditList: View {
                             IconView(icon: icon, selectedIcon: $icon, color: $color)
                         }
                     })
-                    
                 }
             }
         }.onAppear(perform: {
             self.color = list.color_
             self.icon = list.image_
             self.name = list.name_ ?? ""
+            isFocused.toggle()
         })
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .toolbar(content: {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    model.editList(cdList: list, name: self.name, image: self.icon, color: self.color)
+                   list.color_ =   self.color
+                   list.image_ =    self.icon
+                  list.name_ =    self.name
                     Task{
                         await PersistenceController.shared.save()
                     }
+                    reloadFlag.toggle()
                     presentationMode.wrappedValue.dismiss()
                     
                 } label: {
@@ -58,9 +63,9 @@ struct EditList: View {
             }
             
                 ToolbarItem(placement: .principal) {
-                    Image(systemName: list.image )
+                    Image(systemName: self.icon!)
                         .frame(width: 60, height: 60)
-                        .foregroundColor(Color(hex: list.color ))
+                        .foregroundColor(Color(hex: self.color!))
                 }
             
             ToolbarItem(placement: .topBarLeading) {

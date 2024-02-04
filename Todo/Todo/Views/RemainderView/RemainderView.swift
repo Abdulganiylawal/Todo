@@ -12,6 +12,7 @@ struct RemainderView: View {
     @State private var isClicked:Bool = false
      private var repeatCycleManager = RepeatCycleManager()
     private var model:CDList
+    @State private var id = true
     @Environment(\.managedObjectContext) var context
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
     @State private var selectedRemainder:CDRemainder? = nil
@@ -35,7 +36,9 @@ struct RemainderView: View {
         ZStack(alignment:.bottomTrailing) {
             ScrollView(showsIndicators: false){
                 remainder
+                    .id(id)
                     .padding()
+
             }
             Spacer()
             Image(systemName: "plus")
@@ -51,9 +54,6 @@ struct RemainderView: View {
                 }
                 .padding(.top,630)
                 .padding(.leading,300)
-            
-            
-                .environmentObject(SheetManager())
                 .navigationBarTitleDisplayMode(.inline)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .sheet(isPresented: $isClicked, content: {
@@ -61,6 +61,8 @@ struct RemainderView: View {
                         AddRemainder(model: model)
                             .environmentObject(SheetManager())
                     }
+                    .presentationBackground(.ultraThinMaterial)
+                    .presentationCornerRadius(16)
                 })
                 .background(
                     Text(remainders.isEmpty ? "Empty" : "")
@@ -108,8 +110,10 @@ struct RemainderView: View {
         }
         .sheet(item: $selectedRemainder) {  remainder in
             NavigationStack{
-                EditRemainder(remainders: .constant(remainder))
+                EditRemainder(remainders: .constant(remainder),id:$id)
             }
+            .presentationBackground(.ultraThinMaterial)
+            .presentationCornerRadius(16)
         }
     }
 }

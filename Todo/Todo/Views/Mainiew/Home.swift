@@ -18,37 +18,38 @@ struct Home: View {
     var ListEssModel:ListEssentials
     @State private var reloadFlag = false
     @State var isClicked: Bool = false
-    let resultGridLayout = [GridItem(.adaptive(minimum: 150), spacing: 15,
-                                     alignment: .top)]
+    let resultGridLayout = [GridItem(.flexible()),GridItem(.flexible())]
     @State private var selectedList:CDList? = nil
+    @FetchRequest(fetchRequest: CDList.fetch(), animation: .bouncy) var lists
     init(context:NSManagedObjectContext){
         self.context = context
         _model = StateObject(wrappedValue: ListViewManger(context: context))
         ListEssModel = ListEssentials(context: context)
         
+        let request = CDList.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDList.name_, ascending: true)]
+        request.predicate = NSPredicate.all
+        self._lists = FetchRequest(fetchRequest: request)
     }
     
     
     
     var body: some View {
         NavigationStack(path: $navigationManager.routes){
-            
             ZStack(alignment:.bottomTrailing) {
                 ScrollView(showsIndicators: false){
                     Section{
                         LazyVGrid(columns: resultGridLayout) {
                             ForEach(TaskGroup.allCases) { taskGroup in
-                                NavigationLink(value: Route.groupTaskView(selector: taskGroup)) {
-                                    ListView(icon: taskGroup.iconName, name: taskGroup.name, color: taskGroup.colorDark, count: ListEssModel.getCount(item: taskGroup.rawValue), remainders: ListEssModel.get3Remainder(for: taskGroup))
-                                    
+                                NavigationLink(value: Route.groupTaskView(selector: taskGroup, context: self.context)) {
+                                    ListView(icon: taskGroup.iconName, name: taskGroup.name, color: taskGroup.colorDark, count: ListEssModel.getCount(item: taskGroup.rawValue))
                                 }
-                                
-                                
                             }
                         }
                     }
                     .padding([.top,.leading,.trailing],20)
                     .id(reloadFlag)
+                   
                     HStack{
                         Text("List")
                             .foregroundStyle(.gray)
@@ -60,19 +61,18 @@ struct Home: View {
                     
                     Section{
                         LazyVGrid(columns: resultGridLayout) {
-                        ForEach(model.myList,id: \.id) { list in
+                        ForEach(lists,id: \.id) { list in
                                 NavigationLink(value: Route.remainderView(model: list)) {
-                                    ListView(icon: list.image, name: list.name, color: list.color, count: ListEssModel.getRemainderCount(list: list), remainders: ListEssModel.get3Remainder(for: list))
+                                    ListView(icon: list.image, name: list.name, color: list.color, count: ListEssModel.getRemainderCount(list: list))
                                     
                                     .contextMenu {
                                             Group {
                                                 Button("Edit List", action: {
                                                     selectedList = list
-                                                        model.fetchList()
                                                 })
                                                 Button("Delete List", action: {
                                                     CDList.delete(list: list)
-                                                    model.fetchList()
+                                            
                                                    
                                                 })
                                                
@@ -82,9 +82,9 @@ struct Home: View {
                             }
                         
                         }
-                        .fullScreenCover(item: $selectedList) { list in
+                        .sheet(item: $selectedList) { list in
                             NavigationStack{
-                                EditList(list: .constant(list), model: self.model)
+                                EditList(list: .constant(list), model: self.model, reloadFlag: $reloadFlag)
                             }
                         }
                         .padding()
@@ -97,7 +97,7 @@ struct Home: View {
                                     Image(systemName: "gearshape")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
-                                        .foregroundColor(Color(hex: "6e7b8b"))
+                                        .foregroundColor(Color(hex: "#acb7ae"))
                                         
                                 }
                             }
@@ -106,27 +106,24 @@ struct Home: View {
                                     Image(systemName: "magnifyingglass")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
-                                        .foregroundColor(Color(hex: "6e7b8b"))
+                                        .foregroundColor(Color(hex: "#acb7ae"))
                                         
                                     
                                 }
                             }
                             
                         })
-                        .onAppear {
-                            model.fetchList()
-                            reloadFlag.toggle()
-                        }
-                        .sheet(isPresented: $isClicked) {
+                       
+                        .sheet(isPresented: $isClicked, content: {
                             NavigationStack{
                                 AddList(manager: model)
                             }
-                        }
-                    
+                           
+                        })
                 }
                 Spacer()
                 Image(systemName: "plus")
-                    .foregroundColor(Color(hex: "6e7b8b"))
+                    .foregroundColor(Color(hex: "#acb7ae"))
                     .font(.body)
                     .fontWeight(.bold)
                     .padding()
@@ -138,6 +135,8 @@ struct Home: View {
                     }
                 .navigationDestination(for: Route.self)  {  $0}
             }
+           
+          
         }
     }
 }

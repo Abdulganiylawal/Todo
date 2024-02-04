@@ -10,8 +10,8 @@ import SwiftUI
 import UIKit
 
 class DateFormatterModel{
+  static let shared = DateFormatterModel()
   
- 
   func formattedDatesString(from component: Date,isTime:Bool) -> String {
         let dateFormatter = DateFormatter()
         if isTime{
@@ -34,19 +34,29 @@ class DateFormatterModel{
               let end = dateFormatter.date(from: endTime) else {
             return nil
         }
-        
-        // If the end time is before the start time, assume it's on the next day
         let adjustedEnd = end < start ? Calendar.current.date(byAdding: .day, value: 1, to: end)! : end
-
         let difference = Calendar.current.dateComponents([.second], from: start, to: adjustedEnd)
-
-        // Return the difference in seconds
-      
         return Double(difference.second ?? 0)
     }
 
+    func stringTimeToDate(_ time: String,isTime:Bool) -> Date {
+        let dateFormatter = DateFormatter()
+        if isTime{
+            dateFormatter.dateFormat = "h:mm a"
+        }
+        else {
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+        }
 
- 
+        if let value = dateFormatter.date(from: time) {
+            return value
+        } else {
+           
+            print("Invalid date format: \(time)")
+            return Date()
+        }
+    }
+    
 
 
 }
