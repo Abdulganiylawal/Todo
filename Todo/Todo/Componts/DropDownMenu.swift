@@ -26,6 +26,9 @@ struct DropdownMenu: View {
             NavigationStack{
                 CompletedView(model: model)
             }
+            .presentationDragIndicator(.visible)
+            .presentationBackground(.ultraThinMaterial)
+            .presentationCornerRadius(16)
         })
     }
 }

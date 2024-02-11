@@ -167,3 +167,32 @@ extension View {
        self.modifier(BackgroundStyle1(cornerRadius: cornerRadius, opacity: opacity))
    }
 }
+
+
+struct StrokeStyle: ViewModifier {
+    var cornerRadius: CGFloat
+    var colors:String
+    @Environment(\.colorScheme) var colorScheme
+    func body(content: Content) -> some View {
+        content.overlay(
+            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                .stroke(
+                    .linearGradient(
+                        colors: [
+                            Color(hex: colors),
+                            Color(hex: colors)
+                        ], startPoint: .top, endPoint: .bottom
+                    )
+                )
+                .blendMode(.overlay)
+        )
+    }
+}
+
+extension View {
+    func strokeStyle(cornerRadius: CGFloat = 30,colors:String) -> some View {
+        modifier(StrokeStyle(cornerRadius: cornerRadius, colors: colors))
+    }
+}
+
+

@@ -21,6 +21,8 @@
 		1033288D2B029D540093CEEA /* ListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1033288C2B029D540093CEEA /* ListTest.swift */; };
 		1033288F2B02A85B0093CEEA /* RemainderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1033288E2B02A85B0093CEEA /* RemainderTest.swift */; };
 		103328922B02AEBF0093CEEA /* RouteTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103328912B02AEBF0093CEEA /* RouteTest.swift */; };
+		103AC0272B7906D5000672DD /* TabModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103AC0262B7906D5000672DD /* TabModel.swift */; };
+		103AC0292B79070C000672DD /* RemaindersTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103AC0282B79070C000672DD /* RemaindersTab.swift */; };
 		104ECFB62AB6273A0083B3D6 /* TodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB52AB6273A0083B3D6 /* TodoApp.swift */; };
 		104ECFB82AB6273A0083B3D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104ECFB72AB6273A0083B3D6 /* ContentView.swift */; };
 		104ECFBD2AB6273C0083B3D6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 104ECFBC2AB6273C0083B3D6 /* Preview Assets.xcassets */; };
@@ -52,7 +54,7 @@
 		10A078D32ADAF3F900FE2BF0 /* TaskGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A078D22ADAF3F900FE2BF0 /* TaskGroup.swift */; };
 		10A078D52ADB108700FE2BF0 /* GroupedTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A078D42ADB108700FE2BF0 /* GroupedTaskView.swift */; };
 		10CE85CC2AC44D6F0086C8DA /* Calender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CE85CB2AC44D6F0086C8DA /* Calender.swift */; };
-		10D72A702AC3228A00193E93 /* AddRemainderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A6F2AC3228A00193E93 /* AddRemainderModel.swift */; };
+		10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */; };
 		10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A742AC32A2C00193E93 /* RemainderView.swift */; };
 		10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A762AC32BFC00193E93 /* DropDownMenu.swift */; };
 		10E0E8712AB9EA1200E2359D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8702AB9EA1200E2359D /* Home.swift */; };
@@ -88,6 +90,8 @@
 		1033288C2B029D540093CEEA /* ListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTest.swift; sourceTree = "<group>"; };
 		1033288E2B02A85B0093CEEA /* RemainderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderTest.swift; sourceTree = "<group>"; };
 		103328912B02AEBF0093CEEA /* RouteTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTest.swift; sourceTree = "<group>"; };
+		103AC0262B7906D5000672DD /* TabModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabModel.swift; sourceTree = "<group>"; };
+		103AC0282B79070C000672DD /* RemaindersTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemaindersTab.swift; sourceTree = "<group>"; };
 		104ECFB22AB627390083B3D6 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		104ECFB52AB6273A0083B3D6 /* TodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoApp.swift; sourceTree = "<group>"; };
 		104ECFB72AB6273A0083B3D6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -122,7 +126,7 @@
 		10A078D22ADAF3F900FE2BF0 /* TaskGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGroup.swift; sourceTree = "<group>"; };
 		10A078D42ADB108700FE2BF0 /* GroupedTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedTaskView.swift; sourceTree = "<group>"; };
 		10CE85CB2AC44D6F0086C8DA /* Calender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calender.swift; sourceTree = "<group>"; };
-		10D72A6F2AC3228A00193E93 /* AddRemainderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemainderModel.swift; sourceTree = "<group>"; };
+		10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderViewModel.swift; sourceTree = "<group>"; };
 		10D72A742AC32A2C00193E93 /* RemainderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderView.swift; sourceTree = "<group>"; };
 		10D72A762AC32BFC00193E93 /* DropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
 		10E0E8702AB9EA1200E2359D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 				104ECFEC2AB6288A0083B3D6 /* AuthModel.swift */,
 				10A078D22ADAF3F900FE2BF0 /* TaskGroup.swift */,
 				1091F4DD2AFE63EB00A367A5 /* RoutingModel.swift */,
+				103AC0262B7906D5000672DD /* TabModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -337,6 +342,7 @@
 				105936D22AFBD75500823D41 /* Repeat.swift */,
 				10132CE82AFC369200B8DFAF /* ArrayOfColors.swift */,
 				10132CEA2AFC36D100B8DFAF /* ArraysOfIcons.swift */,
+				103AC0282B79070C000672DD /* RemaindersTab.swift */,
 			);
 			path = Componts;
 			sourceTree = "<group>";
@@ -378,7 +384,7 @@
 		10D72A6E2AC3227A00193E93 /* Remainder */ = {
 			isa = PBXGroup;
 			children = (
-				10D72A6F2AC3228A00193E93 /* AddRemainderModel.swift */,
+				10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */,
 			);
 			path = Remainder;
 			sourceTree = "<group>";
@@ -516,6 +522,7 @@
 				1051EEB92AD6F1E700B3C30B /* Predicate.swift in Sources */,
 				10132CEB2AFC36D100B8DFAF /* ArraysOfIcons.swift in Sources */,
 				105936D32AFBD75500823D41 /* Repeat.swift in Sources */,
+				103AC0272B7906D5000672DD /* TabModel.swift in Sources */,
 				1091F4DE2AFE63EB00A367A5 /* RoutingModel.swift in Sources */,
 				10A078D52ADB108700FE2BF0 /* GroupedTaskView.swift in Sources */,
 				1099B7692B0165DF007264F8 /* EditRemainder.swift in Sources */,
@@ -539,10 +546,11 @@
 				102C3EB52AFA79A20037B238 /* ListView.swift in Sources */,
 				104ECFED2AB6288A0083B3D6 /* AuthModel.swift in Sources */,
 				105936D02AFBD72D00823D41 /* Duration.swift in Sources */,
-				10D72A702AC3228A00193E93 /* AddRemainderModel.swift in Sources */,
+				10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */,
 				10E0E87C2ABA0F0300E2359D /* Styles.swift in Sources */,
 				1050F22B2AB8A164001EA255 /* SignUp.swift in Sources */,
 				102C3EB72AFA82FF0037B238 /* Modifiers.swift in Sources */,
+				103AC0292B79070C000672DD /* RemaindersTab.swift in Sources */,
 				1050F2292AB8A14D001EA255 /* SignIn.swift in Sources */,
 				10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */,
 				105AAC4E2AFD251400F44993 /* DurationManager.swift in Sources */,

@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 import CoreData
-class AddRemainderModel: ObservableObject{
+class RemainderViewModel: ObservableObject{
     @Published var name: String = ""
      @Published var notes: String = ""
      @Published var date: String = ""

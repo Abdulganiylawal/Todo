@@ -62,7 +62,7 @@ extension CDList{
     }
 
     
-    static func delete(list: CDList){
+    static func delete(list: CDList) async{
         guard let context = list.managedObjectContext else { return }
         
         for remainder in list.remainders {

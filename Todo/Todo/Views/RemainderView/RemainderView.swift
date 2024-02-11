@@ -7,8 +7,9 @@
 import SwiftUI
 import CoreData
 @available(iOS 17.0, *)
-struct RemainderView: View {
+struct RemainderView: View ,ReminderHandler{
     @Environment(\.colorScheme) var colorScheme
+    @State var selectedTab: TabModel = .today
     @State private var isClicked:Bool = false
      private var repeatCycleManager = RepeatCycleManager()
     private var model:CDList
@@ -16,10 +17,6 @@ struct RemainderView: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
     @State private var selectedRemainder:CDRemainder? = nil
-
-
- 
-    
     init(model:CDList){
         self.model = model
         let request = CDRemainder.fetch()
@@ -28,32 +25,64 @@ struct RemainderView: View {
         let predicate2 = NSPredicate(format: "isCompleted_ == false")
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2])
         self._remainders = FetchRequest(fetchRequest: request, animation: .bouncy)
-        
     }
     
     var body: some View {
-        
-        ZStack(alignment:.bottomTrailing) {
+
+        ZStack(alignment:.bottom) {
             ScrollView(showsIndicators: false){
                 remainder
                     .id(id)
                     .padding()
-
             }
-            Spacer()
-            Image(systemName: "plus")
-                .foregroundColor(Color(hex: model.color))
-                .font(.body)
-                .fontWeight(.bold)
-                .padding()
-                .background(.ultraThinMaterial)
-                .backgroundStyle1(cornerRadius: 20,opacity: 0)
-                .padding()
-                .onTapGesture {
-                    isClicked.toggle()
-                }
-                .padding(.top,630)
-                .padding(.leading,300)
+            VStack{
+                Spacer()
+                RoundedRectangle(cornerRadius: 30, style: .continuous)
+                    .stroke(Color.gray, lineWidth: 0.5)
+                    .background(
+                        RoundedRectangle(cornerRadius: 30, style: .continuous)
+                            .fill(.thinMaterial)
+                    )
+                    .frame(width: 150,height: 45)
+                    .overlay {
+                        HStack{
+                            Button(action:{
+                                
+                                todayRemainders()
+                            }, label: {
+                                Image(systemName: selectedTab != .today ? "sun.max" : "sun.max.circle.fill"  )
+                                    .resizable()
+                                    .frame(width: 20,height: 20)
+                                    .foregroundStyle(Color.white)
+                            })
+                            .sensoryFeedback(.success, trigger: selectedTab == .today)
+                            .padding()
+                            Spacer()
+                           
+                            Button(action:scheduleRemainders
+                                   , label: {
+                                Image(systemName: selectedTab != .scheduled ? "calendar" : "calendar.circle.fill")
+                                    .resizable()
+                                    .frame(width: 20,height: 20)
+                                    .foregroundStyle(Color.white)
+                            })
+                            .sensoryFeedback(.success, trigger: selectedTab == .scheduled)
+                            Spacer()
+                            Button(action: {
+                                selectedTab = .add
+                                isClicked.toggle()
+                            }, label: {
+                                Image(systemName: selectedTab != .add ?  "square.and.pencil" : "square.and.pencil.circle.fill")
+                                    .resizable()
+                                    .frame(width: 20,height: 20)
+                                    .foregroundStyle(Color.white)
+                            })
+                            .sensoryFeedback(.success, trigger: selectedTab == .add)
+                            .padding()
+                        }
+                    }
+                
+            }
                 .navigationBarTitleDisplayMode(.inline)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .sheet(isPresented: $isClicked, content: {
@@ -116,5 +145,21 @@ struct RemainderView: View {
             .presentationCornerRadius(16)
         }
     }
+   func todayRemainders(){
+        selectedTab = .today
+        
+    }
+    
+    func scheduleRemainders(){
+        selectedTab = .scheduled
+    }
+    
 }
+
+protocol ReminderHandler {
+    mutating func todayRemainders()
+    mutating func scheduleRemainders()
+}
+
+
 

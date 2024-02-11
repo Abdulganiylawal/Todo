@@ -9,7 +9,7 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 struct AddRemainder: View {
-    @StateObject var  model:AddRemainderModel
+    @StateObject var  model:RemainderViewModel
 
     @Environment(\.presentationMode) var presentationMode
     @FocusState var isFocused:Bool
@@ -22,7 +22,7 @@ struct AddRemainder: View {
 
     
     init(model:CDList){
-        _model = StateObject(wrappedValue:AddRemainderModel(model: model))
+        _model = StateObject(wrappedValue:RemainderViewModel(model: model))
     }
     var body: some View {
         VStack(alignment:.leading){

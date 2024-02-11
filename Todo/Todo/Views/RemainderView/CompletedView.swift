@@ -23,16 +23,14 @@ struct CompletedView: View {
     }
     
     var body: some View {
-            ScrollView{
+            ScrollView(showsIndicators: false){
                 ForEach(completedRemainders){
                     remainder in
                     RemainderRow(remainder: remainder, color: model.color, duration: remainder.schedule_?.duration ?? 0.0)
+                        .padding(.top,10)
                 }
-            }.padding()
-            
-        
-     
-        
+            }.ignoresSafeArea()
+            .padding()
     }
 }
 

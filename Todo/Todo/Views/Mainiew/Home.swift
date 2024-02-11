@@ -71,9 +71,13 @@ struct Home: View {
                                                     selectedList = list
                                                 })
                                                 Button("Delete List", action: {
-                                                    CDList.delete(list: list)
-                                            
-                                                   
+                                                    Task{
+                                                        do{
+                                                            await CDList.delete(list: list)
+                                                            reloadFlag.toggle()
+                                                        }
+                                                    }
+                                        
                                                 })
                                                
                                             }
@@ -90,6 +94,9 @@ struct Home: View {
                         .padding()
                     }
                     .id(reloadFlag)
+                    .onAppear(perform: {
+                        reloadFlag.toggle()
+                    })
                         .navigationTitle("")
                         .toolbar(content: {
                             ToolbarItem(placement: .topBarLeading) {

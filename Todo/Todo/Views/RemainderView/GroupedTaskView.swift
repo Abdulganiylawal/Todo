@@ -137,6 +137,7 @@ struct GroupedTaskView: View {
                 Section {
                     ForEach(value){ (remainder:CDRemainder) in
                         RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "today")
+                            .padding(.top,10)
                             .contextMenu {
                                 Group {
                                     Button("Edit Remainders", action: {
@@ -193,6 +194,7 @@ struct GroupedTaskView: View {
                 Section {
                     ForEach(value){ remainder in
                         RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "today")
+                            .padding(.top,10)
                             .contextMenu {
                                 Button("Delete Remainders", action: {
                                   
