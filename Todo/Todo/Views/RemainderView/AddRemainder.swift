@@ -9,8 +9,7 @@ import SwiftUI
 
 @available(iOS 17.0, *)
 struct AddRemainder: View {
-    @StateObject var  model:RemainderViewModel
-
+    @ObservedObject var  model:RemainderViewModel
     @Environment(\.presentationMode) var presentationMode
     @FocusState var isFocused:Bool
     @State var isDateClicked:Bool = false
@@ -20,17 +19,12 @@ struct AddRemainder: View {
     @EnvironmentObject var sheetManager:SheetManager
     var dateFormatter = DateFormatterModel()
 
-    
-    init(model:CDList){
-        _model = StateObject(wrappedValue:RemainderViewModel(model: model))
-    }
     var body: some View {
         VStack(alignment:.leading){
             TextField("", text: $model.name)
                 .foregroundStyle( Color.white)
                 .focused($isFocused)
                 .onTapGesture {
-                    
                     sheetManager.dismiss()
                 }
                 .placeholder(when: model.name.isEmpty, alignment: .leading) {
@@ -282,17 +276,6 @@ struct AddRemainder: View {
 }
 
 
-@available(iOS 17.0, *)
-struct AddRemainder_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        return Group {
-            AddRemainder(model: CDList(name: "Test", color: "7EAA92", image: "book", context: PersistenceController.shared.container.viewContext))
-                .environmentObject(SheetManager())
-                .preferredColorScheme(.dark)
-        }
-    }
-}
 
 
 struct ActionButton: View {

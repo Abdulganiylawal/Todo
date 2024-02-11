@@ -48,6 +48,7 @@
 		106B7D052B6FB7CD00E5ABCF /* GroupedTaskModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106B7D042B6FB7CD00E5ABCF /* GroupedTaskModel.swift */; };
 		107075762AC1C44600793E13 /* AddList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107075752AC1C44600793E13 /* AddList.swift */; };
 		1070757B2AC1C50700793E13 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070757A2AC1C50700793E13 /* ListViewModel.swift */; };
+		107A04B62B794DAC00233ADC /* SlideButton in Frameworks */ = {isa = PBXBuildFile; productRef = 107A04B52B794DAC00233ADC /* SlideButton */; };
 		1091F4DE2AFE63EB00A367A5 /* RoutingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1091F4DD2AFE63EB00A367A5 /* RoutingModel.swift */; };
 		1091F4E12AFE679200A367A5 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1091F4E02AFE679200A367A5 /* NavigationManager.swift */; };
 		1099B7692B0165DF007264F8 /* EditRemainder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1099B7682B0165DF007264F8 /* EditRemainder.swift */; };
@@ -142,6 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				107A04B62B794DAC00233ADC /* SlideButton in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +179,7 @@
 				104ECFB42AB627390083B3D6 /* Todo */,
 				104ECFCB2AB6273C0083B3D6 /* TodoTests */,
 				104ECFB32AB627390083B3D6 /* Products */,
+				107A04B42B794DAC00233ADC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -373,6 +376,13 @@
 			path = LIst;
 			sourceTree = "<group>";
 		};
+		107A04B42B794DAC00233ADC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1091F4DF2AFE677900A367A5 /* NavigationService */ = {
 			isa = PBXGroup;
 			children = (
@@ -429,6 +439,7 @@
 			);
 			name = Todo;
 			packageProductDependencies = (
+				107A04B52B794DAC00233ADC /* SlideButton */,
 			);
 			productName = Todo;
 			productReference = 104ECFB22AB627390083B3D6 /* Todo.app */;
@@ -481,6 +492,7 @@
 			);
 			mainGroup = 104ECFA92AB627390083B3D6;
 			packageReferences = (
+				103AC0612B79475A000672DD /* XCRemoteSwiftPackageReference "SlideButton" */,
 			);
 			productRefGroup = 104ECFB32AB627390083B3D6 /* Products */;
 			projectDirPath = "";
@@ -840,6 +852,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		103AC0612B79475A000672DD /* XCRemoteSwiftPackageReference "SlideButton" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/no-comment/SlideButton";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		107A04B52B794DAC00233ADC /* SlideButton */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 103AC0612B79475A000672DD /* XCRemoteSwiftPackageReference "SlideButton" */;
+			productName = SlideButton;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		1051EEAF2AD6D9EA00B3C30B /* TodoModel.xcdatamodeld */ = {

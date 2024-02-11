@@ -45,9 +45,17 @@ struct RemainderRow: View {
                 if !remainder.title.isEmpty {
                     Text(remainder.title)
                         .foregroundStyle(Color.white)
-                    
                 }
                 Spacer()
+                if  remainder.isCompleted_{
+                        Text("Completed")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .padding(8)
+                            .background(.ultraThinMaterial)
+                            .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
+                         
+                }
                 if !select.isEmpty{
                     Text(remainder.list?.name ?? "" )
                         .font(.caption)
@@ -115,18 +123,7 @@ struct RemainderRow: View {
     
                 }
             }
-            HStack{
-                Spacer()
-                if  remainder.isCompleted_{
-                    Text("Completed")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .padding(8)
-                        .background(.ultraThinMaterial)
-                        .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
-                     
-                }
-            }
+           
 
         }
         .padding()

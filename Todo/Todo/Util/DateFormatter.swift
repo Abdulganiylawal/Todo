@@ -57,6 +57,12 @@ class DateFormatterModel{
         }
     }
     
+    func stringDateToDate(from dateString: String, format: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.date(from: dateString)
+    }
+    
 
 
 }

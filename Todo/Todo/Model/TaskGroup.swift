@@ -87,8 +87,12 @@ class ListEssentials{
             request.predicate = NSPredicate(format: "isCompleted_ == true")
         }
         else if item == "schedule"{
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            let formattedDates = dateFormatter.string(from: date)
             let request1 = NSPredicate(format: "isCompleted_ == false")
-            let request2 = NSPredicate(format: "schedule_.date_  != %@", "")
+            let request2 = NSPredicate(format: "schedule_.date_  != %@", formattedDates as CVarArg)
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request1,request2])
         }
         else if item == "today"{

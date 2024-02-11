@@ -50,8 +50,12 @@ struct GroupedTaskView: View {
                 request.predicate = NSPredicate(format: "isCompleted_ == true")
             case .schedule:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yyyy"
+                let formattedDates = dateFormatter.string(from: date)
                 let request1 = NSPredicate(format: "isCompleted_ == false")
-                let request2 = NSPredicate(format: "schedule_.date_  != %@", "")
+                let request2 = NSPredicate(format: "schedule_.date_  != %@", formattedDates as CVarArg)
                 request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [request1,request2])
             case .today:
                 request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]

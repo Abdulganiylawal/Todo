@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import Combine
+import SlideButton
 @available(iOS 17.0, *)
 struct Home: View {
     @Environment(\.colorScheme) var colorScheme
@@ -36,7 +37,7 @@ struct Home: View {
     
     var body: some View {
         NavigationStack(path: $navigationManager.routes){
-            ZStack(alignment:.bottomTrailing) {
+            ZStack {
                 ScrollView(showsIndicators: false){
                     Section{
                         LazyVGrid(columns: resultGridLayout) {
@@ -128,22 +129,32 @@ struct Home: View {
                            
                         })
                 }
-                Spacer()
-                Image(systemName: "plus")
-                    .foregroundColor(Color(hex: "#acb7ae"))
-                    .font(.body)
-                    .fontWeight(.bold)
-                    .padding()
-                    .background(.ultraThinMaterial)
-                    .backgroundStyle1(cornerRadius: 20,opacity: 0)
-                    .padding()
-                    .onTapGesture {
-                        isClicked.toggle()
-                    }
+                VStack{
+                    Spacer()
+                    RoundedRectangle(cornerRadius: 30, style: .continuous)
+                        .stroke(Color.gray, lineWidth: 0.5)
+                        .background(
+                            RoundedRectangle(cornerRadius: 30, style: .continuous)
+                                .fill(.ultraThinMaterial)
+                        )
+                        .frame(width: 200,height: 35)
+                        .overlay {
+                            SlideButton(styling: SlideButtonStyling(
+                                indicatorSize:40,
+                                indicatorSpacing:0,
+                                 indicatorColor: .clear,
+                               indicatorSystemName: "plus",textAlignment: .globalCenter
+                            )) {
+                                isClicked.toggle()
+                                    
+                            } label: {
+//                                Text("Add")
+                            }
+                        }
+                }
+                .sensoryFeedback(.success, trigger: isClicked)
                 .navigationDestination(for: Route.self)  {  $0}
             }
-           
-          
         }
     }
 }
