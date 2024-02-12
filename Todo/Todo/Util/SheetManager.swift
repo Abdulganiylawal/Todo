@@ -28,4 +28,5 @@ final class SheetManager:ObservableObject{
 
 extension SheetManager.Action{
     var isPresented:Bool {self == .present}
+    var isDismissed:Bool {self == .dismiss}
 }

@@ -65,7 +65,6 @@ class RemainderViewModel: ObservableObject{
         }else{
             scheduleRemainders()
         }
-      
     }
     
     func todayRemainders(){

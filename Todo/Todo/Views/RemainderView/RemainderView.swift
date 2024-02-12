@@ -11,6 +11,7 @@ struct RemainderView: View{
     @Environment(\.colorScheme) var colorScheme
     @State var selectedTab: TabModel = .today
     @State private var isClicked:Bool = false
+    @EnvironmentObject var sheetManager:SheetManager
      private var repeatCycleManager = RepeatCycleManager()
     private var model:CDList
     @State private var id = true
@@ -33,7 +34,7 @@ struct RemainderView: View{
             }
             VStack{
                 Spacer()
-                RemaindersTab(selectedTab: $selectedTab, isClicked: $isClicked, model: viewModel,colors: model.color)
+                RemaindersTab(selectedTab: $selectedTab, isClicked: $isClicked, sheetManager: .constant(sheetManager), model: viewModel,colors: model.color)
             }
                 .navigationBarTitleDisplayMode(.inline)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -50,14 +51,14 @@ struct RemainderView: View{
                 )
         }
         .toolbar(content: {
-            ToolbarItem(placement: .principal) {
-                Text(model.name)
-                    .foregroundColor(Color(hex: model.color))
-            }
-            ToolbarItem {
-                DropdownMenu(model: model)
-            }
-        })
+                ToolbarItem(placement: .principal) {
+                    Text(model.name)
+                        .foregroundColor(Color(hex: model.color))
+                }
+                ToolbarItem {
+                    DropdownMenu(model: model)
+                }
+            })
         
     }
     

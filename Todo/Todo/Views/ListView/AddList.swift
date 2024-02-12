@@ -80,7 +80,7 @@ struct IconView: View {
     
     var body: some View {
         Image(systemName: icon)
-            .frame(width: 40,height: 40)
+            .frame(width: 20,height: 20)
             .foregroundColor(.gray)
             .onTapGesture {
                 self.selectedIcon = icon
@@ -88,7 +88,7 @@ struct IconView: View {
             }
             .overlay(
                 Image(systemName: icon)
-                    .frame(width: 40,height: 40)
+                    .frame(width: 20,height: 20)
                     .foregroundColor(self.selectedIcon == icon ? Color(hex: self.color ?? "D83F31") : .gray)
                     .opacity(self.icon == selectedIcon ? 1 : 0)
             )
@@ -102,14 +102,14 @@ struct ColorCapsule: View {
     var body: some View {
         Capsule()
             .foregroundColor(Color(hex: self.color))
-            .frame(width: 40, height: 40)
+            .frame(width: 20, height: 20)
             .onTapGesture {
                 self.selectedColor = color.description
             }
             .overlay(
                 Circle()
                     .foregroundColor(Color.black)
-                    .frame(width: 13, height: 13)
+                    .frame(width: 7, height: 7)
                     .offset(x: 0, y: 0)
                     .opacity(self.selectedColor == color.description ? 1 : 0)
             )

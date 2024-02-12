@@ -12,7 +12,9 @@ import CoreData
 struct RemaindersTab: View {
     @Binding var selectedTab:TabModel
     @Binding var isClicked:Bool
+    @Binding var sheetManager:SheetManager
     @ObservedObject var model:RemainderViewModel
+    
     var colors = "#a28089"
     var body: some View {
         RoundedRectangle(cornerRadius: 30, style: .continuous)
@@ -49,6 +51,7 @@ struct RemaindersTab: View {
                     Spacer()
                     Button(action: {
                         selectedTab = .add
+//                        sheetManager.present()
                         isClicked.toggle()
                     }, label: {
                         Image(systemName: selectedTab != .add ?  "square.and.pencil" : "square.and.pencil.circle.fill")

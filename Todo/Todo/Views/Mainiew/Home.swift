@@ -14,11 +14,12 @@ struct Home: View {
     @Environment(\.colorScheme) var colorScheme
     @StateObject var model:ListViewManger
     @EnvironmentObject var navigationManager:NavigationManager
-    
+    @EnvironmentObject var sheetManager:SheetManager
+    @State var isEditing:Bool = false
+    @State var isAdding:Bool = false
     var context:NSManagedObjectContext
     var ListEssModel:ListEssentials
     @State private var reloadFlag = false
-    @State var isClicked: Bool = false
     let resultGridLayout = [GridItem(.flexible()),GridItem(.flexible())]
     @State private var selectedList:CDList? = nil
     @FetchRequest(fetchRequest: CDList.fetch(), animation: .bouncy) var lists
@@ -26,7 +27,6 @@ struct Home: View {
         self.context = context
         _model = StateObject(wrappedValue: ListViewManger(context: context))
         ListEssModel = ListEssentials(context: context)
-        
         let request = CDList.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \CDList.name_, ascending: true)]
         request.predicate = NSPredicate.all
@@ -48,9 +48,10 @@ struct Home: View {
                             }
                         }
                     }
+                    
                     .padding([.top,.leading,.trailing],20)
                     .id(reloadFlag)
-                   
+                    
                     HStack{
                         Text("List")
                             .foregroundStyle(.gray)
@@ -62,14 +63,18 @@ struct Home: View {
                     
                     Section{
                         LazyVGrid(columns: resultGridLayout) {
-                        ForEach(lists,id: \.id) { list in
+                            ForEach(lists,id: \.id) { list in
                                 NavigationLink(value: Route.remainderView(model: list)) {
                                     ListView(icon: list.image, name: list.name, color: list.color, count: ListEssModel.getRemainderCount(list: list))
                                     
-                                    .contextMenu {
+                                        .contextMenu {
                                             Group {
                                                 Button("Edit List", action: {
                                                     selectedList = list
+                                                    sheetManager.present()
+                                                    isAdding = true
+                                                    isEditing = true
+                                                    
                                                 })
                                                 Button("Delete List", action: {
                                                     Task{
@@ -78,35 +83,31 @@ struct Home: View {
                                                             reloadFlag.toggle()
                                                         }
                                                     }
-                                        
+                                                    
                                                 })
-                                               
+                                                
                                             }
-                                    }
+                                        }
                                 }
                             }
                         
                         }
-                        .sheet(item: $selectedList) { list in
-                            NavigationStack{
-                                EditList(list: .constant(list), model: self.model, reloadFlag: $reloadFlag)
-                            }
-                        }
-                        .padding()
                     }
+                    .padding()
                     .id(reloadFlag)
                     .onAppear(perform: {
                         reloadFlag.toggle()
                     })
-                        .navigationTitle("")
-                        .toolbar(content: {
+                    .navigationTitle("")
+                    .toolbar(content: {
+                        if !sheetManager.action.isPresented{
                             ToolbarItem(placement: .topBarLeading) {
                                 NavigationLink(value: Route.SettingsView) {
                                     Image(systemName: "gearshape")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
                                         .foregroundColor(Color(hex: "#acb7ae"))
-                                        
+                                    
                                 }
                             }
                             ToolbarItem(placement: .topBarTrailing) {
@@ -115,19 +116,10 @@ struct Home: View {
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
                                         .foregroundColor(Color(hex: "#acb7ae"))
-                                        
-                                    
                                 }
                             }
                             
-                        })
-                       
-                        .sheet(isPresented: $isClicked, content: {
-                            NavigationStack{
-                                AddList(manager: model)
-                            }
-                           
-                        })
+                        }})
                 }
                 VStack{
                     Spacer()
@@ -142,18 +134,36 @@ struct Home: View {
                             SlideButton(styling: SlideButtonStyling(
                                 indicatorSize:40,
                                 indicatorSpacing:0,
-                                 indicatorColor: .clear,
-                               indicatorSystemName: "plus",textAlignment: .globalCenter
+                                indicatorColor: .clear,
+                                indicatorSystemName: "plus",textAlignment: .globalCenter
                             )) {
-                                isClicked.toggle()
-                                    
+                                sheetManager.present()
+                                isEditing = false
+                                isAdding = true
+                              
                             } label: {
-//                                Text("Add")
+                                //                                Text("Add")
                             }
                         }
                 }
-                .sensoryFeedback(.success, trigger: isClicked)
                 .navigationDestination(for: Route.self)  {  $0}
+            }
+            .disabled(sheetManager.action.isPresented)
+            .blur(radius: sheetManager.action.isPresented ? 20 : 0)
+            .overlay{
+                    if sheetManager.action.isPresented {
+                        if isAdding {
+                            withAnimation(.bouncy) {
+                                AddListV2(model: model)
+                            }
+                        }
+                        if isEditing {
+                            withAnimation(.bouncy) {
+                                EditListV2( reloadFlag: $reloadFlag, list: Binding.constant(selectedList!))
+                            }
+                            }
+                            
+                    }
             }
         }
     }
