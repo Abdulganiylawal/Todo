@@ -21,6 +21,13 @@ struct RemainderRow: View {
           self.duration = duration
           self.select = select
       }
+    
+    init(remainder:CDRemainder, color:String, duration:Double){
+        self.color = color
+        self.remainder = remainder
+        self.duration = duration
+    }
+    
     var progressInterval: ClosedRange<Date>? {
         guard let startTimeString = remainder.schedule_?.time,
               let startDateString = remainder.schedule_?.date,
@@ -32,12 +39,7 @@ struct RemainderRow: View {
     }
 
 
-    init(remainder:CDRemainder, color:String, duration:Double){
-        self.color = color
-        self.remainder = remainder
-        self.duration = duration
-    }
-    
+
     var body: some View {
         
         VStack(alignment: .leading, spacing: 8) {
@@ -158,7 +160,7 @@ struct SwiftUIView_Previews: PreviewProvider {
         remainders.isCompleted_ = true
         remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, context: PersistenceController.shared.container.viewContext)
         return Group {
-            RemainderRow(remainder: remainders, color:  "#4A4C8", duration: 0.0)
+            RemainderRow(remainder: remainders, color:  "#4A4C8", duration: 360.0)
         }
     }
 }

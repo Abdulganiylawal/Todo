@@ -1,300 +1,285 @@
-
 import SwiftUI
 
 @available(iOS 17.0, *)
 struct EditRemainder: View {
-    @Binding var remainders:CDRemainder
-    @Environment(\.presentationMode) var presentationMode
+    @State var name = ""
+    @State var desc = ""
+    @State var endTime = ""
+    @State var date = ""
+    @State var time = ""
+    @State var repeatCycle = ""
+    @State var durationTime:Double = 0.0
+    @Binding var reloadFlag:Bool
+    @Binding var remainder:CDRemainder
+    @EnvironmentObject var sheetManager:SheetManager
+    @Environment(\.dismiss) private var dismiss
     @FocusState var isFocused:Bool
     @State var isDateClicked:Bool = false
     @State var isTimeClicked:Bool = false
     @State var isEndTimeClicked:Bool = false
     @State var isRepeatClicked:Bool = false
-    @State var endTime = ""
-    @State var date = ""
-    @State var time = ""
-    @State var repeatCycle = ""
-    @Binding var id:Bool
-    @EnvironmentObject var sheetManager:SheetManager
-    var dateFormatter = DateFormatterModel()
-
-    
     var body: some View {
-        VStack(alignment:.leading){
-            TextField("", text: $remainders.title)
-                .foregroundStyle( Color.white)
-                .focused($isFocused)
-                .onTapGesture {
+        NavigationStack {
+            VStack {
+                ScrollView(showsIndicators:false){
+                    title
+                        .padding(.bottom,5)
                     
-                    sheetManager.dismiss()
-                }
-                .placeholder(when: remainders.title.isEmpty, alignment: .center) {
-                    Text("Task descriptions").foregroundColor(.gray)
+                    Divider()
+                        .foregroundStyle(Color.white)
+                    buttons
+                        .padding(.bottom,5)
+                    notes
+                        .padding(.bottom,5)
                 }
                 .padding()
-            Divider()
-            if self.date.isEmpty {
-                if let listImage = remainders.list?.image, let listColor = remainders.list?.color, let listName = remainders.list?.name {
-                    HStack {
-                        Image(systemName: listImage)
-                            .foregroundStyle(Color(hex: listColor))
-                        Text(listName)
-                            .foregroundStyle(Color.white)
-                    }.padding([.leading, .top], 15)
-                }
             }
-            else{
-                VStack(alignment: .leading){
-                    if !self.date.isEmpty{
-                        HStack{
-                            LabeledContent {
-                                Button(role: .destructive) {
-                                    remainders.schedule_?.date_ = ""
-                                    self.date = ""
-                                } label: {
-                                    Image(systemName: "trash")
-                                        .foregroundStyle(Color.red)
-                                        .padding(.trailing,10)
-                                }
-                            } label: {
-                                HStack{
-                                    Image(systemName: "calendar")
-                                    Text(self.date)
-                                        .foregroundStyle(Color.white)
-                                }
-                            }
-                        }.padding([.top, .bottom],5)
-                            .padding(.leading,15)
-                    }
-                }
-            }
-            VStack{
-                if !self.time.isEmpty{
-                    LabeledContent {
-                        Button(role: .destructive) {
-                            remainders.schedule_?.time_ = ""
-                            self.time = ""
-                        } label: {
-                            Image(systemName: "trash")
-                                .foregroundStyle(Color.red)
-                            
-                                .padding(.trailing,10)
-                        }
-                    } label: {
-                        HStack{
-                            Image(systemName: "clock")
-                            Text(self.time)
-                                .foregroundStyle(Color.white)
-                        }
-                   
-                    }
-                    .padding(.bottom,5)
-                }
-                
-                if !self.endTime.isEmpty{
-                    LabeledContent {
-                        Button(role: .destructive) {
-                            self.endTime = ""
-                        } label: {
-                            Image(systemName: "trash")
-                                .foregroundStyle(Color.red)
-                                .padding(.trailing,10)
-                        }
-                    } label: {
-                        HStack{
-                            Image(systemName: "stopwatch.fill")
-                            Text(self.endTime)
-                                .foregroundStyle(Color.white)
-                        }
-                    }
-                    .padding(.bottom,5)
-                }
-                if !self.repeatCycle.isEmpty{
-                    LabeledContent {
-                        Button(role: .destructive) {
-                            remainders.schedule_?.repeatCycle_ = ""
-                            self.repeatCycle = ""
-                        } label: {
-                            Image(systemName: "trash")
-                                .foregroundStyle(Color.red)
-                                .padding(.trailing,10)
-                        }
-                    } label: {
-                        HStack{
-                            Image(systemName: "repeat")
-                            Text(self.repeatCycle)
-                                .foregroundStyle(Color.white)
-                        }
-                    }
-                    .padding(.bottom,5)
-                }
-            }
-            .padding(.leading,15)
             
-            ScrollView(.horizontal,showsIndicators: false){
-                
-                HStack{
-                    ActionButton(text: "Date", imageName: "calendar", colorHex: remainders.list!.color_!, width: 100, height: 35, action: {
-                        withAnimation(.bouncy) {
-                            isFocused = false
-                            isDateClicked.toggle()
-                            isTimeClicked = false
-                            isEndTimeClicked = false
-                            isRepeatClicked = false
-                            sheetManager.present()
-                        }})
-                    
-                    ActionButton(text: "Time", imageName: "clock", colorHex: remainders.list!.color_!, width: 100, height: 35 ,action:{
-                        withAnimation(.easeOut) {
-                            isFocused = false
-                            isTimeClicked.toggle()
-                            isDateClicked = false
-                            
-                            isEndTimeClicked = false
-                            isRepeatClicked = false
-                            sheetManager.present()
-                        }
-                    })
-                    ActionButton(text: "End Time", imageName: "stopwatch.fill", colorHex: remainders.list!.color_!, width: 130, height: 35, action:{
-                        withAnimation(.easeOut) {
-                            isFocused = false
-                            isEndTimeClicked.toggle()
-                            isTimeClicked = false
-                            isDateClicked = false
-                            isRepeatClicked = false
-                            sheetManager.present()
-                            
-                        }
-                    } )
-                    
-                    ActionButton(text: "Repeat", imageName: "repeat", colorHex: remainders.list!.color_!, width: 130, height: 35, action: {
-                        withAnimation(.easeOut) {
-                            isFocused = false
-                            isRepeatClicked.toggle()
-                            isDateClicked = false
-                            isEndTimeClicked = false
-                            isTimeClicked = false
-                            sheetManager.present()
-                        }
-                    })
-                }.padding()
-            
+        }
+        .onAppear(perform: {
+            isFocused.toggle()
+            name = remainder.title
+            desc = remainder.notes
+            date = remainder.schedule_!.date_!
+            time = remainder.schedule_!.time_!
+            if let value = remainder.schedule_?.repeatCycle{
+                repeatCycle = value
             }
-            Divider()
-            Section{
-                Text("Notes")
-                    .foregroundStyle(Color.white)
-               
-                TextField("", text: $remainders.notes)
-                    .foregroundStyle(Color.white)
-                    .onTapGesture {
-                            sheetManager.dismiss()
-                        }
-                    .placeholder(when: remainders.notes.isEmpty, alignment: .leading) {
-                        Text("Add notes")
-                            .foregroundColor(.gray)
-                    }
-            }.padding(.leading,15)
-            Divider()
-            Spacer()
-        }.onAppear(perform: {
-            date = remainders.schedule_?.date_ ?? ""
-            time = remainders.schedule_?.time_ ?? ""
-            repeatCycle = remainders.schedule_?.repeatCycle_ ?? ""
-        
         })
-        .navigationTitle("New Task")
-            .foregroundStyle(Color(hex: remainders.list!.color_!))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar(content: {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button(action: {
-                        isFocused = true
+        .overlay(alignment: .bottom) {
+            if sheetManager.action.isPresented{
+                if isDateClicked{
+                    withAnimation {
+                        calender(didClose: {
+                            isFocused.toggle()
+                            isDateClicked.toggle()
+                            sheetManager.dismiss()}, date: $date, color: remainder.list!.color)
+                        .padding()
                         
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Cancel")
-                            .foregroundStyle(Color(hex: remainders.list!.color_!))
-                    })
+                    }
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                  
-                        remainders.schedule_?.date_  = date
-                        remainders.schedule_?.time_   = time
-                        remainders.schedule_?.repeatCycle_  = repeatCycle
-                        isFocused = true
-                        if let time = remainders.schedule_?.time_{
-                            let durationTime = dateFormatter.timeDifference(from: time, to: self.endTime)
-                            if !(remainders.schedule_?.duration_.isZero)! {
-                                remainders.schedule_?.duration_ = durationTime ?? 0.0
-                            }
-                        }
-                        Task{
-                            await PersistenceController.shared.save()
-                        }
-                        self.id.toggle()
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Done")
-                            .foregroundStyle(Color(hex: !remainders.title.isEmpty ? remainders.list!.color_! : "000000"))
+                if isTimeClicked{
+                    withAnimation {
+                        TimeView(didClose: {
+                            isFocused.toggle()
+                            isTimeClicked.toggle()
+                            sheetManager.dismiss()}, time: $time, color: remainder.list!.color)
+                        .padding()
+                        
                     }
-                    ).disabled(remainders.title.isEmpty)
                 }
-            })
-            .onAppear(perform: {
-                isFocused.toggle()
-            })
-            .overlay(alignment: .bottom) {
-                if sheetManager.action.isPresented{
-                    if isDateClicked{
-                        withAnimation {
-                            calender(didClose: {sheetManager.dismiss()}, date: $date, color: remainders.list!.color_!)
-                                .padding()
-                                .ignoresSafeArea()
-                        }
+                if isRepeatClicked{
+                    withAnimation {
+                        Repeat(didClose: {
+                            isFocused.toggle()
+                            isRepeatClicked.toggle()
+                            sheetManager.dismiss()}, repeatCycle: $repeatCycle, color:remainder.list!.color)
+                        .padding()
+                        
                     }
-                    if isTimeClicked{
-                        withAnimation {
-                            TimeView(didClose: {sheetManager.dismiss()}, time: $time, color: remainders.list!.color_!)
-                                .padding()
-                                .ignoresSafeArea()
-                        }
-                    }
-                    if isRepeatClicked{
-                        withAnimation {
-                            Repeat(didClose: {sheetManager.dismiss()}, repeatCycle:  $repeatCycle, color: remainders.list!.color_!)
-                                .padding()
-                                .ignoresSafeArea()
-                        }
-                    }
-                    if isEndTimeClicked{
-                        withAnimation {
-                            Duration(didClose: {sheetManager.dismiss()}, time: $endTime, color: remainders.list!.color_!)
-                                .padding()
-                                .ignoresSafeArea()
-                        }
+                }
+                if isEndTimeClicked{
+                    withAnimation {
+                        Duration(didClose: {
+                            isFocused.toggle()
+                            isEndTimeClicked.toggle()
+                            sheetManager.dismiss()}, time: $endTime, color: remainder.list!.color)
+                        .padding()
+                        
                     }
                 }
             }
-    }
-}
-
-
-@available(iOS 17.0, *)
-struct EditRemainder_Previews: PreviewProvider {
-    static var previews: some View {
-        let list = CDList(name: "", color: "D83F31", image: "", context: PersistenceController.shared.container.viewContext)
-        let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "djdjdjlkjnankasnckcnkscnknc")
-        remainders.list = list
-        remainders.isCompleted_ = true
-        remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, context: PersistenceController.shared.container.viewContext)
-        return Group {
-            EditRemainder(remainders: .constant(remainders), id: .constant(false))
-                .environmentObject(SheetManager())
-                .preferredColorScheme(.dark)
+        }
+        .navigationTitle("Adding a task")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
+                    dismiss()}, label: {
+                        Image(systemName: "xmark")
+                               .resizable()
+                               .frame(width:15, height: 15)
+                    })
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(action: {
+                    Task{
+                        if date.isEmpty {
+                            let currentDate = Date()
+                            date = DateFormatterModel.shared.formattedDatesString(from: currentDate, isTime: false)
+                            
+                        }
+                        if time.isEmpty{
+                            let currentDate = Date()
+                            time = DateFormatterModel.shared.formattedDatesString(from: currentDate, isTime: true)
+                        }
+                        durationTime = DateFormatterModel.shared.timeDifference(from: time, to: endTime) ?? 0.0
+                        remainder.title = name
+                        remainder.notes = desc
+                        remainder.schedule_!.date_! = date
+                        remainder.schedule_!.time_! = time
+                        remainder.schedule_?.repeatCycle = repeatCycle
+                        remainder.schedule_?.duration = durationTime
+                        reloadFlag.toggle()
+                        await PersistenceController.shared.save()
+                        dismiss()
+                    }
+                }, label: {
+                    Text("Edit")
+                        .foregroundStyle(name.isEmpty ? .red : Color(hex: remainder.list!.color))
+                        .padding([.top,.bottom,.leading,.trailing],10)
+                }
+                ).disabled(name.isEmpty)
+            }
         }
     }
+    
+    var buttons: some View{
+        VStack {
+            if !name.isEmpty {
+                VStack(spacing:15){
+                    HStack(spacing:10){
+                        ActionButton(imageName: date.isEmpty ? "calendar.circle" : "calendar.circle.fill" ,  action: {
+                            withAnimation(.bouncy) {
+                                isFocused = false
+                                isDateClicked.toggle()
+                                isTimeClicked = false
+                                isEndTimeClicked = false
+                                isRepeatClicked = false
+                                sheetManager.present()
+                            }})
+                        
+                        ActionButton(imageName: time.isEmpty ? "clock.circle" : "clock.circle.fill" ,action:{
+                            withAnimation(.easeOut) {
+                                isFocused = false
+                                isTimeClicked.toggle()
+                                isDateClicked = false
+                                
+                                isEndTimeClicked = false
+                                isRepeatClicked = false
+                                sheetManager.present()
+                            }
+                        })
+                        ActionButton(imageName: endTime.isEmpty ? "stopwatch" :"stopwatch.fill", action:{
+                            withAnimation(.easeOut) {
+                                isFocused = false
+                                isEndTimeClicked.toggle()
+                                isTimeClicked = false
+                                isDateClicked = false
+                                isRepeatClicked = false
+                                sheetManager.present()
+                                
+                            }
+                        } )
+                        ActionButton(imageName: repeatCycle.isEmpty ? "repeat.circle" : "repeat.circle.fill", action: {
+                            withAnimation(.easeOut) {
+                                isFocused = false
+                                isRepeatClicked.toggle()
+                                isDateClicked = false
+                                isEndTimeClicked = false
+                                isTimeClicked = false
+                                sheetManager.present()
+                            }
+                        })
+                    }.frame(maxWidth:.infinity,alignment: .trailing)
+                    VStack{
+                        HStack{
+                            Text("Date")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            if !date.isEmpty{
+                                Text(DateFormatterModel.shared.formatDate(self.date)!)
+                                    .foregroundStyle(.secondary)
+                                
+                            }
+                        }
+                        Spacer()
+                        HStack{
+                            Text("Time")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            if !time.isEmpty{
+                                Text(time)
+                                    .foregroundStyle(.secondary)
+                                
+                            }
+                        }
+                        Spacer()
+                        HStack{
+                            Text("End Time")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            if !endTime.isEmpty{
+                                Text(endTime)
+                                    .foregroundStyle(.secondary)
+                                
+                            }
+                        }
+                        Spacer()
+                        HStack{
+                            Text("Repeat")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            if !repeatCycle.isEmpty{
+                                Text(self.repeatCycle)
+                                    .foregroundStyle(.secondary)
+                                
+                            }
+                        }
+                        Spacer()
+                    }
+                    .frame(height: 100, alignment: .topLeading)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 20,style: .continuous)
+                            .fill(.thinMaterial)
+                            .shadow(color: .black, radius: 0.5)
+                    )
+                    Divider()
+                        .foregroundStyle(Color.white)
+                }
+            } else {
+                EmptyView()
+            }
+            
+        }
+        
+    }
+    var title:some View {
+        HStack {
+            Image(systemName: "square.and.pencil")
+            
+            TextField("", text: $name)
+                .foregroundStyle(Color(hex: remainder.list!.color))
+                .focused($isFocused)
+                .placeholder(when: name.isEmpty, alignment: .leading) {
+                    Text("Task Name").foregroundColor(.secondary)
+                }
+            
+        }
+        .frame(height: 20)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 20,style: .continuous)
+                .fill(.thinMaterial)
+                .shadow(color: .black, radius: 0.5)
+        )
+    }
+    
+    var notes:some View {
+        TextField("", text: $desc)
+            .foregroundStyle(Color(hex: remainder.list!.color))
+            .placeholder(when: desc.isEmpty, alignment: .topLeading) {
+                Text("Add a note...").foregroundColor(.secondary)
+                
+            }
+            .padding()
+            .frame(height: 150,alignment: .topLeading)
+            .background(
+                RoundedRectangle(cornerRadius: 20,style: .continuous)
+                    .fill(.thinMaterial)
+                    .shadow(color: .black, radius: 0.5)
+            )
+        
+    }
 }
-
-

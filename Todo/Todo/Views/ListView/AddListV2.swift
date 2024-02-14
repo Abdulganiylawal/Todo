@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddListV2: View {
     @State private var name:String = ""
-    @State private var color: String? = "#ffde22"
+    @State private var color: String? = "#384358"
     @State private var icon: String? = "list.bullet"
     @ObservedObject var model:ListViewManger
     @Environment(\.presentationMode) var presentationMode
@@ -49,19 +49,24 @@ struct AddListV2: View {
                     VStack{
                         Image(systemName: self.icon ?? "list.bullet")
                             .resizable()
-                            .frame(width: 20, height: 20)
-                            .padding()
                             .foregroundColor(Color(hex: self.color ?? "D83F31"))
-                        
+                            .frame(width: 20, height: 20)
+                            .padding(.top,30)
+                        Spacer()
                         title
-                        
+                            .padding(.top,15)
+                        Spacer()
                         Divider()
                             .foregroundStyle(Color.white)
                             .padding(.bottom,5)
+                        Spacer()
                         colors
                             .padding(.bottom,5)
+                      
+                        Spacer()
                         icons
-                            .padding(.bottom,30)
+                            .padding(.bottom,25)
+                        Spacer()
                     }
                     .padding([.leading,.trailing],40)
                     .onAppear(perform: {
@@ -70,6 +75,7 @@ struct AddListV2: View {
                     
                 }
         }
+        .transition(.move(edge: .bottom))
         .onDisappear(perform: {
             model.title = ""
         })
@@ -86,35 +92,42 @@ struct AddListV2: View {
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 30,style: .continuous)
-                    .fill(.ultraThinMaterial)
+                    .fill(.thinMaterial)
             )
     }
     
     var colors:some View{
-        LazyVGrid(columns: resultGridLayout,spacing: 10, content: {
-            ForEach(popularColors, id: \.self) { color in
-                ColorCapsule(color: color, selectedColor: $color)
-            }
-        })
-        .padding()
+        ScrollView(.vertical,showsIndicators: false){
+            LazyVGrid(columns: resultGridLayout,spacing: 8, content: {
+                ForEach(popularColors, id: \.self) { color in
+                    ColorCapsule(color: color, selectedColor: $color)
+                }
+               
+            })
+            .padding([.top,.bottom],15)
+            .padding([.leading,.trailing],1)
+        }
         .background(
-            RoundedRectangle(cornerRadius: 20,style: .continuous)
-                .fill(.ultraThinMaterial)
+            RoundedRectangle(cornerRadius: 10,style: .continuous)
+                .fill(.thinMaterial)
         )
     }
     
     var icons:some View{
         
-        LazyVGrid(columns: resultGridLayout,spacing: 10, content: {
-            ForEach(todoIcons, id: \.self) { icon in
-                IconView(icon: icon, selectedIcon: $icon, color: $color)
-            }
-        })
-        .padding()
+        ScrollView(.vertical,showsIndicators: false){
+            LazyVGrid(columns: resultGridLayout,spacing: 8, content: {
+                ForEach(todoIcons, id: \.self) { icon in
+                    IconView(icon: icon, selectedIcon: $icon, color: $color)
+                }
+            })
+            .padding([.top,.bottom],15)
+            .padding([.leading,.trailing],1)
+        }
         .background(
-            RoundedRectangle(cornerRadius: 20,style: .continuous)
-                .fill(.ultraThinMaterial)
-        )
+            RoundedRectangle(cornerRadius: 10,style: .continuous)
+                .fill(.thinMaterial)
+    )
         
     }
     

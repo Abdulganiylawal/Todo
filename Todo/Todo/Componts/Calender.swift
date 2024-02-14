@@ -17,43 +17,39 @@ struct calender: View {
     @State var dates:Date = Date()
     var body: some View {
         VStack{
-            DatePicker(
-                "",
-                selection: $dates,
-                displayedComponents: [.date]
-            )
-            .datePickerStyle(.graphical)
-            .foregroundStyle(Color(hex: color))
-            .onChange(of: dates, initial: false) { oldValue, newValue in
-                date = dateFormatter.formattedDatesString(from: dates, isTime: false)
-            }
-            .overlay(alignment: .topTrailing) {
-                Button(action: {
-                    didClose()
-                }, label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.title2)
-                        .foregroundStyle(Color(hex: color))
-                    
-                })
-                .padding(.top,-20)
-            }
-            .transition(.move(edge: .bottom))
-            
-            .background(
-                RoundedRectangle(cornerRadius: 20.0)
-                   .backgroundStyle1(cornerRadius: 20, opacity: 0.4)
-                   .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
-                .frame(width:370, height: 400)
-                .opacity(0.1)
-            
+            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                    .fill(Color(hex: "#1A1C20"))
+                    .shadow(color: .black, radius: 0.5)
+                    .overlay {
+                        VStack(alignment:.trailing){
+                            Button(action: {
+                                didClose()
+                            }, label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.title2)
+                                    .foregroundStyle(Color(hex: color))
+                                
+                            })
+                            .padding()
+                            DatePicker(
+                                "",
+                                selection: $dates,
+                                displayedComponents: [.date]
+                            )
+                            .padding()
+                            .datePickerStyle(.graphical)
+                            .accentColor(Color(hex: color))
+                            .onChange(of: dates, initial: false) { oldValue, newValue in
+                                date = dateFormatter.formattedDatesString(from: dates, isTime: false)
+                            }
+                        }
                 
-            )
-  
+                    }
+                    .padding()
         }
-     
-        .padding(.top,30)
-        .padding()
+        .transition(.move(edge: .bottom))
+        .frame(width: 400)
+        .frame(minHeight: 500,maxHeight: 500)
     }
         
 }

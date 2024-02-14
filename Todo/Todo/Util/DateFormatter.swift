@@ -62,7 +62,32 @@ class DateFormatterModel{
         dateFormatter.dateFormat = format
         return dateFormatter.date(from: dateString)
     }
-    
+   
 
+    func formatDate(_ dateString: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "MMM d'\(ordinalSuffix(from: date))' yyyy"
+            return dateFormatter.string(from: date)
+        } else {
+            return nil
+        }
+    }
+
+    func ordinalSuffix(from date: Date) -> String {
+        let calendar = Calendar.current
+        let dayOfMonth = calendar.component(.day, from: date)
+        switch dayOfMonth {
+        case 1, 21, 31:
+            return "st"
+        case 2, 22:
+            return "nd"
+        case 3, 23:
+            return "rd"
+        default:
+            return "th"
+        }
+    }
 
 }

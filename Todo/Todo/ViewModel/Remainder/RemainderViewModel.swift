@@ -9,50 +9,15 @@ import Foundation
 import Combine
 import CoreData
 class RemainderViewModel: ObservableObject{
-    @Published var name: String = ""
-    @Published var notes: String = ""
-    @Published var date: String = ""
-    @Published var time: String = ""
-    @Published var repeatCycle: String = ""
-    @Published var durationTime: Double? = 0.0
-    @Published var endTime: String = ""
-    @Published var isClickable:Bool = false
-    @Published var duration:String = ""
+    
     var context:NSManagedObjectContext = PersistenceController.shared.container.viewContext
     @Published var remainders:[CDRemainder] = [CDRemainder]()
-
     let model:CDList
     init(model: CDList) {
         self.model = model
        todayRemainders()
-        clickable
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$isClickable)
     }
-    
-    lazy var clickable: AnyPublisher<Bool,Never> = {
-        $name
-            .map { value in
-                return value.count >= 1
-            }.eraseToAnyPublisher()
-    }()
-    
-    func reset() {
-           DispatchQueue.main.async {
-               self.name = ""
-               self.notes = ""
-               self.date = ""
-               self.time = ""
-               self.repeatCycle = ""
-               self.durationTime = 0.0
-               self.endTime = ""
-               self.isClickable = false
-               self.duration = ""
-           }
-       }
-
-    
-    func addRemainders(title:String,notes:String,repeatcycle:String,date:String,time:String?,duration:Double) async{
+    @MainActor func addRemainders(title:String,notes:String,repeatcycle:String,date:String,time:String?,duration:Double) async{
         let remainder = CDRemainder(context: PersistenceController.shared.container.viewContext, title: title, notes: notes)
         remainder.schedule_ = CDRemainderSchedule(repeatCycle: repeatcycle, date: date, time: time ??  DateFormatterModel.shared.formattedDatesString(from: Date(), isTime: true), duration: duration, context: PersistenceController.shared.container.viewContext)
         remainder.list = model
@@ -83,7 +48,6 @@ class RemainderViewModel: ObservableObject{
         }catch{
             print(error.localizedDescription)
         }
-        reset()
     }
     
     func scheduleRemainders(){
@@ -103,11 +67,7 @@ class RemainderViewModel: ObservableObject{
         }catch{
             print(error.localizedDescription)
         }
-        reset()
     }
-    
-    
-
 }
 
 

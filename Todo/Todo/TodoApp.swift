@@ -32,7 +32,7 @@ struct TodoApp: App {
     var body: some Scene {
         WindowGroup {
             Home(context: persistenceController.container.viewContext)
-    
+                
                 .preferredColorScheme(.dark)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(sheetManager)

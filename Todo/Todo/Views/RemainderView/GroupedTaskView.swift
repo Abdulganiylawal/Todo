@@ -90,7 +90,7 @@ struct GroupedTaskView: View {
         .id(reloadFlag)
         .sheet(item: $selectedRemainder) {  remainder in
             NavigationStack{
-                EditRemainder(remainders: .constant(remainder) , id:$reloadFlag)
+//                EditRemainder(remainders: .constant(remainder) , id:$reloadFlag)
             }
             .presentationBackground(.ultraThinMaterial)
             .presentationCornerRadius(16)

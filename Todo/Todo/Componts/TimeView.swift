@@ -18,43 +18,34 @@ struct TimeView: View {
     var color:String
     var body: some View {
         VStack{
-            DatePicker(
-                "",
-                selection: $times,
-                displayedComponents: .hourAndMinute
-            )
-            .datePickerStyle(.wheel)
-            .onChange(of: times, initial: false) { oldValue, newValue in
-                time =  dateFormatter.formattedDatesString(from: times, isTime: true)
-            }
-            
-            .overlay(alignment: .topTrailing) {
-                Button(action: {
-                    didClose()
-                }, label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.title2)
-                        .foregroundStyle(Color(hex: color))
-                    
+            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/, style: .continuous)
+                .fill(Color(hex: "#1A1C20"))
+                .shadow(color: .black, radius: 0.5)
+                .overlay(content: {
+                    VStack(alignment:.trailing){
+                        Button(action: {
+                            didClose()
+                        }, label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.title2)
+                                .foregroundStyle(Color(hex: color))
+                            
+                        })
+                        .padding()
+                        DatePicker(
+                            "",
+                            selection: $times,
+                            displayedComponents: .hourAndMinute
+                        )
+                        .datePickerStyle(.wheel)
+                        .onChange(of: times, initial: false) { oldValue, newValue in
+                            time =  dateFormatter.formattedDatesString(from: times, isTime: true)
+                        }
+                    }
                 })
-                .padding(-30)
-            }
-            .transition(.move(edge: .bottom))
-            
-            .background(
-                RoundedRectangle(cornerRadius: 20.0)
-                 
-                    .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
-                    .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
-                    .frame(width:370, height: 300)
-                .opacity(0.1)
-                
-            )
-        
         }
-        .padding(.top,30)
-        .padding()
-
+        .transition(.move(edge: .bottom))
+        .frame(height: 300)
     }
     
 }

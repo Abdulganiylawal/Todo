@@ -14,6 +14,7 @@ struct RemainderView: View{
     @EnvironmentObject var sheetManager:SheetManager
      private var repeatCycleManager = RepeatCycleManager()
     private var model:CDList
+   
     @State private var id = true
     @Environment(\.managedObjectContext) var context
     @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
@@ -40,11 +41,12 @@ struct RemainderView: View{
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .sheet(isPresented: $isClicked, content: {
                     NavigationStack{
-                        AddRemainder(model: viewModel)
+                        AddRemainderV2(viewModel: viewModel)
                             .environmentObject(SheetManager())
                     }
                     .presentationBackground(.ultraThinMaterial)
                     .presentationCornerRadius(16)
+                    .presentationDragIndicator(.visible)
                 })
                 .background(
                     Text(viewModel.remainders.isEmpty ? "Empty" : "")
@@ -66,16 +68,17 @@ struct RemainderView: View{
     var remainder: some View{
         ForEach(viewModel.remainders,id: \.self) { remainder in
          
-            RemainderRow(color: model.color, remainder: remainder, duration:remainder.schedule_?.duration ?? 0.0,select: "")
+            RemainderRow(remainder: remainder, color: model.color, duration:remainder.schedule_?.duration ?? 0.0)
                 .padding(.bottom,10)
-                
                 .contextMenu {
                         Group {
                             Button("Edit Remainders", action: {
                                 selectedRemainder = remainder
+            
                             })
                             Button("Delete Remainders", action: {
                                 CDRemainder.delete(remainder: remainder)
+                                
                                    
                             })
                             Button("Completed", action: {
@@ -95,7 +98,7 @@ struct RemainderView: View{
         }
         .sheet(item: $selectedRemainder) {  remainder in
             NavigationStack{
-                EditRemainder(remainders: .constant(remainder),id:$id)
+                EditRemainder(reloadFlag: $id, remainder: .constant(remainder))
             }
             .presentationBackground(.ultraThinMaterial)
             .presentationCornerRadius(16)
