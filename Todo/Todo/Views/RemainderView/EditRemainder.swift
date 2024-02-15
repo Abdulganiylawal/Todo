@@ -8,6 +8,7 @@ struct EditRemainder: View {
     @State var date = ""
     @State var time = ""
     @State var repeatCycle = ""
+    @State var subTasks:[CDRemainderSubTasks] = []
     @State var durationTime:Double = 0.0
     @Binding var reloadFlag:Bool
     @Binding var remainder:CDRemainder
@@ -34,6 +35,7 @@ struct EditRemainder: View {
                             .padding(.bottom,10
                         )
                     }
+                    subTask
                 }
                 .padding()
             }
@@ -48,6 +50,7 @@ struct EditRemainder: View {
             if let value = remainder.schedule_?.repeatCycle{
                 repeatCycle = value
             }
+            subTasks = Array(remainder.subTasks)
         })
         .overlay(alignment: .bottom) {
             if sheetManager.action.isPresented{
@@ -123,6 +126,7 @@ struct EditRemainder: View {
                         remainder.schedule_!.time_! = time
                         remainder.schedule_?.repeatCycle = repeatCycle
                         remainder.schedule_?.duration = durationTime
+                        remainder.subTasks = Set(subTasks.map({ $0 }).sorted(by: { $0.createdDate > $1.createdDate}))
                         reloadFlag.toggle()
                         await PersistenceController.shared.save()
                         dismiss()
@@ -174,7 +178,6 @@ struct EditRemainder: View {
                                         isDateClicked = false
                                         isRepeatClicked = false
                                         sheetManager.present()
-                                        
                                     }
                                 } )
                                 ActionButton(imageName: repeatCycle.isEmpty ? "repeat.circle" : "repeat.circle.fill", action: {
@@ -198,10 +201,8 @@ struct EditRemainder: View {
                             if !date.isEmpty{
                                 Text(DateFormatterModel.shared.formatDate(self.date)!)
                                     .foregroundStyle(.secondary)
-                                
                             }
                         }
-                     
                         HStack{
                             Text("Time")
                                 .foregroundStyle(.secondary)
@@ -252,14 +253,12 @@ struct EditRemainder: View {
     var title:some View {
         HStack {
             Image(systemName: "square.and.pencil")
-            
             TextField("", text: $name)
                 .foregroundStyle(Color(hex: remainder.list!.color))
                 .focused($isFocused)
                 .placeholder(when: name.isEmpty, alignment: .leading) {
                     Text("Task Name").foregroundColor(.secondary)
                 }
-            
         }
         .frame(height: 20)
         .padding()
@@ -285,5 +284,46 @@ struct EditRemainder: View {
                     .shadow(color: .black, radius: 0.5)
             )
         
+    }
+    
+    var subTask:some View{
+        VStack(alignment:.leading){
+            UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20,topTrailing: 20))
+                .frame(height: 30)
+                .foregroundStyle(Color(hex: remainder.list!.color))
+                .overlay(alignment:.leading) {
+                    Button(action: {subTasks.append(CDRemainderSubTasks(context: PersistenceController.shared.container.viewContext, subTaskName: ""))}, label: {
+                        Label("Add SubTask", systemImage: "plus.circle")
+                            .foregroundStyle(.black)
+                            .fontWeight(.bold)
+                    })
+                    .padding()
+                }
+       
+                
+                ForEach($subTasks, id: \.subTaskName){ $subTask in
+                    HStack{
+                        Button {
+                            if let index = subTasks.firstIndex(of: subTask){
+                                subTasks.remove(at: index)
+                            }
+                        } label: {
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .frame(width: 10, height: 10)
+                                .foregroundStyle(.gray)
+                        }
+                        SubTaskItem(name: $subTask.subTaskName, isCompleted: $subTask.isCompleted, isEditing: true, color:remainder.list!.color)
+                    }
+                }
+                .padding(.bottom,5)
+                .padding(.leading,10)
+        }
+        .frame(minHeight: 150,alignment: .topLeading)
+        .background(
+            RoundedRectangle(cornerRadius: 20,style: .continuous)
+                .fill(.thinMaterial)
+                .shadow(color: .black, radius: 0.5)
+        )
     }
 }

@@ -46,6 +46,13 @@ class RemainderViewModel: ObservableObject{
         subTasks.append(subTask)
     }
     
+    func deleteSubTask(subtask: CDRemainderSubTasks){
+        if let index = subTasks.firstIndex(of: subtask){
+            subTasks.remove(at: index)
+        }
+        CDRemainderSubTasks.delete(subTask: subtask)
+    }
+    
     func todayRemainders(){
         let request = CDRemainder.fetch()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
@@ -85,6 +92,7 @@ class RemainderViewModel: ObservableObject{
             print(error.localizedDescription)
         }
     }
+   
 }
 
 

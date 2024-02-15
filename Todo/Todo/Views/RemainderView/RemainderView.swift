@@ -74,27 +74,21 @@ struct RemainderView: View{
                         Group {
                             Button("Edit Remainders", action: {
                                 selectedRemainder = remainder
-            
                             })
                             Button("Delete Remainders", action: {
                                 CDRemainder.delete(remainder: remainder)
-                                
-                                   
                             })
                             Button("Completed", action: {
                                 remainder.isCompleted_ = true
                                 guard let repeatCycle = remainder.schedule_?.repeatCycle, !repeatCycle.isEmpty else{return}
                                 repeatCycleManager.nextDueDate(remainder: remainder, context: context)
-                              
                                 Task{
                                     await PersistenceController.shared.save()
                                 }
                               
                             })
                         }
-                    
                 }
-           
         }
         .sheet(item: $selectedRemainder) {  remainder in
             NavigationStack{

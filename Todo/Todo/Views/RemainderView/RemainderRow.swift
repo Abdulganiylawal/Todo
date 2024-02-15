@@ -11,6 +11,7 @@ import SwiftUI
 struct RemainderRow: View {
     @Environment(\.colorScheme) var colorScheme
     var color:String = ""
+    @State private var isClicked = false
     var remainder:CDRemainder
     var duration:Double
     var select:String = ""
@@ -57,6 +58,19 @@ struct RemainderRow: View {
                             .background(.ultraThinMaterial)
                             .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
                          
+                }
+                if !remainder.subTasks.isEmpty{
+                    Button {
+                        isClicked.toggle()
+//                        remainder.subTasks.forEach({ item in
+//                            print(item.isCompleted)
+//                        })
+                    } label: {
+                        HStack{
+                            Text("\(remainder.subTasks.count)")
+                                .foregroundStyle(.gray)
+                        }
+                    }
                 }
                 if !select.isEmpty{
                     Text(remainder.list?.name ?? "" )
@@ -125,17 +139,21 @@ struct RemainderRow: View {
     
                 }
             }
-           
-
         }
         .padding()
+        .sheet(isPresented: $isClicked, content: {
+            subTaskView(remainder: remainder)
+            
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(16)
+                .presentationDetents([.height(200)])
+                .presentationBackground(.ultraThinMaterial)
+        })
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(.ultraThinMaterial)
                 .backgroundStyle1(cornerRadius: 20, opacity: 0.4)
                 .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
-            
-
         )
     }
     

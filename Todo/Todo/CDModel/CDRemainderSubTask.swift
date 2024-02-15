@@ -9,6 +9,14 @@ import Foundation
 import CoreData
 
 extension CDRemainderSubTasks{
+    public var id: UUID {
+       return id_ ?? UUID()
+   }
+   
+   public override func awakeFromInsert() {
+       self.id_ = UUID()
+   }
+    
     var createdDate:Date{
         get{
            createdDate_ ?? Date()
@@ -44,5 +52,11 @@ extension CDRemainderSubTasks{
         self.init(context: context)
         self.createdDate = Date()
         self.subTaskName = subTaskName
+    }
+}
+
+extension CDRemainderSubTasks:Comparable{
+    public static func < (lhs: CDRemainderSubTasks, rhs: CDRemainderSubTasks) -> Bool {
+        return lhs.subTaskName < rhs.subTaskName
     }
 }

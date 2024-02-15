@@ -65,6 +65,7 @@
 		10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E8742AB9EA2C00E2359D /* Search.swift */; };
 		10E0E87C2ABA0F0300E2359D /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E87B2ABA0F0300E2359D /* Styles.swift */; };
 		10F0B7442B7E05F400750F13 /* CDRemainderSubTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0B7432B7E05F400750F13 /* CDRemainderSubTask.swift */; };
+		10F0B7462B7E52F100750F13 /* subTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0B7452B7E52F100750F13 /* subTaskView.swift */; };
 		10F9A4F22AC9C50E005B5231 /* CompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F9A4F12AC9C50E005B5231 /* CompletedView.swift */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +140,7 @@
 		10E0E8742AB9EA2C00E2359D /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		10E0E87B2ABA0F0300E2359D /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		10F0B7432B7E05F400750F13 /* CDRemainderSubTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDRemainderSubTask.swift; sourceTree = "<group>"; };
+		10F0B7452B7E52F100750F13 /* subTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subTaskView.swift; sourceTree = "<group>"; };
 		10F9A4F12AC9C50E005B5231 /* CompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -351,6 +353,7 @@
 				10132CE82AFC369200B8DFAF /* ArrayOfColors.swift */,
 				10132CEA2AFC36D100B8DFAF /* ArraysOfIcons.swift */,
 				103AC0282B79070C000672DD /* RemaindersTab.swift */,
+				10F0B7452B7E52F100750F13 /* subTaskView.swift */,
 			);
 			path = Componts;
 			sourceTree = "<group>";
@@ -543,6 +546,7 @@
 				105936D32AFBD75500823D41 /* Repeat.swift in Sources */,
 				103AC0272B7906D5000672DD /* TabModel.swift in Sources */,
 				1091F4DE2AFE63EB00A367A5 /* RoutingModel.swift in Sources */,
+				10F0B7462B7E52F100750F13 /* subTaskView.swift in Sources */,
 				10A078D52ADB108700FE2BF0 /* GroupedTaskView.swift in Sources */,
 				10A559992B7A159D00F39C7D /* AddListV2.swift in Sources */,
 				10F0B7442B7E05F400750F13 /* CDRemainderSubTask.swift in Sources */,

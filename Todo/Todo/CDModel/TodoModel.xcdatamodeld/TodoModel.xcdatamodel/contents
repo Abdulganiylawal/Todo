@@ -27,6 +27,7 @@
     </entity>
     <entity name="CDRemainderSubTasks" representedClassName="CDRemainderSubTasks" syncable="YES" codeGenerationType="class">
         <attribute name="createdDate_" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id_" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isCompleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="subTaskName_" optional="YES" attributeType="String"/>
         <relationship name="remainders" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRemainder" inverseName="subTask" inverseEntity="CDRemainder"/>

@@ -39,7 +39,7 @@ struct AddRemainderV2: View {
                     if !name.isEmpty {
                         buttons
                             .padding(.bottom,10
-                        )
+                            )
                     }
                     subTask
                 }
@@ -136,108 +136,105 @@ struct AddRemainderV2: View {
     
     var buttons: some View{
         VStack {
-          
-            VStack{
-                    UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20,topTrailing: 20))
-                        .frame(height: 30)
-                        .foregroundStyle(Color(hex: viewModel.model.color))
-                        .overlay {
-                            HStack(spacing:10){
-                                ActionButton(imageName: !isDateClicked ? "calendar.circle" : "calendar.circle.fill" ,  action: {
-                                    withAnimation(.bouncy) {
-                                        isFocused = false
-                                        isDateClicked.toggle()
-                                        isTimeClicked = false
-                                        isEndTimeClicked = false
-                                        isRepeatClicked = false
-                                        sheetManager.present()
-                                    }})
-                                
-                                ActionButton(imageName: !isTimeClicked ? "clock.circle" : "clock.circle.fill" ,action:{
-                                    withAnimation(.easeOut) {
-                                        isFocused = false
-                                        isTimeClicked.toggle()
-                                        isDateClicked = false
-                                        
-                                        isEndTimeClicked = false
-                                        isRepeatClicked = false
-                                        sheetManager.present()
-                                    }
-                                })
-                                ActionButton(imageName: !isEndTimeClicked ? "stopwatch" :"stopwatch.fill", action:{
-                                    withAnimation(.easeOut) {
-                                        isFocused = false
-                                        isEndTimeClicked.toggle()
-                                        isTimeClicked = false
-                                        isDateClicked = false
-                                        isRepeatClicked = false
-                                        sheetManager.present()
-                                        
-                                    }
-                                } )
-                                ActionButton(imageName: !isRepeatClicked ? "repeat.circle" : "repeat.circle.fill", action: {
-                                    withAnimation(.easeOut) {
-                                        isFocused = false
-                                        isRepeatClicked.toggle()
-                                        isDateClicked = false
-                                        isEndTimeClicked = false
-                                        isTimeClicked = false
-                                        sheetManager.present()
-                                    }
-                                })
-                            }.frame(maxWidth:.infinity,alignment: .leading)
-                            .padding()
-                        }
-                    VStack(spacing:5){
-                        HStack{
-                            Text("Date")
-                                .foregroundStyle(.secondary)
-                            Spacer()
-                            if !date.isEmpty{
-                                Text(DateFormatterModel.shared.formatDate(self.date)!)
-                                    .foregroundStyle(.secondary)
-                                
-                            }
-                        }
-                     
-                        HStack{
-                            Text("Time")
-                                .foregroundStyle(.secondary)
-                            Spacer()
-                            if !time.isEmpty{
-                                Text(time)
-                                    .foregroundStyle(.secondary)
-                                
-                            }
-                        }
-             
-                        HStack{
-                            Text("End Time")
-                                .foregroundStyle(.secondary)
-                            Spacer()
-                            if !endTime.isEmpty{
-                                Text(endTime)
-                                    .foregroundStyle(.secondary)
-                                
-                            }
-                        }
-                       
-                        HStack{
-                            Text("Repeat")
-                                .foregroundStyle(.secondary)
-                            Spacer()
-                            if !repeatCycle.isEmpty{
-                                Text(self.repeatCycle)
-                                    .foregroundStyle(.secondary)
-                                
-                            }
-                        }
-                        
-                    }
-                    .padding([.top,.bottom,.leading,.trailing],10)
-                }
-           
             
+            VStack{
+                UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20,topTrailing: 20))
+                    .frame(height: 30)
+                    .foregroundStyle(Color(hex: viewModel.model.color))
+                    .overlay {
+                        HStack(spacing:10){
+                            ActionButton(imageName: !isDateClicked ? "calendar.circle" : "calendar.circle.fill" ,  action: {
+                                withAnimation(.bouncy) {
+                                    isDateClicked.toggle()
+                                    isFocused = false
+                                    isTimeClicked = false
+                                    isEndTimeClicked = false
+                                    isRepeatClicked = false
+                                    sheetManager.present()
+                                }})
+                            
+                            ActionButton(imageName: !isTimeClicked ? "clock.circle" : "clock.circle.fill" ,action:{
+                                withAnimation(.easeOut) {
+                                    isTimeClicked.toggle()
+                                    isDateClicked = false
+                                    isFocused = false
+                                    isEndTimeClicked = false
+                                    isRepeatClicked = false
+                                    sheetManager.present()
+                                }
+                            })
+                            ActionButton(imageName: !isEndTimeClicked ? "stopwatch" :"stopwatch.fill", action:{
+                                withAnimation(.easeOut) {
+                                    isEndTimeClicked.toggle()
+                                    isTimeClicked = false
+                                    isDateClicked = false
+                                    isRepeatClicked = false
+                                    isFocused = false
+                                    sheetManager.present()
+                                    
+                                }
+                            } )
+                            ActionButton(imageName: !isRepeatClicked ? "repeat.circle" : "repeat.circle.fill", action: {
+                                withAnimation(.easeOut) {
+                                    isRepeatClicked.toggle()
+                                    isDateClicked = false
+                                    isEndTimeClicked = false
+                                    isTimeClicked = false
+                                    isFocused = false
+                                    sheetManager.present()
+                                }
+                            })
+                        }.frame(maxWidth:.infinity,alignment: .leading)
+                            .padding()
+                    }
+                VStack(spacing:5){
+                    HStack{
+                        Text("Date")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        if !date.isEmpty{
+                            Text(DateFormatterModel.shared.formatDate(self.date)!)
+                                .foregroundStyle(.secondary)
+                            
+                        }
+                    }
+                    
+                    HStack{
+                        Text("Time")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        if !time.isEmpty{
+                            Text(time)
+                                .foregroundStyle(.secondary)
+                            
+                        }
+                    }
+                    
+                    HStack{
+                        Text("End Time")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        if !endTime.isEmpty{
+                            Text(endTime)
+                                .foregroundStyle(.secondary)
+                            
+                        }
+                    }
+                    
+                    HStack{
+                        Text("Repeat")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        if !repeatCycle.isEmpty{
+                            Text(self.repeatCycle)
+                                .foregroundStyle(.secondary)
+                            
+                        }
+                    }
+                    
+                }
+                .padding([.top,.bottom,.leading,.trailing],10)
+            }
         }
         .frame(height: 160, alignment: .topLeading)
         .background(
@@ -250,7 +247,6 @@ struct AddRemainderV2: View {
     var title:some View {
         HStack {
             Image(systemName: "square.and.pencil")
-            
             TextField("", text: $name)
                 .foregroundStyle(Color(hex: viewModel.model.color))
                 .focused($isFocused)
@@ -304,9 +300,19 @@ struct AddRemainderV2: View {
                     .padding()
                 }
             ForEach($viewModel.subTasks){ $subTask in
-                SubTaskItem(name: $subTask.subTaskName, color: viewModel.model.color)
+                HStack{
+                    Button {
+                        viewModel.deleteSubTask(subtask: subTask)} label: {
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .frame(width: 10, height: 10)
+                                .foregroundStyle(.gray)
+                        }
+                    SubTaskItem(name: $subTask.subTaskName, isCompleted: $subTask.isCompleted, isEditing: true, color: viewModel.model.color)
+                }
             }
-            .padding([.leading,.bottom],10)
+            .padding(.bottom,5)
+            .padding(.leading,10)
         }
         .frame(minHeight: 150,alignment: .topLeading)
         .background(
@@ -343,21 +349,40 @@ struct ActionButton: View {
 
 struct SubTaskItem:View{
     @Binding var name:String
-    @State private var isChecked = false
+    @Binding var isCompleted:Bool
+    @State private var isTapped = false
+    var isEditing:Bool
     var color:String
+    
     var body: some View{
         HStack{
             Button(action: {
-                isChecked.toggle()
-                print(name)
+                if isEditing{
+                    isTapped.toggle()
+                }
+                else{
+                    isCompleted.toggle()
+                    isTapped.toggle()
+                    Task{
+                        await PersistenceController.shared.save()
+                    }
+                }
             }, label: {
-                Image(systemName: !isChecked ? "square" : "square.fill")
+                Image(systemName: !isTapped ? "square" : "square.fill")
                     .foregroundStyle(Color(hex: color))
             })
-            TextField("", text: $name)
-                .placeholder(when: name.isEmpty, alignment: .topLeading) {
-                    Text("Add a subTask...").foregroundColor(.secondary)
-                }
-        }
+            if isEditing{
+                TextField("", text:  $name)
+                    .placeholder(when: name.isEmpty, alignment: .topLeading) {
+                        Text("Add a subTask...").foregroundColor(.secondary)
+                    }
+            }
+            else{
+                Text(name)
+            }
+        }.frame(maxWidth: .infinity,alignment: .leading)
+            .onAppear {
+                isTapped = isCompleted
+            }
     }
 }
