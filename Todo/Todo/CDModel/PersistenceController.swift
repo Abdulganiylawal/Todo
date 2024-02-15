@@ -38,7 +38,6 @@ struct PersistenceController {
                           try context.save()
                           continuation.resume()
                       } catch {
-                  
                           continuation.resume(throwing: error as! Never)
                       }
                   }

@@ -9,18 +9,26 @@ import Foundation
 import Combine
 import CoreData
 class RemainderViewModel: ObservableObject{
-    
     var context:NSManagedObjectContext = PersistenceController.shared.container.viewContext
     @Published var remainders:[CDRemainder] = [CDRemainder]()
+    @Published var subTasks:[CDRemainderSubTasks] = [CDRemainderSubTasks]()
+    private var remainder:CDRemainder? = nil
     let model:CDList
     init(model: CDList) {
         self.model = model
-       todayRemainders()
+        todayRemainders()
     }
+    
     @MainActor func addRemainders(title:String,notes:String,repeatcycle:String,date:String,time:String?,duration:Double) async{
-        let remainder = CDRemainder(context: PersistenceController.shared.container.viewContext, title: title, notes: notes)
-        remainder.schedule_ = CDRemainderSchedule(repeatCycle: repeatcycle, date: date, time: time ??  DateFormatterModel.shared.formattedDatesString(from: Date(), isTime: true), duration: duration, context: PersistenceController.shared.container.viewContext)
-        remainder.list = model
+        remainder = CDRemainder(context: PersistenceController.shared.container.viewContext, title: title, notes: notes)
+        remainder!.schedule_ = CDRemainderSchedule(repeatCycle: repeatcycle, date: date, time: time ??  DateFormatterModel.shared.formattedDatesString(from: Date(), isTime: true), duration: duration, context: PersistenceController.shared.container.viewContext)
+        remainder!.list = model
+        subTasks.forEach {
+            subTask in
+            if !subTask.subTaskName.isEmpty{
+                subTask.remainders = remainder
+            }
+        }
         await PersistenceController.shared.save()
         let currentDate = Date()
         let selectedDate = DateFormatterModel.shared.stringDateToDate(from: date, format: "dd/MM/yyyy")
@@ -30,6 +38,12 @@ class RemainderViewModel: ObservableObject{
         }else{
             scheduleRemainders()
         }
+        
+    }
+    
+    func addSubTask(){
+        let subTask = CDRemainderSubTasks(context: PersistenceController.shared.container.viewContext, subTaskName: "")
+        subTasks.append(subTask)
     }
     
     func todayRemainders(){
@@ -45,6 +59,9 @@ class RemainderViewModel: ObservableObject{
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2,predicate3])
         do{
             remainders = try context.fetch(request)
+            //            remainders.forEach { print($0.subTasks.forEach({ print($0.subTaskName)
+            //            }))
+            //            }
         }catch{
             print(error.localizedDescription)
         }

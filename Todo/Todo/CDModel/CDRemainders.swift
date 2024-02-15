@@ -41,8 +41,22 @@ extension CDRemainder{
         }
     }
     
+    var subTasks:Set<CDRemainderSubTasks>{
+        get{
+            (subTask as? Set<CDRemainderSubTasks>) ?? []
+        }
+        set{
+            subTask = newValue as NSSet
+        }
+    }
+    
     static func delete(remainder:CDRemainder){
         guard let context = remainder.managedObjectContext else {return}
+        
+        for subTask in remainder.subTasks{
+            CDRemainderSubTasks.delete(subTask: subTask)
+        }
+        
         CDRemainderSchedule.delete(schedule: remainder.schedule_!)
         context.delete(remainder)
         Task{

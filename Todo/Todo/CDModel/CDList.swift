@@ -61,7 +61,6 @@ extension CDList{
         return request
     }
 
-    
     static func delete(list: CDList) async{
         guard let context = list.managedObjectContext else { return }
         
@@ -74,12 +73,9 @@ extension CDList{
         }
     }
     
-    
     public override func awakeFromInsert() {
         self.id_ = UUID()
     }
-    
-
     
     convenience init(name:String,color:String,image:String,context:NSManagedObjectContext) {
         self.init(context: context)
@@ -87,6 +83,4 @@ extension CDList{
         self.color = color
         self.image = image
     }
-    
-    
 }

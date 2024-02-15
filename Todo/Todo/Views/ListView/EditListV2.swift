@@ -38,6 +38,7 @@ struct EditListV2: View {
                     Text("Save")
                 }.disabled(name.isEmpty)
             }.padding()
+            
             RoundedRectangle(cornerRadius: 20,style: .continuous)
                 .stroke(Color.gray, lineWidth: 0.5)
                 .background(
@@ -50,17 +51,22 @@ struct EditListV2: View {
                     VStack{
                         Image(systemName: self.icon ?? "list.bullet")
                             .resizable()
-                            .frame(width: 20, height: 20)
-                            .padding()
                             .foregroundColor(Color(hex: self.color ?? "D83F31"))
+                            .frame(width: 20, height: 20)
+                            .padding(.top,30)
+                        Spacer()
                         title
+                        Spacer()
                         Divider()
                             .foregroundStyle(Color.white)
                             .padding(.bottom,5)
+                        Spacer()
                         colors
                             .padding(.bottom,5)
+                        Spacer()
                         icons
                             .padding(.bottom,30)
+                        Spacer()
                     }
                     .padding([.leading,.trailing],40)
                     .onAppear(perform: {
@@ -93,12 +99,16 @@ struct EditListV2: View {
     }
     
     var colors:some View{
-        LazyVGrid(columns: resultGridLayout,spacing: 10, content: {
-            ForEach(popularColors, id: \.self) { color in
-                ColorCapsule(color: color, selectedColor: $color)
-            }
-        })
-        .padding()
+        ScrollView(.vertical,showsIndicators: false){
+            LazyVGrid(columns: resultGridLayout,spacing: 8, content: {
+                ForEach(popularColors, id: \.self) { color in
+                    ColorCapsule(color: color, selectedColor: $color)
+                }
+               
+            })
+            .padding([.top,.bottom],15)
+            .padding([.leading,.trailing],1)
+        }
         .background(
             RoundedRectangle(cornerRadius: 20,style: .continuous)
                 .fill(.ultraThinMaterial)
@@ -107,12 +117,15 @@ struct EditListV2: View {
     
     var icons:some View{
         
-        LazyVGrid(columns: resultGridLayout,spacing: 10, content: {
-            ForEach(todoIcons, id: \.self) { icon in
-                IconView(icon: icon, selectedIcon: $icon, color: $color)
-            }
-        })
-        .padding()
+        ScrollView(.vertical,showsIndicators: false){
+            LazyVGrid(columns: resultGridLayout,spacing: 8, content: {
+                ForEach(todoIcons, id: \.self) { icon in
+                    IconView(icon: icon, selectedIcon: $icon, color: $color)
+                }
+            })
+            .padding([.top,.bottom],15)
+            .padding([.leading,.trailing],1)
+        }
         .background(
             RoundedRectangle(cornerRadius: 20,style: .continuous)
                 .fill(.ultraThinMaterial)

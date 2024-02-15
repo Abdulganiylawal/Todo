@@ -33,10 +33,15 @@ struct AddRemainderV2: View {
                     
                     Divider()
                         .foregroundStyle(Color.white)
-                    buttons
-                        .padding(.bottom,5)
                     notes
-                        .padding(.bottom,5)
+                        .padding(.bottom,10)
+                    
+                    if !name.isEmpty {
+                        buttons
+                            .padding(.bottom,10
+                        )
+                    }
+                    subTask
                 }
                 .padding()
                 Spacer()
@@ -97,7 +102,7 @@ struct AddRemainderV2: View {
                 Button(action: {
                     isFocused = true
                     dismiss()}, label: {
-                     Image(systemName: "xmark")
+                        Image(systemName: "xmark")
                             .resizable()
                             .frame(width:15, height: 15)
                     })
@@ -119,7 +124,7 @@ struct AddRemainderV2: View {
                         durationTime = DateFormatterModel.shared.timeDifference(from: time, to: endTime) ?? 0.0
                         await viewModel.addRemainders(title: name, notes: desc , repeatcycle: repeatCycle, date: date, time: time, duration: durationTime )
                     }
-                   
+                    
                 }, label: {
                     Text("Create")
                         .foregroundStyle(name.isEmpty ? .red : Color(hex: viewModel.model.color))
@@ -131,53 +136,59 @@ struct AddRemainderV2: View {
     
     var buttons: some View{
         VStack {
-            if !name.isEmpty {
-                VStack(spacing:15){
-                    HStack(spacing:10){
-                        ActionButton(imageName: !isDateClicked ? "calendar.circle" : "calendar.circle.fill" ,  action: {
-                            withAnimation(.bouncy) {
-                                isFocused = false
-                                isDateClicked.toggle()
-                                isTimeClicked = false
-                                isEndTimeClicked = false
-                                isRepeatClicked = false
-                                sheetManager.present()
-                            }})
-                        
-                        ActionButton(imageName: !isTimeClicked ? "clock.circle" : "clock.circle.fill" ,action:{
-                            withAnimation(.easeOut) {
-                                isFocused = false
-                                isTimeClicked.toggle()
-                                isDateClicked = false
+          
+            VStack{
+                    UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20,topTrailing: 20))
+                        .frame(height: 30)
+                        .foregroundStyle(Color(hex: viewModel.model.color))
+                        .overlay {
+                            HStack(spacing:10){
+                                ActionButton(imageName: !isDateClicked ? "calendar.circle" : "calendar.circle.fill" ,  action: {
+                                    withAnimation(.bouncy) {
+                                        isFocused = false
+                                        isDateClicked.toggle()
+                                        isTimeClicked = false
+                                        isEndTimeClicked = false
+                                        isRepeatClicked = false
+                                        sheetManager.present()
+                                    }})
                                 
-                                isEndTimeClicked = false
-                                isRepeatClicked = false
-                                sheetManager.present()
-                            }
-                        })
-                        ActionButton(imageName: !isEndTimeClicked ? "stopwatch" :"stopwatch.fill", action:{
-                            withAnimation(.easeOut) {
-                                isFocused = false
-                                isEndTimeClicked.toggle()
-                                isTimeClicked = false
-                                isDateClicked = false
-                                isRepeatClicked = false
-                                sheetManager.present()
-                                
-                            }
-                        } )
-                        ActionButton(imageName: !isRepeatClicked ? "repeat.circle" : "repeat.circle.fill", action: {
-                            withAnimation(.easeOut) {
-                                isFocused = false
-                                isRepeatClicked.toggle()
-                                isDateClicked = false
-                                isEndTimeClicked = false
-                                isTimeClicked = false
-                                sheetManager.present()
-                            }
-                        })
-                    }.frame(maxWidth:.infinity,alignment: .trailing)
-                    VStack{
+                                ActionButton(imageName: !isTimeClicked ? "clock.circle" : "clock.circle.fill" ,action:{
+                                    withAnimation(.easeOut) {
+                                        isFocused = false
+                                        isTimeClicked.toggle()
+                                        isDateClicked = false
+                                        
+                                        isEndTimeClicked = false
+                                        isRepeatClicked = false
+                                        sheetManager.present()
+                                    }
+                                })
+                                ActionButton(imageName: !isEndTimeClicked ? "stopwatch" :"stopwatch.fill", action:{
+                                    withAnimation(.easeOut) {
+                                        isFocused = false
+                                        isEndTimeClicked.toggle()
+                                        isTimeClicked = false
+                                        isDateClicked = false
+                                        isRepeatClicked = false
+                                        sheetManager.present()
+                                        
+                                    }
+                                } )
+                                ActionButton(imageName: !isRepeatClicked ? "repeat.circle" : "repeat.circle.fill", action: {
+                                    withAnimation(.easeOut) {
+                                        isFocused = false
+                                        isRepeatClicked.toggle()
+                                        isDateClicked = false
+                                        isEndTimeClicked = false
+                                        isTimeClicked = false
+                                        sheetManager.present()
+                                    }
+                                })
+                            }.frame(maxWidth:.infinity,alignment: .leading)
+                            .padding()
+                        }
+                    VStack(spacing:5){
                         HStack{
                             Text("Date")
                                 .foregroundStyle(.secondary)
@@ -188,7 +199,7 @@ struct AddRemainderV2: View {
                                 
                             }
                         }
-                        Spacer()
+                     
                         HStack{
                             Text("Time")
                                 .foregroundStyle(.secondary)
@@ -199,7 +210,7 @@ struct AddRemainderV2: View {
                                 
                             }
                         }
-                        Spacer()
+             
                         HStack{
                             Text("End Time")
                                 .foregroundStyle(.secondary)
@@ -210,7 +221,7 @@ struct AddRemainderV2: View {
                                 
                             }
                         }
-                        Spacer()
+                       
                         HStack{
                             Text("Repeat")
                                 .foregroundStyle(.secondary)
@@ -221,21 +232,19 @@ struct AddRemainderV2: View {
                                 
                             }
                         }
-                        Spacer()
+                        
                     }
-                    .frame(height: 100, alignment: .topLeading)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 20,style: .continuous)
-                            .fill(.thinMaterial)
-                            .shadow(color: .black, radius: 0.5)
-                    )
+                    .padding([.top,.bottom,.leading,.trailing],10)
                 }
-            } else {
-                EmptyView()
-            }
+           
             
         }
+        .frame(height: 160, alignment: .topLeading)
+        .background(
+            RoundedRectangle(cornerRadius: 20,style: .continuous)
+                .fill(.thinMaterial)
+                .shadow(color: .black, radius: 0.5)
+        )
         
     }
     var title:some View {
@@ -279,7 +288,32 @@ struct AddRemainderV2: View {
                     .fill(.thinMaterial)
                     .shadow(color: .black, radius: 0.5)
             )
-        
+    }
+    
+    var subTask:some View{
+        VStack(alignment:.leading){
+            UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20,topTrailing: 20))
+                .frame(height: 30)
+                .foregroundStyle(Color(hex: viewModel.model.color))
+                .overlay(alignment:.leading) {
+                    Button(action: {viewModel.addSubTask()}, label: {
+                        Label("Add SubTask", systemImage: "plus.circle")
+                            .foregroundStyle(.black)
+                            .fontWeight(.bold)
+                    })
+                    .padding()
+                }
+            ForEach($viewModel.subTasks){ $subTask in
+                SubTaskItem(name: $subTask.subTaskName, color: viewModel.model.color)
+            }
+            .padding([.leading,.bottom],10)
+        }
+        .frame(minHeight: 150,alignment: .topLeading)
+        .background(
+            RoundedRectangle(cornerRadius: 20,style: .continuous)
+                .fill(.thinMaterial)
+                .shadow(color: .black, radius: 0.5)
+        )
     }
 }
 
@@ -295,16 +329,35 @@ struct AddRemainderV2_Previews: PreviewProvider {
 struct ActionButton: View {
     let imageName: String
     let action: () -> Void
-    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         Button(action: action, label: {
             Image(systemName: imageName)
                 .resizable()
                 .frame(width: 20,height: 20)
-                .foregroundStyle(Color(hex: "F5F8F9"))
+                .foregroundStyle(.black)
         }
         )
     }
 }
 
+struct SubTaskItem:View{
+    @Binding var name:String
+    @State private var isChecked = false
+    var color:String
+    var body: some View{
+        HStack{
+            Button(action: {
+                isChecked.toggle()
+                print(name)
+            }, label: {
+                Image(systemName: !isChecked ? "square" : "square.fill")
+                    .foregroundStyle(Color(hex: color))
+            })
+            TextField("", text: $name)
+                .placeholder(when: name.isEmpty, alignment: .topLeading) {
+                    Text("Add a subTask...").foregroundColor(.secondary)
+                }
+        }
+    }
+}

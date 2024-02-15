@@ -27,10 +27,13 @@ struct EditRemainder: View {
                     
                     Divider()
                         .foregroundStyle(Color.white)
-                    buttons
-                        .padding(.bottom,5)
                     notes
-                        .padding(.bottom,5)
+                        .padding(.bottom,10)
+                    if !name.isEmpty {
+                        buttons
+                            .padding(.bottom,10
+                        )
+                    }
                 }
                 .padding()
             }
@@ -90,7 +93,7 @@ struct EditRemainder: View {
                 }
             }
         }
-        .navigationTitle("Adding a task")
+        .navigationTitle("Editing a task")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
@@ -136,53 +139,58 @@ struct EditRemainder: View {
     
     var buttons: some View{
         VStack {
-            if !name.isEmpty {
-                VStack(spacing:15){
-                    HStack(spacing:10){
-                        ActionButton(imageName: date.isEmpty ? "calendar.circle" : "calendar.circle.fill" ,  action: {
-                            withAnimation(.bouncy) {
-                                isFocused = false
-                                isDateClicked.toggle()
-                                isTimeClicked = false
-                                isEndTimeClicked = false
-                                isRepeatClicked = false
-                                sheetManager.present()
-                            }})
-                        
-                        ActionButton(imageName: time.isEmpty ? "clock.circle" : "clock.circle.fill" ,action:{
-                            withAnimation(.easeOut) {
-                                isFocused = false
-                                isTimeClicked.toggle()
-                                isDateClicked = false
+            VStack(alignment:.leading){
+                    UnevenRoundedRectangle(cornerRadii: .init(topLeading: 20,topTrailing: 20))
+                        .frame(height: 30)
+                        .foregroundStyle(Color(hex: remainder.list!.color))
+                        .overlay(alignment:.leading) {
+                            HStack(spacing:10){
+                                ActionButton(imageName: date.isEmpty ? "calendar.circle" : "calendar.circle.fill" ,  action: {
+                                    withAnimation(.bouncy) {
+                                        isFocused = false
+                                        isDateClicked.toggle()
+                                        isTimeClicked = false
+                                        isEndTimeClicked = false
+                                        isRepeatClicked = false
+                                        sheetManager.present()
+                                    }})
                                 
-                                isEndTimeClicked = false
-                                isRepeatClicked = false
-                                sheetManager.present()
-                            }
-                        })
-                        ActionButton(imageName: endTime.isEmpty ? "stopwatch" :"stopwatch.fill", action:{
-                            withAnimation(.easeOut) {
-                                isFocused = false
-                                isEndTimeClicked.toggle()
-                                isTimeClicked = false
-                                isDateClicked = false
-                                isRepeatClicked = false
-                                sheetManager.present()
-                                
-                            }
-                        } )
-                        ActionButton(imageName: repeatCycle.isEmpty ? "repeat.circle" : "repeat.circle.fill", action: {
-                            withAnimation(.easeOut) {
-                                isFocused = false
-                                isRepeatClicked.toggle()
-                                isDateClicked = false
-                                isEndTimeClicked = false
-                                isTimeClicked = false
-                                sheetManager.present()
-                            }
-                        })
-                    }.frame(maxWidth:.infinity,alignment: .trailing)
-                    VStack{
+                                ActionButton(imageName: time.isEmpty ? "clock.circle" : "clock.circle.fill" ,action:{
+                                    withAnimation(.easeOut) {
+                                        isFocused = false
+                                        isTimeClicked.toggle()
+                                        isDateClicked = false
+                                        
+                                        isEndTimeClicked = false
+                                        isRepeatClicked = false
+                                        sheetManager.present()
+                                    }
+                                })
+                                ActionButton(imageName: endTime.isEmpty ? "stopwatch" :"stopwatch.fill", action:{
+                                    withAnimation(.easeOut) {
+                                        isFocused = false
+                                        isEndTimeClicked.toggle()
+                                        isTimeClicked = false
+                                        isDateClicked = false
+                                        isRepeatClicked = false
+                                        sheetManager.present()
+                                        
+                                    }
+                                } )
+                                ActionButton(imageName: repeatCycle.isEmpty ? "repeat.circle" : "repeat.circle.fill", action: {
+                                    withAnimation(.easeOut) {
+                                        isFocused = false
+                                        isRepeatClicked.toggle()
+                                        isDateClicked = false
+                                        isEndTimeClicked = false
+                                        isTimeClicked = false
+                                        sheetManager.present()
+                                    }
+                                })
+                            }.frame(maxWidth:.infinity,alignment: .leading)
+                            .padding()
+                        }
+                    VStack(spacing:5){
                         HStack{
                             Text("Date")
                                 .foregroundStyle(.secondary)
@@ -193,7 +201,7 @@ struct EditRemainder: View {
                                 
                             }
                         }
-                        Spacer()
+                     
                         HStack{
                             Text("Time")
                                 .foregroundStyle(.secondary)
@@ -204,7 +212,7 @@ struct EditRemainder: View {
                                 
                             }
                         }
-                        Spacer()
+             
                         HStack{
                             Text("End Time")
                                 .foregroundStyle(.secondary)
@@ -215,7 +223,7 @@ struct EditRemainder: View {
                                 
                             }
                         }
-                        Spacer()
+                       
                         HStack{
                             Text("Repeat")
                                 .foregroundStyle(.secondary)
@@ -226,23 +234,19 @@ struct EditRemainder: View {
                                 
                             }
                         }
-                        Spacer()
+                        
                     }
-                    .frame(height: 100, alignment: .topLeading)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 20,style: .continuous)
-                            .fill(.thinMaterial)
-                            .shadow(color: .black, radius: 0.5)
-                    )
-                    Divider()
-                        .foregroundStyle(Color.white)
+                    .padding([.top,.bottom,.leading,.trailing],10)
                 }
-            } else {
-                EmptyView()
-            }
+           
             
         }
+        .frame(height: 160, alignment: .topLeading)
+        .background(
+            RoundedRectangle(cornerRadius: 20,style: .continuous)
+                .fill(.thinMaterial)
+                .shadow(color: .black, radius: 0.5)
+        )
         
     }
     var title:some View {
