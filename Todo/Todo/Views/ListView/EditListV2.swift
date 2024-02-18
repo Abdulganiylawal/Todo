@@ -32,8 +32,11 @@ struct EditListV2: View {
                     Task{
                          await PersistenceController.shared.save()
                      }
-                    reloadFlag.toggle()
-                    sheetManager.dismiss()
+                    withAnimation(.spring) {
+                        reloadFlag.toggle()
+                        sheetManager.dismiss()
+                    }
+                  
                 } label: {
                     Text("Save")
                 }.disabled(name.isEmpty)
@@ -75,6 +78,7 @@ struct EditListV2: View {
                     
                 }
         }
+        .transition(.moveAndFade)
         .onAppear(perform: {
             self.color = list.color_
             self.icon = list.image_

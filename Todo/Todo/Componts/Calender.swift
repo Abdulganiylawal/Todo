@@ -23,7 +23,9 @@ struct calender: View {
                     .overlay {
                         VStack(alignment:.trailing){
                             Button(action: {
-                                didClose()
+                                withAnimation(.spring) {
+                                    didClose()
+                                }
                             }, label: {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.title2)
@@ -47,7 +49,7 @@ struct calender: View {
                     }
                     .padding()
         }
-        .transition(.move(edge: .bottom))
+        .transition(.moveAndFade)
         .frame(width: 400)
         .frame(minHeight: 500,maxHeight: 500)
     }

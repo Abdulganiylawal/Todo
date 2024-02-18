@@ -18,20 +18,19 @@ struct ListView: View {
 
    
     var body: some View {
-        VStack{
+        VStack(alignment:.leading){
             HStack(alignment: .top){
                 VStack(alignment: .leading)
                 {
-                    Image(systemName: icon)
-                        .padding(.bottom,1)
-                        .foregroundColor(Color(hex: color))
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .frame(width: 40, height: 40)
-
-                        .backgroundStyle1(cornerRadius: 10, opacity: 0.1)
+                            Image(systemName: icon)
+                                .padding(.bottom,1)
+                                .foregroundColor(Color(hex: color))
+                                .font(.title3)
+                                .fontWeight(.bold)
+                            
+                        
                     
-                    
+                        .frame(width: 40, height: 40,alignment: .leading)
                     Text(name)
                         .foregroundColor(Color(hex: "6e7b8b"))
                         .font(.body)
@@ -46,13 +45,15 @@ struct ListView: View {
             }
             
         }
+
         .padding()
         .padding(.vertical, 10)
         .frame(height:  90)
         .background(RoundedRectangle(cornerRadius: 20)
-
-            .fill(LinearGradient(colors: [Color(hex: "#acb7ae").opacity(0.15),Color(hex:  "#acb7ae").opacity(0.1)], startPoint: .topTrailing, endPoint: .bottomLeading))
-            .backgroundStyle1(cornerRadius: 20, opacity: 0.1)
+            .stroke(Color(hex: "#384358").opacity(0.5), lineWidth: 1)
+            .fill(LinearGradient(colors: [Color(hex:   "#384358").opacity(0.5),Color(hex:"#384358").opacity(0.2)], startPoint: .topTrailing, endPoint: .bottomLeading))
+            .shadow(radius: 10)
+//            .backgroundStyle1(cornerRadius: 20, opacity: 0.1)
         )
     }
 }

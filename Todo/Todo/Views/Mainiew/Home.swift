@@ -22,7 +22,7 @@ struct Home: View {
     @State private var reloadFlag = false
     let resultGridLayout = [GridItem(.flexible()),GridItem(.flexible())]
     @State private var selectedList:CDList? = nil
-    @FetchRequest(fetchRequest: CDList.fetch(), animation: .bouncy) var lists
+    @FetchRequest(fetchRequest: CDList.fetch(), animation: .snappy) var lists
     init(context:NSManagedObjectContext){
         self.context = context
         _model = StateObject(wrappedValue: ListViewManger(context: context))
@@ -32,8 +32,6 @@ struct Home: View {
         request.predicate = NSPredicate.all
         self._lists = FetchRequest(fetchRequest: request)
     }
-    
-    
     
     var body: some View {
         NavigationStack(path: $navigationManager.routes){
@@ -66,6 +64,11 @@ struct Home: View {
                             ForEach(lists,id: \.id) { list in
                                 NavigationLink(value: Route.remainderView(model: list)) {
                                     ListView(icon: list.image, name: list.name, color: list.color, count: ListEssModel.getRemainderCount(list: list))
+                                        .scrollTransition(.animated(.easeOut)) { view, phase in
+                                            view.blur(radius: phase.isIdentity ? 0 : 30);}
+                                        .scrollTransition(.animated(.easeOut)) { view, phase in
+                                            view.scaleEffect(phase.isIdentity ? 1 : 0.6)
+                                                         }
                                     
                                         .contextMenu {
                                             Group {
@@ -121,6 +124,7 @@ struct Home: View {
                             
                         }})
                 }
+                
                 VStack{
                     Spacer()
                     RoundedRectangle(cornerRadius: 30, style: .continuous)
@@ -137,10 +141,11 @@ struct Home: View {
                                 indicatorColor: .clear,
                                 indicatorSystemName: "plus",textAlignment: .globalCenter
                             )) {
-                                sheetManager.present()
-                                isEditing = false
-                                isAdding = true
-                              
+                                withAnimation(.spring) {
+                                    sheetManager.present()
+                                    isEditing = false
+                                    isAdding = true
+                                }
                             } label: {
                                 //                                Text("Add")
                             }
@@ -165,6 +170,7 @@ struct Home: View {
                             
                     }
             }
+    
         }
     }
 }

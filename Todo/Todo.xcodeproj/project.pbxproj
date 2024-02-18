@@ -15,7 +15,6 @@
 		10132CEB2AFC36D100B8DFAF /* ArraysOfIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10132CEA2AFC36D100B8DFAF /* ArraysOfIcons.swift */; };
 		102C3EB52AFA79A20037B238 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102C3EB42AFA79A20037B238 /* ListView.swift */; };
 		102C3EB72AFA82FF0037B238 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102C3EB62AFA82FF0037B238 /* Modifiers.swift */; };
-		102C3EB92AFA9EC40037B238 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 102C3EB82AFA9EC40037B238 /* Assets.xcassets */; };
 		102C3EBB2AFAB9050037B238 /* RemainderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102C3EBA2AFAB9050037B238 /* RemainderRow.swift */; };
 		102DE48E2AF3EC4B00AE9BD4 /* repeatCycleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102DE48D2AF3EC4B00AE9BD4 /* repeatCycleManager.swift */; };
 		1033288D2B029D540093CEEA /* ListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1033288C2B029D540093CEEA /* ListTest.swift */; };
@@ -66,6 +65,7 @@
 		10E0E87C2ABA0F0300E2359D /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E0E87B2ABA0F0300E2359D /* Styles.swift */; };
 		10F0B7442B7E05F400750F13 /* CDRemainderSubTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0B7432B7E05F400750F13 /* CDRemainderSubTask.swift */; };
 		10F0B7462B7E52F100750F13 /* subTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F0B7452B7E52F100750F13 /* subTaskView.swift */; };
+		10F0B74A2B7E9A4900750F13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10F0B7492B7E9A4900750F13 /* Assets.xcassets */; };
 		10F9A4F22AC9C50E005B5231 /* CompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F9A4F12AC9C50E005B5231 /* CompletedView.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,7 +88,6 @@
 		10132CEA2AFC36D100B8DFAF /* ArraysOfIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArraysOfIcons.swift; sourceTree = "<group>"; };
 		102C3EB42AFA79A20037B238 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		102C3EB62AFA82FF0037B238 /* Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifiers.swift; sourceTree = "<group>"; };
-		102C3EB82AFA9EC40037B238 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		102C3EBA2AFAB9050037B238 /* RemainderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderRow.swift; sourceTree = "<group>"; };
 		102DE48D2AF3EC4B00AE9BD4 /* repeatCycleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repeatCycleManager.swift; sourceTree = "<group>"; };
 		1033288C2B029D540093CEEA /* ListTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTest.swift; sourceTree = "<group>"; };
@@ -141,6 +140,7 @@
 		10E0E87B2ABA0F0300E2359D /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		10F0B7432B7E05F400750F13 /* CDRemainderSubTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDRemainderSubTask.swift; sourceTree = "<group>"; };
 		10F0B7452B7E52F100750F13 /* subTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subTaskView.swift; sourceTree = "<group>"; };
+		10F0B7492B7E9A4900750F13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../../../Downloads/AppIcons (2)/Assets.xcassets"; sourceTree = "<group>"; };
 		10F9A4F12AC9C50E005B5231 /* CompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,7 +207,7 @@
 				104ECFE62AB627C40083B3D6 /* ViewModel */,
 				104ECFC32AB6273C0083B3D6 /* Info.plist */,
 				104ECFF32AB6370A0083B3D6 /* GoogleService-Info.plist */,
-				102C3EB82AFA9EC40037B238 /* Assets.xcassets */,
+				10F0B7492B7E9A4900750F13 /* Assets.xcassets */,
 				104ECFEA2AB6285D0083B3D6 /* Services */,
 				104ECFBE2AB6273C0083B3D6 /* Persistence.swift */,
 				105936CC2AFBD50300823D41 /* Componts */,
@@ -519,7 +519,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				104ECFBD2AB6273C0083B3D6 /* Preview Assets.xcassets in Resources */,
-				102C3EB92AFA9EC40037B238 /* Assets.xcassets in Resources */,
+				10F0B74A2B7E9A4900750F13 /* Assets.xcassets in Resources */,
 				104ECFF42AB6370A0083B3D6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -754,7 +754,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ladulghanneey.Todo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ladulghanneey.swiftTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -785,7 +785,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ladulghanneey.Todo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ladulghanneey.swiftTask;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

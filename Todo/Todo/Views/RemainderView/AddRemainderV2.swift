@@ -37,9 +37,9 @@ struct AddRemainderV2: View {
                         .padding(.bottom,10)
                     
                     if !name.isEmpty {
-                        buttons
-                            .padding(.bottom,10
-                            )
+                            buttons
+                            .padding(.bottom,10)
+                        
                     }
                     subTask
                 }
@@ -56,17 +56,17 @@ struct AddRemainderV2: View {
         .overlay(alignment: .bottom) {
             if sheetManager.action.isPresented{
                 if isDateClicked{
-                    withAnimation {
+                    withAnimation(.spring) {
                         calender(didClose: {
-                            isFocused.toggle()
+                            isFocused = false
                             isDateClicked.toggle()
                             sheetManager.dismiss()}, date: $date, color: viewModel.model.color)
                     }
                 }
                 if isTimeClicked{
-                    withAnimation {
+                    withAnimation(.spring) {
                         TimeView(didClose: {
-                            isFocused.toggle()
+                            isFocused = false
                             isTimeClicked.toggle()
                             sheetManager.dismiss()}, time: $time, color: viewModel.model.color)
                         .padding()
@@ -74,9 +74,9 @@ struct AddRemainderV2: View {
                     }
                 }
                 if isRepeatClicked{
-                    withAnimation {
+                    withAnimation(.spring) {
                         Repeat(didClose: {
-                            isFocused.toggle()
+                            isFocused = false
                             isRepeatClicked.toggle()
                             sheetManager.dismiss()}, repeatCycle: $repeatCycle, color: viewModel.model.color)
                         .padding()
@@ -84,9 +84,9 @@ struct AddRemainderV2: View {
                     }
                 }
                 if isEndTimeClicked{
-                    withAnimation {
+                    withAnimation(.spring) {
                         Duration(didClose: {
-                            isFocused.toggle()
+                            isFocused = false
                             isEndTimeClicked.toggle()
                             sheetManager.dismiss()}, time: $endTime, color: viewModel.model.color)
                         .padding()

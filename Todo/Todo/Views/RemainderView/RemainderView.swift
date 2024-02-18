@@ -36,6 +36,7 @@ struct RemainderView: View{
             VStack{
                 Spacer()
                 RemaindersTab(selectedTab: $selectedTab, isClicked: $isClicked, sheetManager: .constant(sheetManager), model: viewModel,colors: model.color)
+            
             }
                 .navigationBarTitleDisplayMode(.inline)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -69,7 +70,13 @@ struct RemainderView: View{
         ForEach(viewModel.remainders,id: \.self) { remainder in
          
             RemainderRow(remainder: remainder, color: model.color, duration:remainder.schedule_?.duration ?? 0.0)
+            
                 .padding(.bottom,10)
+                .scrollTransition(.animated(.easeOut)) { view, phase in
+                    view.blur(radius: phase.isIdentity ? 0 : 30);}
+                .scrollTransition(.animated(.easeOut)) { view, phase in
+                    view.scaleEffect(phase.isIdentity ? 1 : 0.6)
+                                 }
                 .contextMenu {
                         Group {
                             Button("Edit Remainders", action: {

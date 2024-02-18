@@ -26,8 +26,12 @@ struct RemaindersTab: View {
             .frame(width: 150,height: 45)
             .overlay {
                 HStack{
-                    Button(action:{selectedTab = .today
-                        model.todayRemainders()}
+                    Button(action:{
+                        withAnimation(.bouncy) {
+                            selectedTab = .today
+                        }
+                        model.todayRemainders()
+                    }
                     , label: {
                         Image(systemName: selectedTab != .today ? "sun.max" : "sun.max.circle.fill"  )
                             .resizable()
@@ -38,8 +42,14 @@ struct RemaindersTab: View {
                     .padding()
                     Spacer()
                    
-                    Button(action:{selectedTab = .scheduled
-                        model.scheduleRemainders()
+                    Button(action:{
+                        withAnimation(.bouncy) {
+                            selectedTab = .scheduled
+                        }
+                      
+                        
+                            model.scheduleRemainders()
+                        
                     }
                     , label: {
                         Image(systemName: selectedTab != .scheduled ? "calendar" : "calendar.circle.fill")

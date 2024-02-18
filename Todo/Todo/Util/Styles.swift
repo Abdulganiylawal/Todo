@@ -24,4 +24,18 @@ extension Color {
     }
 }
 
+extension AnyTransition {
+    static var moveAndFade: AnyTransition {
+        .asymmetric(
+                   insertion: .move(edge: .trailing).combined(with: .opacity),
+                   removal: .move(edge: .leading).combined(with: .opacity)
+               )
+    }
+    static var move: AnyTransition {
+        .asymmetric(
+                   insertion: .move(edge: .bottom).combined(with: .opacity),
+                   removal: .move(edge: .leading).combined(with: .opacity)
+               )
+    }
+}
 

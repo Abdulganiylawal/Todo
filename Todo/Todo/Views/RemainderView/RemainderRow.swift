@@ -51,20 +51,15 @@ struct RemainderRow: View {
                 }
                 Spacer()
                 if  remainder.isCompleted_{
-                        Text("Completed")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .padding(8)
-                            .background(.ultraThinMaterial)
-                            .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
-                         
+                            Text("Completed")
+                                .font(.caption)
+                                .foregroundStyle(Color.green)
+                                .padding(8)
+//
                 }
                 if !remainder.subTasks.isEmpty{
                     Button {
-                        isClicked.toggle()
-//                        remainder.subTasks.forEach({ item in
-//                            print(item.isCompleted)
-//                        })
+                            isClicked.toggle()
                     } label: {
                         HStack{
                             Text("\(remainder.subTasks.count)")
@@ -77,8 +72,8 @@ struct RemainderRow: View {
                         .font(.caption)
                         .foregroundStyle(Color(hex: remainder.list?.color ?? ""))
                         .padding(8)
-                        .background(.ultraThinMaterial)
-                        .backgroundStyle1(cornerRadius: 10, opacity: 0.4)
+                   
+                        
                      
                 }
             }.padding(0)
@@ -143,7 +138,6 @@ struct RemainderRow: View {
         .padding()
         .sheet(isPresented: $isClicked, content: {
             subTaskView(remainder: remainder)
-            
                 .presentationDragIndicator(.visible)
                 .presentationCornerRadius(16)
                 .presentationDetents([.height(200)])
@@ -151,10 +145,8 @@ struct RemainderRow: View {
         })
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(.ultraThinMaterial)
-                .backgroundStyle1(cornerRadius: 20, opacity: 0.4)
-                .customBackgroundForRemainderRow( colorscheme: colorScheme, color: color)
-        )
+                .stroke(Color(hex: color).opacity(0.3), lineWidth: 1)
+                    .fill(LinearGradient(colors: [Color(hex: color).opacity(0.15),Color(hex: color).opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing)))
     }
     
     func dateTimeFromString(dateString: String, timeString: String) -> Date? {

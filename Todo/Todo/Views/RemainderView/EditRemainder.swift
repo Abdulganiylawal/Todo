@@ -55,9 +55,9 @@ struct EditRemainder: View {
         .overlay(alignment: .bottom) {
             if sheetManager.action.isPresented{
                 if isDateClicked{
-                    withAnimation {
+                    withAnimation(.snappy){
                         calender(didClose: {
-                            isFocused.toggle()
+                            isFocused = false
                             isDateClicked.toggle()
                             sheetManager.dismiss()}, date: $date, color: remainder.list!.color)
                         .padding()
@@ -65,9 +65,9 @@ struct EditRemainder: View {
                     }
                 }
                 if isTimeClicked{
-                    withAnimation {
+                    withAnimation(.snappy){
                         TimeView(didClose: {
-                            isFocused.toggle()
+                            isFocused = false
                             isTimeClicked.toggle()
                             sheetManager.dismiss()}, time: $time, color: remainder.list!.color)
                         .padding()
@@ -75,9 +75,9 @@ struct EditRemainder: View {
                     }
                 }
                 if isRepeatClicked{
-                    withAnimation {
+                    withAnimation(.snappy) {
                         Repeat(didClose: {
-                            isFocused.toggle()
+                            isFocused = false
                             isRepeatClicked.toggle()
                             sheetManager.dismiss()}, repeatCycle: $repeatCycle, color:remainder.list!.color)
                         .padding()
@@ -85,9 +85,9 @@ struct EditRemainder: View {
                     }
                 }
                 if isEndTimeClicked{
-                    withAnimation {
+                    withAnimation(.snappy) {
                         Duration(didClose: {
-                            isFocused.toggle()
+                            isFocused = false
                             isEndTimeClicked.toggle()
                             sheetManager.dismiss()}, time: $endTime, color: remainder.list!.color)
                         .padding()

@@ -22,7 +22,9 @@ struct Repeat: View {
                 .overlay(content: {
                     VStack(alignment:.trailing){
                         Button(action: {
-                            didClose()
+                            withAnimation(.spring) {
+                                didClose()
+                            }
                         }, label: {
                             Image(systemName: "xmark.circle.fill")
                                 .font(.title2)
@@ -44,7 +46,7 @@ struct Repeat: View {
                     }
                 })
             }
-        .transition(.move(edge: .bottom))
+        .transition(.moveAndFade)
         .frame(height: 300)
     }
 }

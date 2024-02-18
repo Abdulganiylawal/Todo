@@ -75,13 +75,16 @@ struct GroupedTaskView: View {
             switch selector{
                 case .all, .completed:
                     allAndCompletedView
-                        
+                 
                 case .schedule:
                     scheduleView
+                
                        
                         .padding(0)
                 case .today:
                     todayView
+              
+                                         
                       
                         .padding(0)
             }
@@ -105,6 +108,12 @@ struct GroupedTaskView: View {
                     
                     ForEach(value){ remainder in
                         RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "")
+                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                view.blur(radius: phase.isIdentity ? 0 : 30);}
+                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                view.scaleEffect(phase.isIdentity ? 1 : 0.6)
+                                             }
+                            
                             .padding(.bottom,10)
                             .contextMenu {
                                 Button("Delete Remainders", action: {
@@ -141,6 +150,12 @@ struct GroupedTaskView: View {
                 Section {
                     ForEach(value){ (remainder:CDRemainder) in
                         RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "today")
+                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                view.blur(radius: phase.isIdentity ? 0 : 30);}
+                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                view.scaleEffect(phase.isIdentity ? 1 : 0.6)
+                                             }
+                            
                             .padding(.top,10)
                             .contextMenu {
                                 Group {
@@ -198,6 +213,12 @@ struct GroupedTaskView: View {
                 Section {
                     ForEach(value){ remainder in
                         RemainderRow(color: selector.colorDark, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0,select: "today")
+                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                view.blur(radius: phase.isIdentity ? 0 : 30);}
+                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                view.scaleEffect(phase.isIdentity ? 1 : 0.6)
+                                             }
+                            
                             .padding(.top,10)
                             .contextMenu {
                                 Button("Delete Remainders", action: {

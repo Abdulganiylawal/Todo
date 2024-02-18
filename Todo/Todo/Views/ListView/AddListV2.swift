@@ -31,7 +31,9 @@ struct AddListV2: View {
                     self.name = model.title
                     model.addList(name: self.name, image: self.icon!, color: self.color!)
                     model.title = ""
-                    sheetManager.dismiss()
+                    withAnimation(.spring) {
+                        sheetManager.dismiss()
+                    }
                 } label: {
                     Text("Save")
                 }.disabled(!model.isEnabled)
@@ -75,7 +77,7 @@ struct AddListV2: View {
                     
                 }
         }
-        .transition(.move(edge: .bottom))
+        .transition(.moveAndFade)
         .onDisappear(perform: {
             model.title = ""
         })
@@ -92,7 +94,7 @@ struct AddListV2: View {
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 30,style: .continuous)
-                    .fill(.thinMaterial)
+                    .fill(.ultraThinMaterial)
             )
     }
     
@@ -104,12 +106,13 @@ struct AddListV2: View {
                 }
                
             })
+         
             .padding([.top,.bottom],15)
             .padding([.leading,.trailing],1)
         }
         .background(
             RoundedRectangle(cornerRadius: 10,style: .continuous)
-                .fill(.thinMaterial)
+                .fill(.ultraThinMaterial)
         )
     }
     
@@ -126,7 +129,7 @@ struct AddListV2: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 10,style: .continuous)
-                .fill(.thinMaterial)
+                .fill(.ultraThinMaterial)
     )
         
     }
