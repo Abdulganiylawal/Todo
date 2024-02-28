@@ -27,7 +27,7 @@ struct RemaindersTab: View {
             .overlay {
                 HStack{
                     Button(action:{
-                        withAnimation(.bouncy) {
+                        withAnimation(.spring) {
                             selectedTab = .today
                         }
                         model.todayRemainders()
@@ -43,13 +43,10 @@ struct RemaindersTab: View {
                     Spacer()
                    
                     Button(action:{
-                        withAnimation(.bouncy) {
+                        withAnimation(.spring) {
                             selectedTab = .scheduled
                         }
-                      
-                        
-                            model.scheduleRemainders()
-                        
+                        model.scheduleRemainders()
                     }
                     , label: {
                         Image(systemName: selectedTab != .scheduled ? "calendar" : "calendar.circle.fill")
@@ -69,7 +66,7 @@ struct RemaindersTab: View {
                             .frame(width: 20,height: 20)
                             .foregroundStyle(Color.white)
                     })
-                    .sensoryFeedback(.success, trigger: selectedTab == .add)
+                    .sensoryFeedback(.selection, trigger: selectedTab == .add)
                     .padding()
                 }
             }

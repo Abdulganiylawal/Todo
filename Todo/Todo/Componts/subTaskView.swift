@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@available(iOS 17.0, *)
 struct subTaskView: View {
     @State var subTasks:[CDRemainderSubTasks] = [CDRemainderSubTasks]()
     var remainder:CDRemainder

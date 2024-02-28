@@ -21,6 +21,8 @@ struct AddRemainderV2: View {
     @ObservedObject var viewModel:RemainderViewModel
     @FocusState var isFocused:Bool
     @State var isDateClicked:Bool = false
+    @State var isAddedClicked:Bool = false
+    @State var isDeletedClicked:Bool = false
     @State var isTimeClicked:Bool = false
     @State var isEndTimeClicked:Bool = false
     @State var isRepeatClicked:Bool = false
@@ -37,7 +39,7 @@ struct AddRemainderV2: View {
                         .padding(.bottom,10)
                     
                     if !name.isEmpty {
-                            buttons
+                        buttons
                             .padding(.bottom,10)
                         
                     }
@@ -122,6 +124,7 @@ struct AddRemainderV2: View {
                             time = DateFormatterModel.shared.formattedDatesString(from: currentDate, isTime: true)
                         }
                         durationTime = DateFormatterModel.shared.timeDifference(from: time, to: endTime) ?? 0.0
+                        
                         await viewModel.addRemainders(title: name, notes: desc , repeatcycle: repeatCycle, date: date, time: time, duration: durationTime )
                     }
                     
@@ -152,6 +155,7 @@ struct AddRemainderV2: View {
                                     isRepeatClicked = false
                                     sheetManager.present()
                                 }})
+                            .sensoryFeedback(.selection, trigger: isDateClicked == true)
                             
                             ActionButton(imageName: !isTimeClicked ? "clock.circle" : "clock.circle.fill" ,action:{
                                 withAnimation(.easeOut) {
@@ -163,6 +167,7 @@ struct AddRemainderV2: View {
                                     sheetManager.present()
                                 }
                             })
+                            .sensoryFeedback(.selection, trigger: isTimeClicked == true)
                             ActionButton(imageName: !isEndTimeClicked ? "stopwatch" :"stopwatch.fill", action:{
                                 withAnimation(.easeOut) {
                                     isEndTimeClicked.toggle()
@@ -174,6 +179,7 @@ struct AddRemainderV2: View {
                                     
                                 }
                             } )
+                            .sensoryFeedback(.selection, trigger: isEndTimeClicked == true)
                             ActionButton(imageName: !isRepeatClicked ? "repeat.circle" : "repeat.circle.fill", action: {
                                 withAnimation(.easeOut) {
                                     isRepeatClicked.toggle()
@@ -184,6 +190,7 @@ struct AddRemainderV2: View {
                                     sheetManager.present()
                                 }
                             })
+                            .sensoryFeedback(.selection, trigger: isRepeatClicked == true)
                         }.frame(maxWidth:.infinity,alignment: .leading)
                             .padding()
                     }
@@ -262,12 +269,6 @@ struct AddRemainderV2: View {
                 .fill(.thinMaterial)
                 .shadow(color: .black, radius: 0.5)
         )
-        
-        
-        //            .background(
-        //                RoundedRectangle(cornerRadius: 30,style: .continuous)
-        //                    .fill(.ultraThinMaterial)
-        //            )
     }
     
     var notes:some View {
@@ -292,27 +293,34 @@ struct AddRemainderV2: View {
                 .frame(height: 30)
                 .foregroundStyle(Color(hex: viewModel.model.color))
                 .overlay(alignment:.leading) {
-                    Button(action: {viewModel.addSubTask()}, label: {
-                        Label("Add SubTask", systemImage: "plus.circle")
-                            .foregroundStyle(.black)
-                            .fontWeight(.bold)
-                    })
+                    Button(action: {
+                        isAddedClicked.toggle()
+                        viewModel.addSubTask()}, label: {
+                            Label("Add SubTask", systemImage: "plus.circle")
+                                .foregroundStyle(.black)
+                                .fontWeight(.bold)
+                        })
                     .padding()
+                    .sensoryFeedback(.selection, trigger: isAddedClicked)
                 }
             ForEach($viewModel.subTasks){ $subTask in
                 HStack{
+                    SubTaskItem(name: $subTask.subTaskName, isCompleted: $subTask.isCompleted, isEditing: true, color: viewModel.model.color)
                     Button {
+                        isDeletedClicked.toggle()
                         viewModel.deleteSubTask(subtask: subTask)} label: {
                             Image(systemName: "xmark")
                                 .resizable()
                                 .frame(width: 10, height: 10)
                                 .foregroundStyle(.gray)
                         }
-                    SubTaskItem(name: $subTask.subTaskName, isCompleted: $subTask.isCompleted, isEditing: true, color: viewModel.model.color)
+       
                 }
+                .sensoryFeedback(.selection, trigger: isDeletedClicked)
             }
-            .padding(.bottom,5)
-            .padding(.leading,10)
+            .padding(.bottom,10)
+            .padding([.leading,.trailing],10)
+          
         }
         .frame(minHeight: 150,alignment: .topLeading)
         .background(
@@ -347,42 +355,56 @@ struct ActionButton: View {
     }
 }
 
+@available(iOS 17.0, *)
 struct SubTaskItem:View{
     @Binding var name:String
     @Binding var isCompleted:Bool
     @State private var isTapped = false
+    private let characterLimit = 15
     var isEditing:Bool
     var color:String
     
     var body: some View{
-        HStack{
-            Button(action: {
+        VStack(alignment:.center){
+            HStack(alignment:.center){
+                Button(action: {
+                    if isEditing{
+                        isTapped.toggle()
+                    }
+                    else{
+                        isCompleted.toggle()
+                        isTapped.toggle()
+                        Task{
+                            await PersistenceController.shared.save()
+                        }
+                    }
+                }, label: {
+                    Image(systemName: !isTapped ? "square" : "square.fill")
+                        .foregroundStyle(Color(hex: color))
+                })
                 if isEditing{
-                    isTapped.toggle()
+                    TextField("", text:  $name)
+                        .placeholder(when: name.isEmpty, alignment: .topLeading) {
+                            Text("Add a subTask...").foregroundColor(.secondary)
+                        }
+                        .onChange(of: name) { newValue in
+                            if name.count > characterLimit {
+                                name = String(name.prefix(characterLimit))
+                            }
+                        }
                 }
                 else{
-                    isCompleted.toggle()
-                    isTapped.toggle()
-                    Task{
-                        await PersistenceController.shared.save()
-                    }
+                    Text(name)
                 }
-            }, label: {
-                Image(systemName: !isTapped ? "square" : "square.fill")
-                    .foregroundStyle(Color(hex: color))
-            })
-            if isEditing{
-                TextField("", text:  $name)
-                    .placeholder(when: name.isEmpty, alignment: .topLeading) {
-                        Text("Add a subTask...").foregroundColor(.secondary)
-                    }
+            
             }
-            else{
-                Text(name)
-            }
-        }.frame(maxWidth: .infinity,alignment: .leading)
-            .onAppear {
-                isTapped = isCompleted
-            }
+            .frame(maxWidth: .infinity,alignment: .leading)
+          
+        }
+        .sensoryFeedback(.selection, trigger:isTapped)
+       
+        .onAppear {
+            isTapped = isCompleted
+        }
     }
 }

@@ -11,7 +11,7 @@ import CoreData
 @available(iOS 17.0, *)
 struct GroupedTaskView: View {
     @State private var selectedRemainder:CDRemainder? = nil
-    @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .bouncy) var remainders
+    @FetchRequest(fetchRequest: CDRemainder.fetch(), animation: .snappy) var remainders
     private var GroupLogicModel = Grouping()
     private let selector:TaskGroup
     private var repeatCycleManager = RepeatCycleManager()
@@ -74,18 +74,12 @@ struct GroupedTaskView: View {
         Group{
             switch selector{
                 case .all, .completed:
-                    allAndCompletedView
-                 
+                        allAndCompletedView
                 case .schedule:
-                    scheduleView
-                
-                       
+                        scheduleView
                         .padding(0)
                 case .today:
-                    todayView
-              
-                                         
-                      
+                        todayView
                         .padding(0)
             }
             
@@ -93,7 +87,7 @@ struct GroupedTaskView: View {
         .id(reloadFlag)
         .sheet(item: $selectedRemainder) {  remainder in
             NavigationStack{
-//                EditRemainder(remainders: .constant(remainder) , id:$reloadFlag)
+                EditRemainder(reloadFlag: $reloadFlag, remainder: .constant(remainder))
             }
             .presentationBackground(.ultraThinMaterial)
             .presentationCornerRadius(16)
@@ -125,7 +119,7 @@ struct GroupedTaskView: View {
                     Text(key)
                         .font(.title2)
                         .fontWeight(.bold)
-                        .foregroundColor(Color(hex: value[0].list!.color_!).opacity(0.5))
+                        .foregroundColor(Color(hex: value[0].list!.color_!))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 
@@ -233,7 +227,7 @@ struct GroupedTaskView: View {
                     Text(key)
                         .font(.title2)
                         .fontWeight(.bold)
-                        .foregroundColor(Color(hex: selector.colorDark).opacity(0.5))
+                        .foregroundColor(Color(hex: selector.colorDark))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }

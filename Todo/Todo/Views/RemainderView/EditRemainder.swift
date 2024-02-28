@@ -16,6 +16,8 @@ struct EditRemainder: View {
     @Environment(\.dismiss) private var dismiss
     @FocusState var isFocused:Bool
     @State var isDateClicked:Bool = false
+    @State var isAddedClicked:Bool = false
+    @State var isDeletedClicked:Bool = false
     @State var isTimeClicked:Bool = false
     @State var isEndTimeClicked:Bool = false
     @State var isRepeatClicked:Bool = false
@@ -158,6 +160,7 @@ struct EditRemainder: View {
                                         isRepeatClicked = false
                                         sheetManager.present()
                                     }})
+                                .sensoryFeedback(.selection, trigger: isDateClicked)
                                 
                                 ActionButton(imageName: time.isEmpty ? "clock.circle" : "clock.circle.fill" ,action:{
                                     withAnimation(.easeOut) {
@@ -170,6 +173,7 @@ struct EditRemainder: View {
                                         sheetManager.present()
                                     }
                                 })
+                                .sensoryFeedback(.selection, trigger: isTimeClicked)
                                 ActionButton(imageName: endTime.isEmpty ? "stopwatch" :"stopwatch.fill", action:{
                                     withAnimation(.easeOut) {
                                         isFocused = false
@@ -180,6 +184,7 @@ struct EditRemainder: View {
                                         sheetManager.present()
                                     }
                                 } )
+                                .sensoryFeedback(.selection, trigger: isEndTimeClicked)
                                 ActionButton(imageName: repeatCycle.isEmpty ? "repeat.circle" : "repeat.circle.fill", action: {
                                     withAnimation(.easeOut) {
                                         isFocused = false
@@ -190,6 +195,7 @@ struct EditRemainder: View {
                                         sheetManager.present()
                                     }
                                 })
+                                .sensoryFeedback(.selection, trigger: isRepeatClicked)
                             }.frame(maxWidth:.infinity,alignment: .leading)
                             .padding()
                         }
@@ -292,18 +298,23 @@ struct EditRemainder: View {
                 .frame(height: 30)
                 .foregroundStyle(Color(hex: remainder.list!.color))
                 .overlay(alignment:.leading) {
-                    Button(action: {subTasks.append(CDRemainderSubTasks(context: PersistenceController.shared.container.viewContext, subTaskName: ""))}, label: {
+                    Button(action: {
+                        isAddedClicked.toggle()
+                        subTasks.append(CDRemainderSubTasks(context: PersistenceController.shared.container.viewContext, subTaskName: ""))}, label: {
                         Label("Add SubTask", systemImage: "plus.circle")
                             .foregroundStyle(.black)
                             .fontWeight(.bold)
                     })
+                    .sensoryFeedback(.selection, trigger: isAddedClicked)
+
                     .padding()
                 }
-       
-                
-                ForEach($subTasks, id: \.subTaskName){ $subTask in
-                    HStack{
+            ForEach($subTasks){ $subTask in
+                    HStack(alignment: .center){
+                        SubTaskItem(name: $subTask.subTaskName, isCompleted: $subTask.isCompleted, isEditing: true, color:remainder.list!.color)
+                   
                         Button {
+                            isDeletedClicked.toggle()
                             if let index = subTasks.firstIndex(of: subTask){
                                 subTasks.remove(at: index)
                             }
@@ -313,11 +324,13 @@ struct EditRemainder: View {
                                 .frame(width: 10, height: 10)
                                 .foregroundStyle(.gray)
                         }
-                        SubTaskItem(name: $subTask.subTaskName, isCompleted: $subTask.isCompleted, isEditing: true, color:remainder.list!.color)
+                        .sensoryFeedback(.selection, trigger: isDeletedClicked)
                     }
+                    
                 }
-                .padding(.bottom,5)
-                .padding(.leading,10)
+            .padding(.bottom,10)
+                .padding([.leading,.trailing],10)
+      
         }
         .frame(minHeight: 150,alignment: .topLeading)
         .background(

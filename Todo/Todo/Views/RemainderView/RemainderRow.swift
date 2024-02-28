@@ -10,6 +10,7 @@ import SwiftUI
 @available(iOS 17.0, *)
 struct RemainderRow: View {
     @Environment(\.colorScheme) var colorScheme
+   
     var color:String = ""
     @State private var isClicked = false
     var remainder:CDRemainder
@@ -23,12 +24,7 @@ struct RemainderRow: View {
           self.select = select
       }
     
-    init(remainder:CDRemainder, color:String, duration:Double){
-        self.color = color
-        self.remainder = remainder
-        self.duration = duration
-    }
-    
+
     var progressInterval: ClosedRange<Date>? {
         guard let startTimeString = remainder.schedule_?.time,
               let startDateString = remainder.schedule_?.date,
@@ -36,6 +32,7 @@ struct RemainderRow: View {
             return nil
         }
         let end = start.addingTimeInterval(TimeInterval(self.duration))
+        
         return start...end
     }
 
@@ -47,15 +44,15 @@ struct RemainderRow: View {
             HStack{
                 if !remainder.title.isEmpty {
                     Text(remainder.title)
-                        .foregroundStyle(Color.white)
+                        .foregroundStyle(!remainder.isCompleted_ ? Color.white : .secondary)
                 }
                 Spacer()
                 if  remainder.isCompleted_{
                             Text("Completed")
                                 .font(.caption)
-                                .foregroundStyle(Color.green)
+                                .foregroundStyle(.secondary)
                                 .padding(8)
-//
+                    
                 }
                 if !remainder.subTasks.isEmpty{
                     Button {
@@ -67,14 +64,12 @@ struct RemainderRow: View {
                         }
                     }
                 }
+                
                 if !select.isEmpty{
                     Text(remainder.list?.name ?? "" )
                         .font(.caption)
                         .foregroundStyle(Color(hex: remainder.list?.color ?? ""))
                         .padding(8)
-                   
-                        
-                     
                 }
             }.padding(0)
               if !remainder.notes.isEmpty {
@@ -83,11 +78,13 @@ struct RemainderRow: View {
                       .frame(maxWidth: .infinity, alignment: .leading)
                       .foregroundColor(.primary.opacity(0.7))
               }
+            
             if let interval = progressInterval, duration != 0.0 {
                 ProgressView(timerInterval: interval,countsDown: false)
                     .tint(Color(hex: color))
                 
             }
+            
         
             Divider()
                 .foregroundStyle(Color.white)
@@ -135,6 +132,8 @@ struct RemainderRow: View {
                 }
             }
         }
+       
+        .transition(.move)
         .padding()
         .sheet(isPresented: $isClicked, content: {
             subTaskView(remainder: remainder)
@@ -143,6 +142,7 @@ struct RemainderRow: View {
                 .presentationDetents([.height(200)])
                 .presentationBackground(.ultraThinMaterial)
         })
+     
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .stroke(Color(hex: color).opacity(0.3), lineWidth: 1)
@@ -170,8 +170,9 @@ struct SwiftUIView_Previews: PreviewProvider {
         remainders.isCompleted_ = true
         remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, context: PersistenceController.shared.container.viewContext)
         return Group {
-            RemainderRow(remainder: remainders, color:  "#4A4C8", duration: 360.0)
+            RemainderRow(color:  "#4A4C8", remainder: remainders, duration: 360.0, select: "")
         }
     }
 }
+
 

@@ -27,9 +27,12 @@ struct ListView: View {
                                 .foregroundColor(Color(hex: color))
                                 .font(.title3)
                                 .fontWeight(.bold)
-                            
+                           
+                               
+                          
+                              
                         
-                    
+                            
                         .frame(width: 40, height: 40,alignment: .leading)
                     Text(name)
                         .foregroundColor(Color(hex: "6e7b8b"))

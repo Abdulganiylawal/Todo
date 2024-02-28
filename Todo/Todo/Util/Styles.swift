@@ -33,9 +33,16 @@ extension AnyTransition {
     }
     static var move: AnyTransition {
         .asymmetric(
-                   insertion: .move(edge: .bottom).combined(with: .opacity),
-                   removal: .move(edge: .leading).combined(with: .opacity)
+            insertion: .move(edge: .top).combined(with: .scale).combined(with: .opacity),
+                   removal: .move(edge: .bottom).combined(with: .scale).combined(with: opacity)
                )
     }
 }
 
+extension Animation {
+    static func ripple(index: Int) -> Animation {
+        Animation.easeIn
+            .speed(2)
+            .delay(0.03 * Double(index))
+    }
+}

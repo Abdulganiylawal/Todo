@@ -16,7 +16,7 @@ class RemainderViewModel: ObservableObject{
     let model:CDList
     init(model: CDList) {
         self.model = model
-        todayRemainders()
+   
     }
     
     @MainActor func addRemainders(title:String,notes:String,repeatcycle:String,date:String,time:String?,duration:Double) async{
@@ -54,8 +54,9 @@ class RemainderViewModel: ObservableObject{
     }
     
     func todayRemainders(){
+        remainders = []
         let request = CDRemainder.fetch()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.createdDate_, ascending: false)]
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -75,8 +76,9 @@ class RemainderViewModel: ObservableObject{
     }
     
     func scheduleRemainders(){
+        remainders = []
         let request = CDRemainder.fetch()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.list!.name_, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDRemainder.createdDate_, ascending: false)]
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -86,7 +88,7 @@ class RemainderViewModel: ObservableObject{
         let predicate3 = NSPredicate(format: "schedule_.date_  != %@", formattedDates as CVarArg)
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1,predicate2,predicate3])
         do{
-            remainders = []
+         
             remainders = try context.fetch(request)
         }catch{
             print(error.localizedDescription)

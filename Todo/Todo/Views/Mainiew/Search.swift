@@ -24,7 +24,7 @@ struct SearchView: View {
                     .padding(0)
                 ScrollView(showsIndicators: false) {
                     ForEach(searchModel.results){ remainder in
-                        RemainderRow(remainder: remainder, color: remainder.list?.color ?? "", duration: remainder.schedule_?.duration ?? 0.0)
+                        RemainderRow(color: remainder.list?.color ?? "", remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0, select: "")
                             .padding()
                     }
                 }

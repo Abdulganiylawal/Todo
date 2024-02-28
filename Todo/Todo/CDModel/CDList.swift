@@ -82,5 +82,6 @@ extension CDList{
         self.name = name
         self.color = color
         self.image = image
+        self.date = Date()
     }
 }

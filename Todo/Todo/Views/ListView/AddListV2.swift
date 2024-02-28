@@ -21,7 +21,11 @@ struct AddListV2: View {
         
         VStack {
             HStack{
-                Button(action: { sheetManager.dismiss()}, label: {
+                Button(action: { 
+                    withAnimation(.spring) {
+                        sheetManager.dismiss()
+                    }
+                }, label: {
                     Image(systemName: "xmark.app.fill")
                         .resizable()
                         .frame(width: 20, height: 20)
@@ -32,7 +36,9 @@ struct AddListV2: View {
                     model.addList(name: self.name, image: self.icon!, color: self.color!)
                     model.title = ""
                     withAnimation(.spring) {
+                        isFocused.toggle()
                         sheetManager.dismiss()
+                        
                     }
                 } label: {
                     Text("Save")

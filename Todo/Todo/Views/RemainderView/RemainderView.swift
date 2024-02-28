@@ -11,6 +11,7 @@ struct RemainderView: View{
     @Environment(\.colorScheme) var colorScheme
     @State var selectedTab: TabModel = .today
     @State private var isClicked:Bool = false
+    @State private var hasAppeared:Bool = false
     @EnvironmentObject var sheetManager:SheetManager
      private var repeatCycleManager = RepeatCycleManager()
     private var model:CDList
@@ -33,6 +34,7 @@ struct RemainderView: View{
                     .id(id)
                     .padding()
             }
+
             VStack{
                 Spacer()
                 RemaindersTab(selectedTab: $selectedTab, isClicked: $isClicked, sheetManager: .constant(sheetManager), model: viewModel,colors: model.color)
@@ -53,6 +55,14 @@ struct RemainderView: View{
                     Text(viewModel.remainders.isEmpty ? "Empty" : "")
                 )
         }
+        .onAppear {
+            hasAppeared.toggle()
+            withAnimation(.spring) {
+                viewModel.todayRemainders()
+            }
+        }
+
+  
         .toolbar(content: {
                 ToolbarItem(placement: .principal) {
                     Text(model.name)
@@ -67,10 +77,10 @@ struct RemainderView: View{
     
     // MARK: -  Remainder Loop
     var remainder: some View{
-        ForEach(viewModel.remainders,id: \.self) { remainder in
+        ForEach(Array(viewModel.remainders.enumerated()),id: \.offset) { index,remainder in
          
-            RemainderRow(remainder: remainder, color: model.color, duration:remainder.schedule_?.duration ?? 0.0)
-            
+            RemainderRow(color: model.color, remainder: remainder, duration:remainder.schedule_?.duration ?? 0.0, select: "")
+                .hiddenNavBar(true)
                 .padding(.bottom,10)
                 .scrollTransition(.animated(.easeOut)) { view, phase in
                     view.blur(radius: phase.isIdentity ? 0 : 30);}
@@ -94,6 +104,7 @@ struct RemainderView: View{
                                 }
                               
                             })
+                            .sensoryFeedback(.success, trigger: remainder.isCompleted_ )
                         }
                 }
         }

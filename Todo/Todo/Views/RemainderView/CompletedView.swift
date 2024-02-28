@@ -26,7 +26,7 @@ struct CompletedView: View {
             ScrollView(showsIndicators: false){
                 ForEach(completedRemainders){
                     remainder in
-                    RemainderRow(remainder: remainder, color: model.color, duration: remainder.schedule_?.duration ?? 0.0)
+                    RemainderRow(color: model.color, remainder: remainder, duration: remainder.schedule_?.duration ?? 0.0, select: "")
                         .padding(.top,10)
                 }
             }.ignoresSafeArea()

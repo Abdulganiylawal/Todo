@@ -28,7 +28,7 @@ struct Home: View {
         _model = StateObject(wrappedValue: ListViewManger(context: context))
         ListEssModel = ListEssentials(context: context)
         let request = CDList.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDList.name_, ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDList.date_, ascending: false)]
         request.predicate = NSPredicate.all
         self._lists = FetchRequest(fetchRequest: request)
     }
@@ -38,10 +38,18 @@ struct Home: View {
             ZStack {
                 ScrollView(showsIndicators: false){
                     Section{
-                        LazyVGrid(columns: resultGridLayout) {
-                            ForEach(TaskGroup.allCases) { taskGroup in
-                                NavigationLink(value: Route.groupTaskView(selector: taskGroup, context: self.context)) {
-                                    ListView(icon: taskGroup.iconName, name: taskGroup.name, color: taskGroup.colorDark, count: ListEssModel.getCount(item: taskGroup.rawValue))
+                        withAnimation(.bouncy) {
+                            LazyVGrid(columns: resultGridLayout) {
+                                ForEach(TaskGroup.allCases) { taskGroup in
+                                    NavigationLink(value: Route.groupTaskView(selector: taskGroup, context: self.context)) {
+                                        ListView(icon: taskGroup.iconName, name: taskGroup.name, color: taskGroup.colorDark, count: ListEssModel.getCount(item: taskGroup.rawValue))
+                                  
+                                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                                view.blur(radius: phase.isIdentity ? 0 : 30);}
+                                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                                view.scaleEffect(phase.isIdentity ? 1 : 0.6)
+                                            }
+                                    }
                                 }
                             }
                         }
@@ -60,40 +68,43 @@ struct Home: View {
                     
                     
                     Section{
-                        LazyVGrid(columns: resultGridLayout) {
-                            ForEach(lists,id: \.id) { list in
-                                NavigationLink(value: Route.remainderView(model: list)) {
-                                    ListView(icon: list.image, name: list.name, color: list.color, count: ListEssModel.getRemainderCount(list: list))
-                                        .scrollTransition(.animated(.easeOut)) { view, phase in
-                                            view.blur(radius: phase.isIdentity ? 0 : 30);}
-                                        .scrollTransition(.animated(.easeOut)) { view, phase in
-                                            view.scaleEffect(phase.isIdentity ? 1 : 0.6)
-                                                         }
-                                    
-                                        .contextMenu {
-                                            Group {
-                                                Button("Edit List", action: {
-                                                    selectedList = list
-                                                    sheetManager.present()
-                                                    isAdding = true
-                                                    isEditing = true
-                                                    
-                                                })
-                                                Button("Delete List", action: {
-                                                    Task{
-                                                        do{
-                                                            await CDList.delete(list: list)
-                                                            reloadFlag.toggle()
-                                                        }
-                                                    }
-                                                    
-                                                })
-                                                
+                        withAnimation(.bouncy) {
+                            LazyVGrid(columns: resultGridLayout) {
+                                ForEach(lists,id: \.id) { list in
+                                    NavigationLink(value: Route.remainderView(model: list)) {
+                                        ListView(icon: list.image, name: list.name, color: list.color, count: ListEssModel.getRemainderCount(list: list))
+                                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                                view.scaleEffect(phase.isIdentity ? 1 : 0.6)
                                             }
-                                        }
+                                            .scrollTransition(.animated(.easeOut)) { view, phase in
+                                                view.blur(radius: phase.isIdentity ? 0 : 30);}
+                                        
+                                        
+                                            .contextMenu {
+                                                Group {
+                                                    Button("Edit List", action: {
+                                                        selectedList = list
+                                                        sheetManager.present()
+                                                        isAdding = true
+                                                        isEditing = true
+                                                        
+                                                    })
+                                                    Button("Delete List", action: {
+                                                        Task{
+                                                            do{
+                                                                await CDList.delete(list: list)
+                                                                reloadFlag.toggle()
+                                                            }
+                                                        }
+                                                        
+                                                    })
+                                                    
+                                                }
+                                            }
+                                    }
                                 }
+                                
                             }
-                        
                         }
                     }
                     .padding()
@@ -124,6 +135,7 @@ struct Home: View {
                             
                         }})
                 }
+                .hiddenNavBar(true)
                 
                 VStack{
                     Spacer()

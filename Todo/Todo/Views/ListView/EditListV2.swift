@@ -19,7 +19,11 @@ struct EditListV2: View {
     var body: some View {
         VStack {
             HStack{
-                Button(action: { sheetManager.dismiss()}, label: {
+                Button(action: {
+                    withAnimation(.spring) {
+                        sheetManager.dismiss()
+                    }
+                }, label: {
                     Image(systemName: "xmark.app.fill")
                         .resizable()
                         .frame(width: 20, height: 20)
@@ -34,6 +38,7 @@ struct EditListV2: View {
                      }
                     withAnimation(.spring) {
                         reloadFlag.toggle()
+                        isFocused.toggle()
                         sheetManager.dismiss()
                     }
                   
