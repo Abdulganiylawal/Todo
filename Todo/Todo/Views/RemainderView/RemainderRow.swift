@@ -168,7 +168,7 @@ struct SwiftUIView_Previews: PreviewProvider {
         let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "djdjdjlkjnankasnckcnkscnknc")
         remainders.list = list
         remainders.isCompleted_ = true
-        remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, context: PersistenceController.shared.container.viewContext)
+        remainders.schedule_ = CDRemainderSchedule(repeatCycle: "monthly", date: "26-08-02", time: "12:00", duration: 3600, endTime: "13:00", context: PersistenceController.shared.container.viewContext)
         return Group {
             RemainderRow(color:  "#4A4C8", remainder: remainders, duration: 360.0, select: "")
         }

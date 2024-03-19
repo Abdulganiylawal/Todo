@@ -125,7 +125,7 @@ struct AddRemainderV2: View {
                         }
                         durationTime = DateFormatterModel.shared.timeDifference(from: time, to: endTime) ?? 0.0
                         
-                        await viewModel.addRemainders(title: name, notes: desc , repeatcycle: repeatCycle, date: date, time: time, duration: durationTime )
+                        await viewModel.addRemainders(title: name, notes: desc , repeatcycle: repeatCycle, date: date, time: time, duration: durationTime, endTime: endTime )
                     }
                     
                 }, label: {
@@ -272,7 +272,7 @@ struct AddRemainderV2: View {
     }
     
     var notes:some View {
-        TextField("", text: $desc)
+        TextField("", text: $desc,axis:.vertical)
             .foregroundStyle(Color(hex: viewModel.model.color))
             .placeholder(when: desc.isEmpty, alignment: .topLeading) {
                 Text("Add a note...").foregroundColor(.secondary)

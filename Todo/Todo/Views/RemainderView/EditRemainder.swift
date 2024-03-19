@@ -49,6 +49,7 @@ struct EditRemainder: View {
             desc = remainder.notes
             date = remainder.schedule_!.date_!
             time = remainder.schedule_!.time_!
+            endTime = remainder.schedule_?.endTime_ ?? ""
             if let value = remainder.schedule_?.repeatCycle{
                 repeatCycle = value
             }
@@ -124,8 +125,9 @@ struct EditRemainder: View {
                         durationTime = DateFormatterModel.shared.timeDifference(from: time, to: endTime) ?? 0.0
                         remainder.title = name
                         remainder.notes = desc
-                        remainder.schedule_!.date_! = date
-                        remainder.schedule_!.time_! = time
+                        remainder.schedule_!.date_ = date
+                        remainder.schedule_!.endTime_ = endTime
+                        remainder.schedule_!.time_ = time
                         remainder.schedule_?.repeatCycle = repeatCycle
                         remainder.schedule_?.duration = durationTime
                         remainder.subTasks = Set(subTasks.map({ $0 }).sorted(by: { $0.createdDate > $1.createdDate}))
@@ -276,7 +278,7 @@ struct EditRemainder: View {
     }
     
     var notes:some View {
-        TextField("", text: $desc)
+        TextField("", text: $desc,axis: .vertical)
             .foregroundStyle(Color(hex: remainder.list!.color))
             .placeholder(when: desc.isEmpty, alignment: .topLeading) {
                 Text("Add a note...").foregroundColor(.secondary)

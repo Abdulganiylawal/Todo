@@ -133,10 +133,16 @@ struct Home: View {
                                 }
                             }
                             
+                            ToolbarItem(placement:.topBarTrailing) {
+                                NavigationLink(value: Route.ChatAssistantView) {
+                                    Image(systemName: "message")
+                                        .font(.system(size: 15, weight: .bold))
+                                        .frame(width: 40, height: 40)
+                                        .foregroundColor(Color(hex: "#acb7ae"))
+                                }
+                            }
                         }})
                 }
-                .hiddenNavBar(true)
-                
                 VStack{
                     Spacer()
                     RoundedRectangle(cornerRadius: 30, style: .continuous)

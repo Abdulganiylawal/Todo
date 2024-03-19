@@ -56,6 +56,12 @@
 		10CE85CC2AC44D6F0086C8DA /* Calender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CE85CB2AC44D6F0086C8DA /* Calender.swift */; };
 		10CF40342B7A423600D655A4 /* EditListV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CF40332B7A423600D655A4 /* EditListV2.swift */; };
 		10CF40362B7A4EBF00D655A4 /* AddRemainderV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CF40352B7A4EBF00D655A4 /* AddRemainderV2.swift */; };
+		10D683582BA9900800791A13 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D683572BA9900800791A13 /* Constants.swift */; };
+		10D6835A2BA9952E00791A13 /* ChatAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D683592BA9952E00791A13 /* ChatAssistant.swift */; };
+		10D6835D2BA9962C00791A13 /* OpenAiApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D6835C2BA9962C00791A13 /* OpenAiApiService.swift */; };
+		10D683602BA9B7ED00791A13 /* ChatAssistantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D6835F2BA9B7ED00791A13 /* ChatAssistantViewModel.swift */; };
+		10D683632BA9B84000791A13 /* TextMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D683622BA9B84000791A13 /* TextMessageView.swift */; };
+		10D683652BA9DB4F00791A13 /* DropDownPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D683642BA9DB4F00791A13 /* DropDownPicker.swift */; };
 		10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */; };
 		10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A742AC32A2C00193E93 /* RemainderView.swift */; };
 		10D72A772AC32BFC00193E93 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D72A762AC32BFC00193E93 /* DropDownMenu.swift */; };
@@ -131,6 +137,12 @@
 		10CE85CB2AC44D6F0086C8DA /* Calender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calender.swift; sourceTree = "<group>"; };
 		10CF40332B7A423600D655A4 /* EditListV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListV2.swift; sourceTree = "<group>"; };
 		10CF40352B7A4EBF00D655A4 /* AddRemainderV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemainderV2.swift; sourceTree = "<group>"; };
+		10D683572BA9900800791A13 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		10D683592BA9952E00791A13 /* ChatAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAssistant.swift; sourceTree = "<group>"; };
+		10D6835C2BA9962C00791A13 /* OpenAiApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAiApiService.swift; sourceTree = "<group>"; };
+		10D6835F2BA9B7ED00791A13 /* ChatAssistantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAssistantViewModel.swift; sourceTree = "<group>"; };
+		10D683622BA9B84000791A13 /* TextMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageView.swift; sourceTree = "<group>"; };
+		10D683642BA9DB4F00791A13 /* DropDownPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownPicker.swift; sourceTree = "<group>"; };
 		10D72A6F2AC3228A00193E93 /* RemainderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderViewModel.swift; sourceTree = "<group>"; };
 		10D72A742AC32A2C00193E93 /* RemainderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemainderView.swift; sourceTree = "<group>"; };
 		10D72A762AC32BFC00193E93 /* DropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
@@ -250,6 +262,7 @@
 		104ECFE62AB627C40083B3D6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				10D6835E2BA9B7CE00791A13 /* ChatAssistantViewModel */,
 				106B7D032B6FB7B700E5ABCF /* GroupTaskedModel */,
 				101284872AE050CA00014C76 /* Search */,
 				10D72A6E2AC3227A00193E93 /* Remainder */,
@@ -262,6 +275,8 @@
 		104ECFE72AB627D00083B3D6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				10D683612BA9B82200791A13 /* ChatView */,
+				10D683562BA98FF900791A13 /* Constants */,
 				10D72A732AC32A1800193E93 /* RemainderView */,
 				107075742AC1C43200793E13 /* ListView */,
 				10E0E86F2AB9E9FD00E2359D /* Mainiew */,
@@ -282,6 +297,7 @@
 		104ECFEA2AB6285D0083B3D6 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				10D6835B2BA9961400791A13 /* OpenAiServices */,
 				1091F4DF2AFE677900A367A5 /* NavigationService */,
 				102DE48C2AF3EC2D00AE9BD4 /* RepeatService */,
 				104ECFEB2AB628690083B3D6 /* AuthServices */,
@@ -323,6 +339,7 @@
 				10132CE42AFBEFA700B8DFAF /* DateFormatter.swift */,
 				10132CE62AFBF51400B8DFAF /* SheetManager.swift */,
 				105AAC4D2AFD251400F44993 /* DurationManager.swift */,
+				10D683642BA9DB4F00791A13 /* DropDownPicker.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -397,6 +414,39 @@
 				1091F4E02AFE679200A367A5 /* NavigationManager.swift */,
 			);
 			path = NavigationService;
+			sourceTree = "<group>";
+		};
+		10D683562BA98FF900791A13 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				10D683572BA9900800791A13 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		10D6835B2BA9961400791A13 /* OpenAiServices */ = {
+			isa = PBXGroup;
+			children = (
+				10D6835C2BA9962C00791A13 /* OpenAiApiService.swift */,
+			);
+			path = OpenAiServices;
+			sourceTree = "<group>";
+		};
+		10D6835E2BA9B7CE00791A13 /* ChatAssistantViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				10D6835F2BA9B7ED00791A13 /* ChatAssistantViewModel.swift */,
+			);
+			path = ChatAssistantViewModel;
+			sourceTree = "<group>";
+		};
+		10D683612BA9B82200791A13 /* ChatView */ = {
+			isa = PBXGroup;
+			children = (
+				10D683592BA9952E00791A13 /* ChatAssistant.swift */,
+				10D683622BA9B84000791A13 /* TextMessageView.swift */,
+			);
+			path = ChatView;
 			sourceTree = "<group>";
 		};
 		10D72A6E2AC3227A00193E93 /* Remainder */ = {
@@ -548,11 +598,14 @@
 				1091F4DE2AFE63EB00A367A5 /* RoutingModel.swift in Sources */,
 				10F0B7462B7E52F100750F13 /* subTaskView.swift in Sources */,
 				10A078D52ADB108700FE2BF0 /* GroupedTaskView.swift in Sources */,
+				10D6835A2BA9952E00791A13 /* ChatAssistant.swift in Sources */,
+				10D683632BA9B84000791A13 /* TextMessageView.swift in Sources */,
 				10A559992B7A159D00F39C7D /* AddListV2.swift in Sources */,
 				10F0B7442B7E05F400750F13 /* CDRemainderSubTask.swift in Sources */,
 				1099B7692B0165DF007264F8 /* EditRemainder.swift in Sources */,
 				101284892AE050DA00014C76 /* SearchViewModel.swift in Sources */,
 				10132CE92AFC369200B8DFAF /* ArrayOfColors.swift in Sources */,
+				10D6835D2BA9962C00791A13 /* OpenAiApiService.swift in Sources */,
 				104ECFF02AB628E50083B3D6 /* AuthViewModel.swift in Sources */,
 				10CF40342B7A423600D655A4 /* EditListV2.swift in Sources */,
 				1050F2342AB8B862001EA255 /* AuthenticationManager.swift in Sources */,
@@ -570,6 +623,7 @@
 				10E0E8732AB9EA1F00E2359D /* Settings.swift in Sources */,
 				102C3EB52AFA79A20037B238 /* ListView.swift in Sources */,
 				104ECFED2AB6288A0083B3D6 /* AuthModel.swift in Sources */,
+				10D683602BA9B7ED00791A13 /* ChatAssistantViewModel.swift in Sources */,
 				105936D02AFBD72D00823D41 /* Duration.swift in Sources */,
 				10D72A702AC3228A00193E93 /* RemainderViewModel.swift in Sources */,
 				10E0E87C2ABA0F0300E2359D /* Styles.swift in Sources */,
@@ -577,6 +631,7 @@
 				102C3EB72AFA82FF0037B238 /* Modifiers.swift in Sources */,
 				103AC0292B79070C000672DD /* RemaindersTab.swift in Sources */,
 				1050F2292AB8A14D001EA255 /* SignIn.swift in Sources */,
+				10D683652BA9DB4F00791A13 /* DropDownPicker.swift in Sources */,
 				10E0E8752AB9EA2C00E2359D /* Search.swift in Sources */,
 				105AAC4E2AFD251400F44993 /* DurationManager.swift in Sources */,
 				105936CE2AFBD53700823D41 /* TimeView.swift in Sources */,
@@ -591,6 +646,7 @@
 				10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */,
 				1050F22D2AB8A173001EA255 /* AuthView.swift in Sources */,
 				10CE85CC2AC44D6F0086C8DA /* Calender.swift in Sources */,
+				10D683582BA9900800791A13 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

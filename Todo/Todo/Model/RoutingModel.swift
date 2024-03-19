@@ -14,6 +14,7 @@ enum Route{
     case SettingsView
     case searchView(context:NSManagedObjectContext)
     case groupTaskView(selector:TaskGroup,context:NSManagedObjectContext)
+    case ChatAssistantView
 }
 
 extension Route:Hashable{
@@ -35,6 +36,8 @@ extension Route:Hashable{
                 
             case (.groupTaskView(selector:let lhs),.groupTaskView(selector: let rhs)):
                 return lhs == rhs
+            case (.ChatAssistantView,.ChatAssistantView):
+                return true
             default:
                 return false
         }
@@ -56,6 +59,9 @@ extension Route:View{
 //                    .withCustomBackButton(state: state)
             case .groupTaskView(selector: let selector,context:let context):
                 GroupedTaskView(selector: selector,context: context)
+                
+            case .ChatAssistantView:
+                ChatAssistant()
         }
     }
 }

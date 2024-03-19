@@ -21,6 +21,7 @@
     <entity name="CDRemainderSchedule" representedClassName="CDRemainderSchedule" parentEntity="CDRemainder" syncable="YES" codeGenerationType="class">
         <attribute name="date_" optional="YES" attributeType="String"/>
         <attribute name="duration_" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="endTime_" optional="YES" attributeType="String"/>
         <attribute name="repeatCycle_" optional="YES" attributeType="String"/>
         <attribute name="time_" optional="YES" attributeType="String"/>
         <relationship name="remainder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRemainder" inverseName="schedule_" inverseEntity="CDRemainder"/>
