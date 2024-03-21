@@ -10,14 +10,16 @@ import SwiftUI
 @available(iOS 17.0, *)
 struct ChatAssistant: View {
     @StateObject var viewModel = ChatAssistantViewModel()
+    @State var selection1: String? = nil
     var body: some View {
         VStack{
-            DropDownPickerView(list: viewModel.list)
+            DropDownPickerView(list: viewModel.list,selection1: $selection1)
             Spacer()
           
             TextMessageView(viewModel: viewModel)
                 .padding(.bottom,10)
-        }
+        }.navigationTitle(selection1 ?? "")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

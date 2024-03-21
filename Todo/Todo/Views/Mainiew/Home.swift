@@ -111,6 +111,7 @@ struct Home: View {
                     .id(reloadFlag)
                     .onAppear(perform: {
                         reloadFlag.toggle()
+//                        GetApiKey.shared.getApiKey()
                     })
                     .navigationTitle("")
                     .toolbar(content: {
@@ -120,7 +121,7 @@ struct Home: View {
                                     Image(systemName: "gearshape")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
-                                        .foregroundColor(Color(hex: "#acb7ae"))
+                                        .foregroundColor(Color(hex: "#384358"))
                                     
                                 }
                             }
@@ -129,7 +130,7 @@ struct Home: View {
                                     Image(systemName: "magnifyingglass")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
-                                        .foregroundColor(Color(hex: "#acb7ae"))
+                                        .foregroundColor(Color(hex: "#384358"))
                                 }
                             }
                             
@@ -138,7 +139,7 @@ struct Home: View {
                                     Image(systemName: "message")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
-                                        .foregroundColor(Color(hex: "#acb7ae"))
+                                        .foregroundColor(Color(hex: "#384358"))
                                 }
                             }
                         }})
@@ -149,7 +150,7 @@ struct Home: View {
                         .stroke(Color.gray, lineWidth: 0.5)
                         .background(
                             RoundedRectangle(cornerRadius: 30, style: .continuous)
-                                .fill(.ultraThinMaterial)
+                                .fill(.clear)
                         )
                         .frame(width: 200,height: 35)
                         .overlay {

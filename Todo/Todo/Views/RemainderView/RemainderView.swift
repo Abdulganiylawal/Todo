@@ -80,7 +80,7 @@ struct RemainderView: View{
         ForEach(Array(viewModel.remainders.enumerated()),id: \.offset) { index,remainder in
          
             RemainderRow(color: model.color, remainder: remainder, duration:remainder.schedule_?.duration ?? 0.0, select: "")
-                .hiddenNavBar(true)
+//                .hiddenNavBar(true)
                 .padding(.bottom,10)
                 .scrollTransition(.animated(.easeOut)) { view, phase in
                     view.blur(radius: phase.isIdentity ? 0 : 30);}

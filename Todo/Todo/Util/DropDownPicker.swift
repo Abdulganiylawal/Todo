@@ -10,10 +10,8 @@ import SwiftUI
 struct DropDownPickerView: View {
     var list:[CDList]
 
-    @State var selection1: String? = nil
-    init(list: [CDList]) {
-        self.list = list
-    }
+    @Binding var selection1: String?
+ 
     var body: some View {
             DropDownPicker(
                 selection: $selection1,
@@ -123,6 +121,6 @@ struct DropDownPicker: View {
     }
 }
 
-#Preview {
-    DropDownPickerView(list: [CDList(name: "", color: "", image: "", context: PersistenceController.shared.container.viewContext)])
-}
+//#Preview {
+//    DropDownPickerView(list: [CDList(name: "", color: "", image: "", context: PersistenceController.shared.container.viewContext)])
+//}
