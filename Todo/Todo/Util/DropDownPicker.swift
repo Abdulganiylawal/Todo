@@ -64,7 +64,7 @@ struct DropDownPicker: View {
                 }
                 .padding(.horizontal, 15)
                 .frame(width: 180, height: 30)
-                .background(.clear)
+                .background(.thinMaterial)
                 .contentShape(.rect)
                 .onTapGesture {
                     index += 1
@@ -80,7 +80,7 @@ struct DropDownPicker: View {
                 }
             }
             .clipped()
-            .background(.clear)
+            .background(.thinMaterial)
             .cornerRadius(15)
             .overlay {
                 RoundedRectangle(cornerRadius: 15)
