@@ -21,7 +21,7 @@ class GetApiKey{
             }
             
             if let data = result?.data as? [String: Any], let apiKey = data["apiKey"] as? String {
-                print("API Key: \(apiKey)s")
+                print("API Key: \(apiKey)")
             } else {
                 print("Invalid response from getApiKey function")
             }
