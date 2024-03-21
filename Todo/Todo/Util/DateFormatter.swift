@@ -51,7 +51,7 @@ class DateFormatterModel{
         if let value = dateFormatter.date(from: time) {
             return value
         } else {
-           
+
             print("Invalid date format: \(time)")
             return Date()
         }
