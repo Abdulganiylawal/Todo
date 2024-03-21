@@ -10,6 +10,7 @@ import CoreData
 @testable import Todo
 
 final class ListTest: XCTestCase {
+    
     private var modelTest:ListViewManger!
     var context:NSManagedObjectContext!
 
@@ -17,6 +18,8 @@ final class ListTest: XCTestCase {
     override func setUpWithError() throws {
         modelTest = ListViewManger(context: PersistenceController.Testing.container.newBackgroundContext())
         context =  PersistenceController.Testing.container.newBackgroundContext()
+        
+        
     }
 
     override func tearDownWithError() throws {
@@ -30,7 +33,7 @@ final class ListTest: XCTestCase {
         XCTAssert(modelTest.myList.count == 1, "Theu should be an element in  mylist")
     }
     
-    func testListShouldBeEmptyWhenDeleted() async{
+    func testListShouldBeEmptyWhenDeleted(){
         let list = CDList(name: "Testing", color: "#a28089", image: "list.bullet", context: context)
         expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
                 return true
@@ -40,11 +43,11 @@ final class ListTest: XCTestCase {
             }catch{
                 print(error.localizedDescription)
             }
-        await waitForExpectations(timeout: 2.0) { error in
+        waitForExpectations(timeout: 2.0) { error in
                 XCTAssertNil(error, "Save did not occur")
             }
         
-        await CDList.delete(list: list)
+        CDList.delete(list: list)
         let request = CDList.fetchRequest()
         request.predicate = NSPredicate.all
         let result = try? context.fetch(request)

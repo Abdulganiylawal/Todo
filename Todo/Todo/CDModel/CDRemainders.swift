@@ -77,6 +77,6 @@ extension CDRemainder{
         self.title = title
         self.notes = notes
         self.createdDate = Date()
-        self.schedule_ = CDRemainderSchedule(repeatCycle: "", date: "", time: "", duration: 0.0, endTime: "", context: context)
+        self.schedule_ = CDRemainderSchedule(repeatCycle: "", date: "", time: "", duration: 0.0, context: context)
     }
 }

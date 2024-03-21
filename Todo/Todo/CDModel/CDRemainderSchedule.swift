@@ -34,14 +34,6 @@ extension CDRemainderSchedule{
         }
     }
     
-    var endTime:String{
-        get{
-            endTime_ ?? ""
-        }set{
-            endTime_ = newValue
-        }
-    }
-    
     var duration:Double{
         get{
             duration_
@@ -56,12 +48,11 @@ extension CDRemainderSchedule{
         context.delete(schedule)
     }
 
-    convenience init(repeatCycle:String,date:String,time:String,duration:Double,endTime:String,context:NSManagedObjectContext) {
+    convenience init(repeatCycle:String,date:String,time:String,duration:Double,context:NSManagedObjectContext) {
         self.init(context: context)
         self.repeatCycle = repeatCycle
         self.date = date
         self.time = time
-        self.endTime = endTime
         self.duration = duration
      
     }

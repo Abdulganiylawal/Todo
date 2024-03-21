@@ -71,7 +71,7 @@ struct ListView_Previews: PreviewProvider {
         let list = CDList(name: "", color: "D83F31", image: "", context: PersistenceController.shared.container.viewContext)
         let remainders = CDRemainder(context: PersistenceController.shared.container.viewContext, title: "Hello", notes: "")
         remainders.list = list
-        remainders.schedule_ = CDRemainderSchedule(repeatCycle: "", date: "", time: "", duration: 0.0, endTime: "", context: PersistenceController.shared.container.viewContext)
+        remainders.schedule_ = CDRemainderSchedule(repeatCycle: "", date: "", time: "", duration: 0.0, context: PersistenceController.shared.container.viewContext)
         
         
         

@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 import CoreData
-@MainActor 
 class RemainderViewModel: ObservableObject{
     var context:NSManagedObjectContext = PersistenceController.shared.container.viewContext
     @Published var remainders:[CDRemainder] = [CDRemainder]()
@@ -20,9 +19,9 @@ class RemainderViewModel: ObservableObject{
    
     }
     
-    func addRemainders(title:String,notes:String,repeatcycle:String,date:String,time:String?,duration:Double,endTime:String?) async{
+    @MainActor func addRemainders(title:String,notes:String,repeatcycle:String,date:String,time:String?,duration:Double) async{
         remainder = CDRemainder(context: PersistenceController.shared.container.viewContext, title: title, notes: notes)
-    remainder!.schedule_ = CDRemainderSchedule(repeatCycle: repeatcycle, date: date, time: time ??  DateFormatterModel.shared.formattedDatesString(from: Date(), isTime: true), duration: duration, endTime: endTime ?? "", context: PersistenceController.shared.container.viewContext)
+        remainder!.schedule_ = CDRemainderSchedule(repeatCycle: repeatcycle, date: date, time: time ??  DateFormatterModel.shared.formattedDatesString(from: Date(), isTime: true), duration: duration, context: PersistenceController.shared.container.viewContext)
         remainder!.list = model
         subTasks.forEach {
             subTask in

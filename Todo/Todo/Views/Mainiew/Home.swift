@@ -111,7 +111,6 @@ struct Home: View {
                     .id(reloadFlag)
                     .onAppear(perform: {
                         reloadFlag.toggle()
-//                        GetApiKey.shared.getApiKey()
                     })
                     .navigationTitle("")
                     .toolbar(content: {
@@ -121,7 +120,7 @@ struct Home: View {
                                     Image(systemName: "gearshape")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
-                                        .foregroundColor(Color(hex: "#384358"))
+                                        .foregroundColor(Color(hex: "#acb7ae"))
                                     
                                 }
                             }
@@ -130,27 +129,21 @@ struct Home: View {
                                     Image(systemName: "magnifyingglass")
                                         .font(.system(size: 15, weight: .bold))
                                         .frame(width: 40, height: 40)
-                                        .foregroundColor(Color(hex: "#384358"))
+                                        .foregroundColor(Color(hex: "#acb7ae"))
                                 }
                             }
                             
-                            ToolbarItem(placement:.topBarTrailing) {
-                                NavigationLink(value: Route.ChatAssistantView) {
-                                    Image(systemName: "message")
-                                        .font(.system(size: 15, weight: .bold))
-                                        .frame(width: 40, height: 40)
-                                        .foregroundColor(Color(hex: "#384358"))
-                                }
-                            }
                         }})
                 }
+                .hiddenNavBar(true)
+                
                 VStack{
                     Spacer()
                     RoundedRectangle(cornerRadius: 30, style: .continuous)
                         .stroke(Color.gray, lineWidth: 0.5)
                         .background(
                             RoundedRectangle(cornerRadius: 30, style: .continuous)
-                                .fill(.clear)
+                                .fill(.ultraThinMaterial)
                         )
                         .frame(width: 200,height: 35)
                         .overlay {

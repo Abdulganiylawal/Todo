@@ -25,7 +25,7 @@ struct RepeatCycleManager {
         }
         let copiedRemainder = CDRemainder(context: context, title: remainder.title, notes: remainder.notes)
         copiedRemainder.list = remainder.list
-        copiedRemainder.schedule_ = CDRemainderSchedule(repeatCycle: repeatCycle, date: date, time: originalTime, duration: 0.0, endTime: "", context: context)
+        copiedRemainder.schedule_ = CDRemainderSchedule(repeatCycle: repeatCycle, date: date, time: originalTime, duration: 0.0, context: context)
         copiedRemainder.isCompleted_ = false
         let originalDate = dateFromString(date)
         
