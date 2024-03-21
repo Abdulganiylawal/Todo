@@ -63,7 +63,7 @@
 		10CE85CC2AC44D6F0086C8DA /* Calender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CE85CB2AC44D6F0086C8DA /* Calender.swift */; };
 		10CF40342B7A423600D655A4 /* EditListV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CF40332B7A423600D655A4 /* EditListV2.swift */; };
 		10CF40362B7A4EBF00D655A4 /* AddRemainderV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CF40352B7A4EBF00D655A4 /* AddRemainderV2.swift */; };
-		10D683582BA9900800791A13 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D683572BA9900800791A13 /* Constants.swift */; };
+		10D683582BA9900800791A13 /* CloudFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D683572BA9900800791A13 /* CloudFunctions.swift */; };
 		10D6835A2BA9952E00791A13 /* ChatAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D683592BA9952E00791A13 /* ChatAssistant.swift */; };
 		10D6835D2BA9962C00791A13 /* OpenAiApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D6835C2BA9962C00791A13 /* OpenAiApiService.swift */; };
 		10D683602BA9B7ED00791A13 /* ChatAssistantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D6835F2BA9B7ED00791A13 /* ChatAssistantViewModel.swift */; };
@@ -145,7 +145,7 @@
 		10CE85CB2AC44D6F0086C8DA /* Calender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calender.swift; sourceTree = "<group>"; };
 		10CF40332B7A423600D655A4 /* EditListV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListV2.swift; sourceTree = "<group>"; };
 		10CF40352B7A4EBF00D655A4 /* AddRemainderV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemainderV2.swift; sourceTree = "<group>"; };
-		10D683572BA9900800791A13 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		10D683572BA9900800791A13 /* CloudFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFunctions.swift; sourceTree = "<group>"; };
 		10D683592BA9952E00791A13 /* ChatAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAssistant.swift; sourceTree = "<group>"; };
 		10D6835C2BA9962C00791A13 /* OpenAiApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAiApiService.swift; sourceTree = "<group>"; };
 		10D6835F2BA9B7ED00791A13 /* ChatAssistantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAssistantViewModel.swift; sourceTree = "<group>"; };
@@ -434,7 +434,7 @@
 		10D683562BA98FF900791A13 /* OpenAIKey */ = {
 			isa = PBXGroup;
 			children = (
-				10D683572BA9900800791A13 /* Constants.swift */,
+				10D683572BA9900800791A13 /* CloudFunctions.swift */,
 			);
 			path = OpenAIKey;
 			sourceTree = "<group>";
@@ -669,7 +669,7 @@
 				10D72A752AC32A2C00193E93 /* RemainderView.swift in Sources */,
 				1050F22D2AB8A173001EA255 /* AuthView.swift in Sources */,
 				10CE85CC2AC44D6F0086C8DA /* Calender.swift in Sources */,
-				10D683582BA9900800791A13 /* Constants.swift in Sources */,
+				10D683582BA9900800791A13 /* CloudFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
